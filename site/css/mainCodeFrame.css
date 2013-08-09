@@ -1,0 +1,27 @@
+*{
+font-family:arial;
+font-size:11px;
+}
+h1{
+font-size:16px;
+}
+hr{
+margin:0px;
+border:0px;
+border-bottom:1px dotted #ccc;
+}
+.btn{
+font-size:9px;
+}
+.fonctions{
+margin-bottom:10px;
+border:1px dotted gray;
+padding:8px;
+}
+.fonctions a{
+text-decoration:none;
+color:darkblue;
+}
+.fonctions i{
+text-decoration:underline;
+}

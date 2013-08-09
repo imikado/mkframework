@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<structure>
+<colonne primaire="true">id</colonne>
+<colonne>titre</colonne>
+<colonne>auteur_id</colonne>
+<colonne>priority</colonne>
+</structure>

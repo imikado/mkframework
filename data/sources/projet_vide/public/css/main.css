@@ -1,0 +1,96 @@
+*{
+font-family:arial;
+font-size:11px;
+}
+img{
+border:none;
+}
+a{
+color:darkblue;
+}
+
+.main{
+margin:0px auto;
+width:800px;
+}
+.main .menu{
+float:left;
+width:180px;
+}
+	.main .menu ul{
+	margin:0px;
+	padding:0px;
+	}
+	.main .menu a{
+	text-decoration:none;
+	}
+	.main .menu li{
+	padding:0px 2px;
+	border:1px solid #ccc;
+	margin:0px;
+	background:#ddd;
+	list-style:none;
+	}
+	.main .menu .selectionne{
+	background:#fff;
+	}
+.main .content{
+float:left;
+width:600px;
+border:1px solid #ccc;
+}
+.main .content table th{
+background:#ccc;
+}
+.main .content form .textarea, .main .content form .input{
+width:100%;
+}
+
+.main .pagination ul{
+margin:0px;
+padding:0px;
+}
+.main .pagination li{
+padding:0px;
+display:inline;
+list-style:none;
+}
+.main .pagination .selectionne a{
+text-decoration:none;
+font-weight:bold;
+}
+
+.inputDateAnnee{
+width:100px;
+}
+.inputDateMois{
+width:30px;
+}
+.inputDateJour{
+width:30px;
+}
+.taches{
+border-collapse: collapse;
+}
+.taches th{
+text-align:left;
+}
+.content td{
+vertical-align:top;
+}
+
+.tb_list{
+border-collapse: collapse;
+}
+.tb_list th,.tb_list td{
+border:1px solid gray;
+}
+.tb_list th{
+text-align:left;
+}
+.tb_list td{
+vertical-align:top;
+}
+.tb_list .alt td{
+background:#eee;
+}

@@ -1,0 +1,5 @@
+4
+id;group;action;element;allowdeny;
+1;2;edit;article;ALLOW;
+2;2;add;article;ALLOW;
+3;2;edit;acl;ALLOW;

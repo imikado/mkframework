@@ -1,0 +1,167 @@
+*{
+font-family:arial;
+font-size:11px;
+}
+
+img{
+border:none;
+}
+a{
+color:darkblue;
+}
+body{
+background:#630505 url('images/background.png') center top repeat-y;
+margin:0px;
+}
+.main{
+margin:0px auto;
+width:702px;
+background:white;
+}
+.main .menu{
+margin:0px;
+padding:0px;
+padding-top:12px;
+background:#ddd;
+}
+	.main .menu ul{
+	margin:0px;
+	padding:0px;
+	
+	}
+		.main .menu li{
+		background:#bbb;
+		list-style:none;
+		display:inline;
+		padding:0px 10px;
+		padding-top:4px;
+		margin:6px;
+		-webkit-border-top-left-radius: 4px;
+		-webkit-border-top-right-radius: 4px;
+		-moz-border-radius-topleft: 4px;
+		-moz-border-radius-topright: 4px;
+		border-top-left-radius: 4px;
+		border-top-right-radius: 4px;
+ 
+		}
+		.main .menu .selectionne{
+		background:#fff;
+		}
+			.main .menu a{
+			text-decoration:none;
+			color:black;
+			}
+.main .content{padding-top:20px;
+}
+.main .content table th{
+background:#ccc;
+}
+
+.main .content .msg{
+background:#ddd;
+text-align:center;
+}
+
+.main .content .detail{
+background:#eee;
+
+}
+
+.main .smenu ul{
+	margin:20px;
+	padding:0px;
+	}
+		.main .smenu li{
+		list-style:none;
+		padding-bottom:4px;
+		padding:5px;background:#eee;
+		-webkit-border-radius: 8px;
+		-moz-border-radius: 8px;
+		border-radius: 8px;margin-bottom:4px;
+		}
+		.main .smenu .selectionne{
+		font-weight:bold;
+		background:#630505; 		color:white;
+		}
+		.main .smenu .selectionne a{
+		color:white;
+		}
+			.main .smenu a{
+			text-decoration:none;
+			color:#222;
+			}
+
+.main .projets .selectionne  {
+text-decoration:none;
+background:#630505;
+color:white;
+}
+.main .projets .selectionne a {
+background:#881616;color:white;
+}
+
+.main .projets{
+padding-left:20px;
+}
+.main .projets li{
+list-style:none;
+margin-bottom:4px;
+background:#ddd;
+padding:8px;
+-webkit-border-top-left-radius: 8px;
+-webkit-border-bottom-left-radius: 8px;
+-moz-border-radius-topleft: 8px;
+-moz-border-radius-bottomleft: 8px;
+border-top-left-radius: 8px;
+border-bottom-left-radius: 8px;
+
+}
+.main .projets li span{
+text-decoration:none;
+padding-right:20px;
+}
+.main .projets li a{
+color:#222;
+background:#eee;
+padding:4px 10px;
+border:0px solid gray;-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+border-radius: 8px;
+text-decoration:none;
+}
+
+h1{
+background:#630505;
+color:white;
+padding:10px;
+}
+h2{
+	background:#eee;
+}
+p{
+padding:0px 8px;
+}
+.table{
+margin-left:20px;
+}
+.table table{
+border-collapse:collapse;
+}
+.table td,.table th{
+border:1px solid gray;
+padding:4px;
+}
+.new{
+padding:20px;
+padding-top:10px;
+}
+
+p.error{
+color:red;
+}
+ul.getSelect{
+list-style:none;
+}
+sup{
+font-size:8px;
+}
