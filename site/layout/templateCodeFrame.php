@@ -91,7 +91,7 @@ function addContent(sId,sAction,tTab){
 
 <textarea id="addContentaddAction" style="display:none">
 	
-	public funtion _monaction(){
+	public function _monaction(){
 		
 	}
 	
