@@ -21,6 +21,10 @@ class module_examplemodule extends abstract_moduleembedded{
 	public static function redirect($sModuleAction,$tModuleParam=null){
 		return parent::_redirect(self::$sRootModule,self::$tRootParams,self::$sModuleName,$sModuleAction,$tModuleParam);
 	}
+	public function _index(){
+		$sAction='_'.self::getParam('Action','list');
+		return $this->$sAction();
+	}
 	
 	/*
 	Pour integrer au sein d'un autre module:
@@ -37,6 +41,7 @@ class module_examplemodule extends abstract_moduleembedded{
 	//assigner la vue retournee a votre layout
 	$this->oLayout->add('main',$oViewModule);
 	*/
+	
 	
 	
 	/* #debutaction#
