@@ -37,6 +37,8 @@ Class module_menu extends abstract_module{
 			'Cr&eacute;er la couche mod&egrave;le' => 'model',
 			'Cr&eacute;er un module CRUD' => 'crud',
 			'Cr&eacute;er un module CRUD int&eacute;grable' => 'crudembedded',
+			'Cr&eacute;er un module Lecture seule' => 'crudreadonly',
+			'Cr&eacute;er un module Lecture seule int&eacute;grable' => 'crudembeddedreadonly',
 			'Ajouter un module menu ' => 'addmodulemenu',
 			'Cr&eacute;er un module' => 'module',
 			'Cr&eacute;er un module int&eacute;grable' => 'moduleembedded',
