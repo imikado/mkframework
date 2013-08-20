@@ -17,6 +17,12 @@ along with Mkframework.  If not, see <http://www.gnu.org/licenses/>.
 */
 class module_code extends abstract_module{
 	
+	public static $INI='INI';
+	public static $VIEW='VIEW';
+	public static $MODEL='MODEL';
+	public static $MODULE='MODULE';
+	public static $UNDEFINED='UNDEFINED';
+	
 	public function before(){
 		$this->oLayout=new _layout('templateCode');
 		
@@ -30,6 +36,18 @@ class module_code extends abstract_module{
 	public function _index(){
 		$oView=new _view('code::index');
 		$this->oLayout->add('main',$oView);
+	}
+	
+	public function _createfile(){
+		$oFile=new _file(_root::getParam('file'));
+		$oFile->setContent("\n");
+		$oFile->save();
+		
+		_root::redirect('code::editcode',array(
+													'project'=>_root::getParam('project'),
+													'file' => _root::getParam('file'),
+													'type' => _root::getParam('type')
+													));
 	}
 	
 	public function _editcode(){

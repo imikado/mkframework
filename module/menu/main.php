@@ -39,6 +39,7 @@ Class module_menu extends abstract_module{
 			'Cr&eacute;er un module CRUD int&eacute;grable' => 'crudembedded',
 			'Cr&eacute;er un module Lecture seule' => 'crudreadonly',
 			'Cr&eacute;er un module Lecture seule int&eacute;grable' => 'crudembeddedreadonly',
+			'Cr&eacute;er un module d\'authentification' => 'authmodule',
 			'Ajouter un module menu ' => 'addmodulemenu',
 			'Cr&eacute;er un module' => 'module',
 			'Cr&eacute;er un module int&eacute;grable' => 'moduleembedded',

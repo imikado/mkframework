@@ -60,6 +60,8 @@ background:#ccc;
 .main .content .msg{
 background:#ddd;
 text-align:center;
+color:green;
+font-weight:bold;
 }
 
 .main .content .detail{
@@ -164,4 +166,13 @@ list-style:none;
 }
 sup{
 font-size:8px;
+}
+
+.buttons{
+padding:5px;
+background:#881616;
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+border-radius: 8px;margin-bottom:4px;
+color:white;
 }

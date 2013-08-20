@@ -74,7 +74,7 @@ class model_mkfbuilderprojet extends abstract_model{
 			}
 		}else{
 			copy($sFrom,$sTo);
-			chmod($sTo,0777);
+			chmod($sTo,0666);
 		}
 	}
 	

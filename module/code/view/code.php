@@ -41,36 +41,48 @@ $tDoc=array(
 
 $tLine=$this->oFile->getTab();
 
-$sCode=highlight_string($this->oFile->getContent(),true);
-$tCode=explode('<br />',$sCode);
+$sGoTo=null;
+$tColor=array('#fff','#eee');
+
+$tFunction=null;
+
+$sTypeFile=null;
+
+if(preg_match('/conf\//',_root::getParam('file')) and preg_match('/\.ini/',_root::getParam('file'))){
+	
+	//$sCode=$this->oFile->getContent();
+	$tCode=$tLine;
+	
+	$sTypeFile=module_code::$INI;
+	
+}else{
+
+	$sCode=highlight_string($this->oFile->getContent(),true);
+	$tCode=explode('<br />',$sCode);
+	
+	foreach($tLine as $i => $line):
+		$iLine=sprintf('%06d',($i+1));
+		if(preg_match('/function/',$line) ):
+			list($sType,$sMethod)=preg_split('/function/',$line);
+			$sMethod=preg_replace('/{/','',$sMethod);
+			$tFunction[$sMethod]=array(
+							'method' => $sMethod,
+							'type' => $sType,
+							'line' => $iLine,
+						);
+		endif;
+	endforeach;
+}
 ?>
-<!--<h1><?php if(_root::getParam('type')):?>[<?php echo _root::getParam('type')?>][<?php echo $this->oFile->getName()?>] <?php endif;?><span style="font-weight:regular;font-size:14px;color:#444"><?php echo $this->oFile->getAdresse()?> </span></h1>-->
+
 <script>
 window.parent.setTitle('<?php if(_root::getParam('type')):?>[<?php echo _root::getParam('type')?>][<?php echo $this->oFile->getName()?>] <?php endif;?>','<?php echo $this->oFile->getAdresse()?>');
 </script>
-<?php $tColor=array('#fff','#eee')?>
-
-<?php $sGoTo=null?>
 
 <?php 
-$tFunction=null;
-foreach($tLine as $i => $line):
-	$iLine=sprintf('%06d',($i+1));
-	if(preg_match('/function/',$line) ):
-		list($sType,$sMethod)=preg_split('/function/',$line);
-		$sMethod=preg_replace('/{/','',$sMethod);
-		$tFunction[$sMethod]=array(
-						'method' => $sMethod,
-						'type' => $sType,
-						'line' => $iLine,
-					);
-	endif;
-endforeach;
-?>
 
 
-<?php 
-if($tFunction):?>
+if($sTypeFile==module_code::$INI and $tFunction):?>
 <div class="fonctions">
 	<?php 
 	ksort($tFunction);
@@ -82,8 +94,12 @@ if($tFunction):?>
 		 ?>
 		<a href="#num<?php echo $iLine?>"><i>function</i><?php echo $sMethod?><sup style="color:gray;font-size:9px"><?php echo $sType?></sup></a><br />
 		<?php 
-		if(preg_match('/function '._root::getParam('method').'\(/',$line)){
-			$sGoTo='document.location.href="#num'.$iLine.'";';
+		if( _root::getParam('method') and preg_match('/'._root::getParam('method').'\(/',$sMethod)){
+			$gotoLine=$iLine;
+			$gotoLine-=4;
+			$gotoLine=sprintf('%06d',$gotoLine);
+			if($gotoLine < 0){ $gotoLine=0; }
+			$sGoTo='document.location.href="#num'.$gotoLine.'";colorLine(\''.$iLine.'\');';
 		}
 			
 	}?>
@@ -95,11 +111,18 @@ if($tFunction):?>
 <table>
 	</table>
 <?php foreach($tCode as $i=>$sCode):?>
+
+	<?php if($sTypeFile==module_code::$INI and $i==0){ continue; };?>
+
 	<?php if(!isset($tLine[$i])){ break; }?>
 	<?php $sCodeOriginal=$tLine[$i];?>
 	<?php $iLine=sprintf('%06d',($i+1));
 	
 	if($i%2){ $j=1; }else{$j=0;}
+	
+	if($sTypeFile==module_code::$INI){
+		$sCode=htmlentities($sCode);
+	}
 	
 	foreach($tDoc as $sDoc => $sClassDoc){
 		if(preg_match('/'.$sDoc.'/',$sCode)){
@@ -138,6 +161,22 @@ if($tFunction):?>
 			}
 		}
 	}
+	
+	
+	if($sTypeFile==module_code::$INI ){
+		if(preg_match('/\[/',$sCode) and preg_match('/\]/',$sCode)){
+			$sCode='<strong>'.$sCode.'</strong>';
+			
+		}elseif($sCode[0]==';'){
+			$sCode='<span style="color:orange">'.$sCode.'</span>';
+		}else if(preg_match('/=/',$sCode)){
+			$tCode=preg_split('/=/',$sCode,0);
+			if($tCode[1]!=''){
+				$sCode='<span style="color:darkblue">'.$tCode[0].'</span> <span style="color:red">=</span> '.$tCode[1].'';
+			}
+		}
+	}
+	
 	?>
 	<a id="num<?php echo $iLine?>" name="num<?php echo $iLine?>"  class="btn" href="#" onclick="editLine('<?php echo $iLine?>');return false;">[EDITER]</a>&nbsp;<span style="background:#fff;color:#444"><?php echo $iLine?>&nbsp;&nbsp;</span><?php echo $sCode?><br/>
 	<form style="display:none;" id="line<?php echo $iLine?>" method="POST" action="#num<?php echo $iLine?>"><a class="btn" style="color:red" href="#" onclick="closeEditLine()">[FERMER]</a>&nbsp;<span style="background:#fff;color:#eee"><?php echo $iLine?>&nbsp;&nbsp;</span><input type="hidden" name="iLine" value="<?php echo $iLine?>"/><textarea style="border:0px;background:#ddd;width:600px;height:30px" name="content" id="content<?php echo $iLine?>" ><?php echo $tLine[(int)$iLine-1]?></textarea><input type="submit" value="Enregistrer"/>
@@ -151,7 +190,7 @@ if($tFunction):?>
 		
 	<?php endif;?>
 	</form>
-	<hr/>
+	<hr id="hr<?php echo $iLine?>"/>
 	
 <?php endforeach;?>
 <?php if($sGoTo!=''):?>

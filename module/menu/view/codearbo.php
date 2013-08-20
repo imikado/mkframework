@@ -28,7 +28,7 @@
 						<?php /*FILE*/foreach($tContent3['file'] as $sFile => $sAdresse):?>
 							<?php if(preg_match('/~$/',$sFile) or preg_match('/\.bak$/',$sFile)): continue; endif;?>
 							<?php $sType=null;if($sDir=='module' and $sDir3=='view'){ $sType='view::module '.$sDir2;}?>
-							<p class="file" style="margin-left:60px"><a href="#" onclick="openFile('<?php echo $sType?>','<?php echo $sAdresse?>')"><?php echo $sFile?></a></p>
+							<p class="file" style="margin-left:60px"><a href="#" onclick="openFile('<?php echo $sType?>','<?php echo $sAdresse?>');return false;"><?php echo $sFile?></a></p>
 						<?php endforeach;?>
 						
 					
@@ -37,7 +37,7 @@
 				<?php /*FILE*/foreach($tContent2['file'] as $sFile => $sAdresse):?>
 					<?php if(preg_match('/~$/',$sFile) or preg_match('/\.bak$/',$sFile)): continue; endif;?>
 					<?php $sType=null;if($sDir=='module' and $sFile=='main.php'){ $sType='module::'.$sDir2;}?>
-					<p class="file" style="margin-left:40px"><a href="#" onclick="openFile('<?php echo $sType?>','<?php echo $sAdresse?>')"><?php echo $sFile?></a></p>
+					<p class="file" style="margin-left:40px"><a href="#" onclick="openFile('<?php echo $sType?>','<?php echo $sAdresse?>');return false;"><?php echo $sFile?></a></p>
 				<?php endforeach;?>
 				
 				
@@ -47,7 +47,7 @@
 		<?php /*FILE*/foreach($tContent['file'] as $sFile => $sAdresse):?>
 			<?php if(preg_match('/~$/',$sFile) or preg_match('/\.bak$/',$sFile)): continue; endif;?>
 			<?php $sType=null;if($sDir=='conf'){ $sType='conf';}elseif($sDir=='layout'){ $sType='layout';}elseif(preg_match('/_/',$sFile)){ list($sType,$foo)=preg_split('/_/',$sFile,0);}?>
-			<p class="file" style="margin-left:20px"><a href="#" onclick="openFile('<?php echo $sType?>','<?php echo $sAdresse?>')"><?php echo $sFile?></a></p>
+			<p class="file" style="margin-left:20px"><a href="#" onclick="openFile('<?php echo $sType?>','<?php echo $sAdresse?>');return false;"><?php echo $sFile?></a></p>
 		<?php endforeach;?>
 	</div>
 <?php endforeach;?>

@@ -1,2 +1,9 @@
-<h1><?php if(_root::getParam('type')):?>[<?php echo _root::getParam('type')?>][] <?php endif;?><span style="font-weight:regular;font-size:14px;color:#444"><?php echo $this->oFile->getAdresse()?> </span></h1>
 Fichier inexistant :(
+
+<p>
+<a href="<?php echo _root::getLink('code::createfile',array(
+													'project'=>_root::getParam('project'),
+													'file' => _root::getParam('file'),
+													'type' => _root::getParam('type')
+													)
+													)?>">Cr&eacute;er le fichier ?</a></p>

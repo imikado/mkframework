@@ -83,6 +83,20 @@ function addContent(sId,sAction,tTab){
 		}
 	}
 }
+function colorLine(idLine){
+	var a=getById('hr'+idLine);
+	
+	if(a){
+		a.style.borderColor='red';
+			
+	}
+	var b=getById('num'+idLine);
+	
+	if(b){
+		b.style.color='red';
+			
+	}
+}
 </script>
 <body>
 
