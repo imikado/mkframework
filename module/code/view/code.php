@@ -82,7 +82,7 @@ window.parent.setTitle('<?php if(_root::getParam('type')):?>[<?php echo _root::g
 <?php 
 
 
-if($sTypeFile==module_code::$INI and $tFunction):?>
+if($sTypeFile!=module_code::$INI and $tFunction):?>
 <div class="fonctions">
 	<?php 
 	ksort($tFunction);
