@@ -8,7 +8,7 @@
 	<?php if(_root::getParam('class')==$sFile):?>
 		<li class="selectionne"><?php echo $sFile?></li>
 	<?php else:?>
-		<li><a href="<?php echo _root::getLink('builder::edit',array(
+		<li><a href="<?php echo _root::getLink(_root::getRequest()->getParamNav(),array(
 									'id' => _root::getParam('id'),
 									'action' => 'crudembedded',
 									'class'=> $sFile

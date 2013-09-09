@@ -29,7 +29,7 @@ $tSelectVal=_root::getParam('tSelectVal');
 		<?php if(_root::getParam('sConfig') == $sConfig):?>
 			<li class="selectionne"><?php echo $sConfig?></li>
 		<?php else:?>
-			<li><a href="<?php echo _root::getLink('builder::edit',array(
+			<li><a href="<?php echo _root::getLink(_root::getRequest()->getParamNav(),array(
 								'id' => _root::getParam('id'),
 								'action' => _root::getParam('action'),
 								'sConfig' => $sConfig

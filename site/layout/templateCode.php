@@ -65,10 +65,14 @@ function openFile(sType,sFile){
 	}
 	selectFile(sFile);
 }
-function openCrossPopup(){
+function openCrossPopup(sType){
 	var a=getById('popupFrame');
 	if(a){
-		a.src='<?php echo _root::getLink('builder::editembedded',array('id'=>_root::getParam('project'),'action'=>'module'),false)?>#createon';
+		if(sType=='addModule'){
+			a.src='<?php echo _root::getLink('builder::editembedded',array('id'=>_root::getParam('project'),'action'=>'module'),false)?>#createon';
+		}else if(sType=='genModel'){
+			a.src='<?php echo _root::getLink('builder::editembedded',array('id'=>_root::getParam('project'),'action'=>'model'),false)?>#createon';
+		}
 	}
 	var b=getById('popup');
 	if(b){

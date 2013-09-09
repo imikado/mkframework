@@ -169,7 +169,7 @@ if($sTypeFile!=module_code::$INI and $tFunction):?>
 		}elseif($sCode[0]==';'){
 			$sCode='<span style="color:orange">'.$sCode.'</span>';
 		}else if(preg_match('/=/',$sCode)){
-			$tCode=preg_split('/=/',$sCode,0);
+			$tCode=preg_split('/=/',$sCode,2);
 			if($tCode[1]!=''){
 				$sCode='<span style="color:darkblue">'.$tCode[0].'</span> <span style="color:red">=</span> '.$tCode[1].'';
 			}
@@ -195,9 +195,9 @@ if($sTypeFile!=module_code::$INI and $tFunction):?>
 	<?php if($sTypeFile==module_code::$INI):?>
 		
 		<?php if(preg_match('/=/',$tLine[(int)$iLine-1])):?>
-			<?php list($var,$val)=preg_split('/=/', $tLine[(int)$iLine-1] );?>
+			<?php list($var,$val)=preg_split('/=/', $tLine[(int)$iLine-1],2 );?>
 			
-			<?php echo $var ?> <input type="hidden" name="content_begin" value="<?php echo $var?>"/> = <input type="text" name="content_end" value="<?php echo $val?>"/>
+			<?php echo $var ?> <input type="hidden" name="content_begin" value="<?php echo $var?>"/> = <textarea rows="1" style="width:280px" name="content_end" ><?php echo $val?></textarea>
 		<?php endif;?>
 		
 	<?php else:?>

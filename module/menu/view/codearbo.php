@@ -1,6 +1,12 @@
 <p style="margin:0px;margin-bottom:10px"><a style="display:block;border:1px dotted gray;text-decoration:none;background:#ddd;text-align:center" href="<?php echo _root::getLink('builder::edit',array('id'=>_root::getParam('project')))?>">Retour</a></p>
 <?php foreach($this->tFileDir as $sDir => $tContent): ?>
-	<p class="dir" id="linkarbo<?php echo $sDir?>"><a href="#" onclick="openclose('arbo<?php echo $sDir?>');return false;"><?php echo $sDir?></a><?php if($sDir=='module'):?> <a style="margin-left:10px;color:darkgreen" href="#" onclick="openCrossPopup('addModule');return false">[ Ajouter un module ]</a><?php endif;?></p>
+	<p class="dir" id="linkarbo<?php echo $sDir?>"><a href="#" onclick="openclose('arbo<?php echo $sDir?>');return false;"><?php echo $sDir?></a>
+		<?php if($sDir=='module'):?>
+			<a style="margin-left:10px;color:darkgreen" href="#" onclick="openCrossPopup('addModule');return false">[ Ajouter un module ]</a>
+		<?php elseif($sDir=='model'):?>
+			<a style="margin-left:10px;color:darkgreen" href="#" onclick="openCrossPopup('genModel');return false">[ G&eacute;n&eacute;rer la couche mod&egrave;le ]</a>
+		<?php endif;?>
+	</p>
 	<div id="arbo<?php echo $sDir?>" style="display:none">
 		<?php ksort($tContent['dir']);?>
 		<?php foreach($tContent['dir'] as $sDir2 => $tContent2):?>
