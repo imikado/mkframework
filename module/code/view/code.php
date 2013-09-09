@@ -13,7 +13,6 @@ $tDoc=array(
 'abstract_model'	=>'classabstract__model',
 'abstract_module'	=>'classabstract__module',
 
-
 '_root'	=>'class__root',
 '_cache'	=>'class__cache',
 '_request'	=>'class__request',
@@ -178,8 +177,34 @@ if($sTypeFile!=module_code::$INI and $tFunction):?>
 	}
 	
 	?>
-	<a id="num<?php echo $iLine?>" name="num<?php echo $iLine?>"  class="btn" href="#" onclick="editLine('<?php echo $iLine?>');return false;">[EDITER]</a>&nbsp;<span style="background:#fff;color:#444"><?php echo $iLine?>&nbsp;&nbsp;</span><?php echo $sCode?><br/>
-	<form style="display:none;" id="line<?php echo $iLine?>" method="POST" action="#num<?php echo $iLine?>"><a class="btn" style="color:red" href="#" onclick="closeEditLine()">[FERMER]</a>&nbsp;<span style="background:#fff;color:#eee"><?php echo $iLine?>&nbsp;&nbsp;</span><input type="hidden" name="iLine" value="<?php echo $iLine?>"/><textarea style="border:0px;background:#ddd;width:600px;height:30px" name="content" id="content<?php echo $iLine?>" ><?php echo $tLine[(int)$iLine-1]?></textarea><input type="submit" value="Enregistrer"/>
+	
+	<?php if($sTypeFile==module_code::$INI):?>
+		<?php if(preg_match('/=/',$tLine[(int)$iLine-1])):?>
+			<a id="num<?php echo $iLine?>" name="num<?php echo $iLine?>"  class="btn" href="#" onclick="editLine('<?php echo $iLine?>');return false;">[EDITER]</a>
+		<?php else:?>
+			<a id="num<?php echo $iLine?>" href="#" class="btn"  style="color:#ddd">[EDITER]</a>
+		<?php endif;?>
+	<?php else:?>
+		<a id="num<?php echo $iLine?>" name="num<?php echo $iLine?>"  class="btn" href="#" onclick="editLine('<?php echo $iLine?>');return false;">[EDITER]</a>
+	<?php endif;?>
+	
+	
+	&nbsp;<span style="background:#fff;color:#444"><?php echo $iLine?>&nbsp;&nbsp;</span><?php echo $sCode?><br/>
+	<form style="display:none;" id="line<?php echo $iLine?>" method="POST" action="#num<?php echo sprintf('%06d',($iLine-10))?>"><a class="btn" style="color:red" href="#" onclick="closeEditLine()">[FERMER]</a>&nbsp;<span style="background:#fff;color:#eee"><?php echo $iLine?>&nbsp;&nbsp;</span><input type="hidden" name="iLine" value="<?php echo $iLine?>"/>
+	
+	<?php if($sTypeFile==module_code::$INI):?>
+		
+		<?php if(preg_match('/=/',$tLine[(int)$iLine-1])):?>
+			<?php list($var,$val)=preg_split('/=/', $tLine[(int)$iLine-1] );?>
+			
+			<?php echo $var ?> <input type="hidden" name="content_begin" value="<?php echo $var?>"/> = <input type="text" name="content_end" value="<?php echo $val?>"/>
+		<?php endif;?>
+		
+	<?php else:?>
+		<textarea style="border:0px;background:#ddd;width:600px;height:30px" name="content" id="content<?php echo $iLine?>" ><?php echo $tLine[(int)$iLine-1]?></textarea>
+	<?php endif;?>
+	
+	<input type="submit" value="Enregistrer"/>
 	<?php if($sFileType=='module'):?>
 		<p style="text-align:center">
 			<a href="#" onclick="addContent('<?php echo $iLine?>','addAction')">Ajouter une action</a> 

@@ -113,6 +113,45 @@ class module_builder extends abstract_module{
 		
 	}
 	
+	public function _editembedded(){
+		$this->oLayout->setLayout('templateProjetEmbedded');
+		
+		$this->oLayout->addModule('nav','menu::projetEmbedded');
+		
+		$oTpl=new _tpl('builder::edit');
+		$this->oLayout->add('main',$oTpl);
+		
+		if(_root::getParam('action')=='crud'){
+			$this->oLayout->addModule('main','builder::crud');
+		}elseif(_root::getParam('action')=='module'){
+			$this->oLayout->addModule('main','builder::module');
+		}elseif(_root::getParam('action')=='moduleembedded'){
+			$this->oLayout->addModule('main','builder::moduleembedded');
+		}elseif(_root::getParam('action')=='model'){
+			$this->oLayout->addModule('main','builder::model');
+		}elseif(_root::getParam('action')=='xml'){
+			$this->oLayout->addModule('main','builder::xml');
+		}elseif(_root::getParam('action')=='xmlindex'){
+			$this->oLayout->addModule('main','builder::xmlindex');
+		}elseif(_root::getParam('action')=='csv'){
+			$this->oLayout->addModule('main','builder::csv');
+		}elseif(_root::getParam('action')=='sqlite'){
+			$this->oLayout->addModule('main','builder::sqlite');
+		}elseif(_root::getParam('action')=='crudembedded'){
+			$this->oLayout->addModule('main','builder::crudembedded');
+		}elseif(_root::getParam('action')=='crudembeddedreadonly'){
+			$this->oLayout->addModule('main','builder::crudembeddedreadonly');
+		}elseif(_root::getParam('action')=='authmodule'){
+			$this->oLayout->addModule('main','builder::authmodule');
+		}elseif(_root::getParam('action')=='crudreadonly'){
+			$this->oLayout->addModule('main','builder::crudreadonly');
+		}elseif(_root::getParam('action')=='addmodule'){
+			$this->oLayout->addModule('main','builder::addmodule');
+		}elseif(_root::getParam('action')=='addmodulemenu'){
+			$this->oLayout->addModule('main','builder::addmodulemenu');
+		}
+	}
+	
 	public function _model(){
 		$this->rootAddConf('conf/connexion.ini.php');
 		$msg='';

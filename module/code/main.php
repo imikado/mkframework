@@ -85,8 +85,13 @@ class module_code extends abstract_module{
 			return null;
 		}
 		$iLine=(int)_root::getParam('iLine')-1;
-		$sContent=$_POST['content'];
 		
+		if(isset($_POST['content_begin'])){
+			$sContent=$_POST['content_begin'].'='.$_POST['content_end'];
+		}else{
+			$sContent=$_POST['content'];
+		}
+	
 		$oFile=new _file(_root::getParam('file'));
 		
 		//backup

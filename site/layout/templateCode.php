@@ -24,10 +24,55 @@ function openclose(sId){
 		}
 	}
 }
+function openDir(sId){
+	sId='arbo'+sId;
+	var a=getById(sId);
+	var b=getById('link'+sId);
+	
+	if(a){
+		a.style.display='block';
+		
+		if(b){
+			b.className='diropen';
+		}
+	}
+}
+var tmpLink=null;
+function selectFile(sFile){
+	if(tmpLink!=null){
+		getById(tmpLink).style.backgroundColor="#fff";
+	}
+	var b=getById('link'+sFile);
+	tmpLink='link'+sFile;
+	if(b){
+		b.style.backgroundColor='#b9d4d5';
+	}
+	
+	var tmpDir='';
+	var tDir=sFile.split('/');
+	var maxDir=tDir.length-1;
+	for(var i=3;i<maxDir;i++){
+		
+		openDir(tmpDir+tDir[i]);
+		tmpDir+=tDir[i]+"::";
+	}
+	
+}
 function openFile(sType,sFile){
 	var a=getById('codeFrame');
 	if(a){
 		a.src='<?php echo _root::getLink('code::editcode',array('project'=>_root::getParam('project'),'file'=>null),false)?>'+sFile+'&type='+sType;
+	}
+	selectFile(sFile);
+}
+function openCrossPopup(){
+	var a=getById('popupFrame');
+	if(a){
+		a.src='<?php echo _root::getLink('builder::editembedded',array('id'=>_root::getParam('project'),'action'=>'module'),false)?>#createon';
+	}
+	var b=getById('popup');
+	if(b){
+		b.style.display='block';
 	}
 }
 function help(sClass){

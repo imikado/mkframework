@@ -22,12 +22,15 @@ function help(sClass){
 }
 function gotofile(sFile){
 	document.location.href='<?php echo _root::getLink('code::editcode',array('project'=>_root::getParam('project'),'file'=>'data/genere/'._root::getParam('project').'/'),false)?>'+sFile;
+	window.parent.selectFile('data/genere/<?php echo _root::getParam('project')?>/'+sFile);
 }
 function gotofileandmethod(sFile,sType,sMethod){
 	document.location.href='<?php echo _root::getLink('code::editcode',array('project'=>_root::getParam('project'),'file'=>'data/genere/'._root::getParam('project').'/'),false)?>'+sFile+'&type='+sType+'&method='+sMethod;
+	window.parent.selectFile('data/genere/<?php echo _root::getParam('project')?>/'+sFile);
 }
 function gotofileandtype(sFile,sType){
 	document.location.href='<?php echo _root::getLink('code::editcode',array('project'=>_root::getParam('project'),'file'=>'data/genere/'._root::getParam('project').'/'),false)?>'+sFile+'&type='+sType;
+	window.parent.selectFile('data/genere/<?php echo _root::getParam('project')?>/'+sFile);
 }
 var tmpLine='';
 function editLine(iLine){
