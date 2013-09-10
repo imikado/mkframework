@@ -133,6 +133,17 @@ abstract class abstract_sgbd_pdo{
 		return array($sReq,$tParam);
 	}
 	
+	public function findManySimple($tSql,$sClassRow){
+		list($sReq,$tParam)=$this->getRequestAndParam($tSql);
+
+		$pRs=$this->query($sReq,$tParam);
+		
+		if(!$pRs){
+			return null;
+		}
+		
+		return $pRs->fetchAll(PDO::FETCH_OBJ);
+	}
 	public function findMany($tSql,$sClassRow){
 		list($sReq,$tParam)=$this->getRequestAndParam($tSql);
 
@@ -161,6 +172,19 @@ abstract class abstract_sgbd_pdo{
 		}
 			
 		$oRow=new $sClassRow($tRow);
+		
+		return $oRow;
+	}
+	public function findOneSimple($tSql,$sClassRow){
+		list($sReq,$tParam)=$this->getRequestAndParam($tSql);
+
+		$pRs=$this->query($sReq,$tParam);
+
+		$oRow=$pRs->fetch(PDO::FETCH_OBJ);
+		
+		if(empty($oRow) ){
+			return null;
+		}
 		
 		return $oRow;
 	}

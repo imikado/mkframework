@@ -30,6 +30,9 @@ class sgbd_xml extends abstract_sgbd{
 		
 		return $tRows;
 	}
+	public function findManySimple($tSql,$sClassRow){
+		return $this->findMany($tSql,$sClassRow);
+	}
 	public function findOne($tSql,$sClassRow){
 		$tRs=$this->query($this->bind($tSql),$sClassRow);
 		
@@ -38,6 +41,9 @@ class sgbd_xml extends abstract_sgbd{
 		}
 		
 		return $tRs[0];
+	}
+	public function findOneSimple($tSql,$sClassRow){
+		return $this->findOne($tSql,$sClassRow);
 	}
 	public function execute($tSql){
 		return $this->query($this->bind($tSql));

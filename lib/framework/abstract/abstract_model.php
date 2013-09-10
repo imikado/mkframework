@@ -97,6 +97,19 @@ abstract class abstract_model{
 		return $this->_oSgbd;
 	}
 	/** 
+	* retourne un tableau d'enregistrement d'objet simple (plus rapide)
+	* @access public
+	* @param string $sRequete
+	* @param undefined $uParam
+	* @return un object
+	*/
+	public function findOneSimple(){
+		$tSql=func_get_args();
+		$oObj= $this->getSgbd()->findOneSimple($tSql,$this->sClassRow);
+		/*LOG*/_root::getLog()->info('sql select:'.$this->getSgbd()->getRequete());
+		return $oObj;
+	}
+	/** 
 	* retourne un tableau d'enregistrement
 	* @access public
 	* @param string $sRequete
@@ -119,6 +132,19 @@ abstract class abstract_model{
 	public function findMany(){
 		$tSql=func_get_args();
 		$tObj= $this->getSgbd()->findMany($tSql,$this->sClassRow);
+		/*LOG*/_root::getLog()->info('sql select:'.$this->getSgbd()->getRequete());
+		return $tObj;
+	}
+	/** 
+	* retourne un tableau d'enregistrement d'objet simple (plus rapide)
+	* @access public
+	* @param string $sRequete
+	* @param undefined $uParam
+	* @return un tableau d'object
+	*/
+	public function findManySimple(){
+		$tSql=func_get_args();
+		$tObj= $this->getSgbd()->findManySimple($tSql,$this->sClassRow);
 		/*LOG*/_root::getLog()->info('sql select:'.$this->getSgbd()->getRequete());
 		return $tObj;
 	}

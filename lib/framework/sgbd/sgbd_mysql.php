@@ -35,6 +35,19 @@ class sgbd_mysql extends abstract_sgbd{
 		}
 		return $tObj;
 	}
+	public function findManySimple($tSql,$sClassRow){
+		$pRs=$this->query($this->bind($tSql));
+		
+		if(empty($pRs)){
+			return null;
+		}
+		
+		$tObj=array();
+		while($oRow=mysql_fetch_object($pRs)){
+			$tObj[]=$oRow;
+		}
+		return $tObj;
+	}
 	public function findOne($tSql,$sClassRow){
 		$pRs=$this->query($this->bind($tSql));
 		
@@ -44,6 +57,17 @@ class sgbd_mysql extends abstract_sgbd{
 		
 		$tRow=mysql_fetch_assoc($pRs);
 		$oRow=new $sClassRow($tRow);
+		
+		return $oRow;
+	}
+	public function findOneSimple($tSql,$sClassRow){
+		$pRs=$this->query($this->bind($tSql));
+		
+		if(empty($pRs)){
+			return null;
+		}
+		
+		$oRow=mysql_fetch_object($pRs);
 		
 		return $oRow;
 	}
