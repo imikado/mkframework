@@ -24,7 +24,7 @@ class _root{
 	
 	static protected $_oRequest;
 	static protected $_oCache;
-	static protected $_oTools;
+	static protected $_oCacheVar;
 	static protected $_oAuth;
 	static protected $_oUrlrewriting;
 	static protected $_oLog;
@@ -541,6 +541,15 @@ class _root{
 		if(self::$_oCache==null){ self::$_oCache=new _cache(); }
 		return self::$_oCache;
 	}
+	/** 
+	* retourne l'objet _cacheVar
+	* @access public
+	* @return _cacheVar
+	*/
+	public static function getCacheVar(){
+		if(self::$_oCacheVar==null){ self::$_oCacheVar=new _cacheVar(); }
+		return self::$_oCacheVar;
+	}	
 	/** 
 	* retourne l'objet d'authentification auth.class
 	* @access public
