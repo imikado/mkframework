@@ -34,19 +34,30 @@ Class module_menu extends abstract_module{
 		
 		$tLink=array(
 			//'Ajouter un module' => 'addmodule',
-			'Cr&eacute;er la couche mod&egrave;le' => 'model',
-			'Cr&eacute;er un module CRUD' => 'crud',
-			'Cr&eacute;er un module CRUD int&eacute;grable' => 'crudembedded',
-			'Cr&eacute;er un module Lecture seule' => 'crudreadonly',
-			'Cr&eacute;er un module Lecture seule int&eacute;grable' => 'crudembeddedreadonly',
-			'Cr&eacute;er un module d\'authentification' => 'authmodule',
-			'Ajouter un module menu ' => 'addmodulemenu',
-			'Cr&eacute;er un module' => 'module',
-			'Cr&eacute;er un module int&eacute;grable' => 'moduleembedded',
-			'Cr&eacute;er une base xml' => 'xml',
-			'Cr&eacute;er un index sur base xml' => 'xmlindex',
-			'Cr&eacute;er une base csv' => 'csv',
-			'Cr&eacute;er une base sqlite' => 'sqlite',
+			'Couche modele'=>'title',
+				'Cr&eacute;er la couche mod&egrave;le' => 'model',
+			
+			'Modules' => 'title',
+				'Cr&eacute;er un module' => 'module',
+				
+				'Cr&eacute;er un module CRUD' => 'crud',
+				'Cr&eacute;er un module Lecture seule' => 'crudreadonly',
+				
+				'Cr&eacute;er un module d\'authentification' => 'authmodule',
+				'Cr&eacute;er un module d\'authentification avec inscription' => 'authwithinscriptionmodule',
+			
+			'Modules int&eacute;grable' => 'title',
+				'Cr&eacute;er un module menu ' => 'addmodulemenu',
+				'Cr&eacute;er un module int&eacute;grable' => 'moduleembedded',
+				'Cr&eacute;er un module CRUD int&eacute;grable' => 'crudembedded',
+				'Cr&eacute;er un module Lecture seule int&eacute;grable' => 'crudembeddedreadonly',
+			
+			'Base de donn&eacute;es embarqu&eacute;es' => 'title',
+			
+				'Cr&eacute;er une base xml' => 'xml',
+				'Cr&eacute;er un index sur base xml' => 'xmlindex',
+				'Cr&eacute;er une base csv' => 'csv',
+				'Cr&eacute;er une base sqlite' => 'sqlite',
 		);
 		
 		$oTpl=new _tpl('menu::projet');

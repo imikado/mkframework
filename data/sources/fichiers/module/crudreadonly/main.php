@@ -44,3 +44,6 @@ class module_examplemodule extends abstract_module{
 }
 
 
+/*variables
+#select		$oView->tJoinexamplemodel=examplemodel::getInstance()->getSelect();#fin_select
+variables*/
