@@ -25,71 +25,16 @@ class module_examplemodule extends abstract_module{
 		$this->oLayout->add('main',$oView);
 	}
 	
-
-	public function _new(){
-		$tMessage=$this->save();
+	//iciMethodNew
 	
-		$oExamplemodel=new row_examplemodel;
-		
-		$oView=new _view('examplemodule::new');
-		$oView->oExamplemodel=$oExamplemodel;
-		
-		//icinew
-		
-		$oPluginXsrf=new plugin_xsrf();
-		$oView->token=$oPluginXsrf->getToken();
-		$oView->tMessage=$tMessage;
-		
-		$this->oLayout->add('main',$oView);
-	}
+	//iciMethodEdit
 	
+	//iciMethodShow
 	
-	public function _edit(){
-		$tMessage=$this->save();
-		
-		$oExamplemodel=model_examplemodel::getInstance()->findById( _root::getParam('id') );
-		
-		$oView=new _view('examplemodule::edit');
-		$oView->oExamplemodel=$oExamplemodel;
-		$oView->tId=model_examplemodel::getInstance()->getIdTab();
-		
-		//iciedit
-		
-		$oPluginXsrf=new plugin_xsrf();
-		$oView->token=$oPluginXsrf->getToken();
-		$oView->tMessage=$tMessage;
-		
-		$this->oLayout->add('main',$oView);
-	}
-
-	public function _show(){
-		$oExamplemodel=model_examplemodel::getInstance()->findById( _root::getParam('id') );
-		
-		$oView=new _view('examplemodule::show');
-		$oView->oExamplemodel=$oExamplemodel;
-		
-		//icishow
-		$this->oLayout->add('main',$oView);
-	}
+	//iciMethodDelete
 	
-	public function _delete(){
-		$tMessage=$this->delete();
 
-		$oExamplemodel=model_examplemodel::getInstance()->findById( _root::getParam('id') );
-		
-		$oView=new _view('examplemodule::delete');
-		$oView->oExamplemodel=$oExamplemodel;
-		
-		//icishow
-
-		$oPluginXsrf=new plugin_xsrf();
-		$oView->token=$oPluginXsrf->getToken();
-		$oView->tMessage=$tMessage;
-		
-		$this->oLayout->add('main',$oView);
-	}
-
-	public function save(){
+	public function processSave(){
 		if(!_root::getRequest()->isPost() ){ //si ce n'est pas une requete POST on ne soumet pas
 			return null;
 		}
@@ -126,24 +71,9 @@ class module_examplemodule extends abstract_module{
 		}
 		
 	}
-
-	public function delete(){
-		if(!_root::getRequest()->isPost() ){ //si ce n'est pas une requete POST on ne soumet pas
-			return null;
-		}
-		
-		$oPluginXsrf=new plugin_xsrf();
-		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
-			return array('token'=>$oPluginXsrf->getMessage() );
-		}
 	
-		$oExamplemodel=model_examplemodel::getInstance()->findById( _root::getParam('id',null) );
-				
-		$oExamplemodel->delete();
-		//une fois enregistre on redirige (vers la page liste)
-		_root::redirect('examplemodule::list');
-		
-	}
+	//iciMethodProcessDelete
+
 	
 	public function after(){
 		$this->oLayout->show();
@@ -162,5 +92,96 @@ class module_examplemodule extends abstract_module{
 				$oExamplemodel->$sColumn=$oPluginUpload->getPath();
 				continue;	
 			}else #fin_uploadsave
+			
+#methodNew
+	public function _new(){
+		$tMessage=$this->processSave();
+	
+		$oExamplemodel=new row_examplemodel;
+		
+		$oView=new _view('examplemodule::new');
+		$oView->oExamplemodel=$oExamplemodel;
+		
+		//icinew
+		
+		$oPluginXsrf=new plugin_xsrf();
+		$oView->token=$oPluginXsrf->getToken();
+		$oView->tMessage=$tMessage;
+		
+		$this->oLayout->add('main',$oView);
+	}
+methodNew#
+	
+#methodEdit
+	public function _edit(){
+		$tMessage=$this->processSave();
+		
+		$oExamplemodel=model_examplemodel::getInstance()->findById( _root::getParam('id') );
+		
+		$oView=new _view('examplemodule::edit');
+		$oView->oExamplemodel=$oExamplemodel;
+		$oView->tId=model_examplemodel::getInstance()->getIdTab();
+		
+		//iciedit
+		
+		$oPluginXsrf=new plugin_xsrf();
+		$oView->token=$oPluginXsrf->getToken();
+		$oView->tMessage=$tMessage;
+		
+		$this->oLayout->add('main',$oView);
+	}
+methodEdit#
+
+#methodShow
+	public function _show(){
+		$oExamplemodel=model_examplemodel::getInstance()->findById( _root::getParam('id') );
+		
+		$oView=new _view('examplemodule::show');
+		$oView->oExamplemodel=$oExamplemodel;
+		
+		//icishow
+		$this->oLayout->add('main',$oView);
+	}
+methodShow#
+	
+#methodDelete
+	public function _delete(){
+		$tMessage=$this->processDelete();
+
+		$oExamplemodel=model_examplemodel::getInstance()->findById( _root::getParam('id') );
+		
+		$oView=new _view('examplemodule::delete');
+		$oView->oExamplemodel=$oExamplemodel;
+		
+		//icishow
+
+		$oPluginXsrf=new plugin_xsrf();
+		$oView->token=$oPluginXsrf->getToken();
+		$oView->tMessage=$tMessage;
+		
+		$this->oLayout->add('main',$oView);
+	}
+methodDelete#	
+
+#methodProcessDelete
+	public function processDelete(){
+		if(!_root::getRequest()->isPost() ){ //si ce n'est pas une requete POST on ne soumet pas
+			return null;
+		}
+		
+		$oPluginXsrf=new plugin_xsrf();
+		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
+			return array('token'=>$oPluginXsrf->getMessage() );
+		}
+	
+		$oExamplemodel=model_examplemodel::getInstance()->findById( _root::getParam('id',null) );
+				
+		$oExamplemodel->delete();
+		//une fois enregistre on redirige (vers la page liste)
+		_root::redirect('examplemodule::list');
+		
+	}
+methodProcessDelete#	
+			
 variables*/
 
