@@ -65,18 +65,29 @@ class module_moduleCrudEmbedded{
 			module_builder::getTools()->projetmkdir('module/'.$sModule );
 			module_builder::getTools()->projetmkdir('module/'.$sModule.'/view');
 
-			$this->genModelMainCrudembedded($sModuleToCreate,$oModel->getTable(),$sClass,$tColumn);
-			$this->genModelTplCrudembedded($sModuleToCreate,$sClass,$tColumn,$oModel->getTable());
+			$tCrud= _root::getParam('crud',null);
+
+			$this->genModelMain($sModuleToCreate,$oModel->getTable(),$sClass,$tColumn,$tCrud);
+			$this->genModelTpl($sModuleToCreate,$sClass,$tColumn,$oModel->getTable(),$tCrud);
 			
 			$msg='Module '.$sModule.' g&eacute;n&eacute;r&eacute; avec succ&egrave;s';
 			$detail='Cr&eacute;ation repertoire module/'.$sModule;
 			$detail.='<br />Cr&eacute;ation repertoire module/'.$sModule.'/view';
 			$detail.='<br />Cr&eacute;ation fichier module/'.$sModule.'/main.php';
 			$detail.='<br />Cr&eacute;ation fichier module/'.$sModule.'/view/list.php';
-			$detail.='<br />Cr&eacute;ation fichier module/'.$sModule.'/view/edit.php';
-			$detail.='<br />Cr&eacute;ation fichier module/'.$sModule.'/view/new.php';
-			$detail.='<br />Cr&eacute;ation fichier module/'.$sModule.'/view/show.php';
-			$detail.='<br />Cr&eacute;ation fichier module/'.$sModule.'/view/delete.php';
+			
+			if(in_array('crudEdit',$tCrud)){
+				$detail.='<br />Cr&eacute;ation fichier module/'.$sModule.'/view/edit.php';
+			}
+			if(in_array('crudNew',$tCrud)){
+				$detail.='<br />Cr&eacute;ation fichier module/'.$sModule.'/view/new.php';
+			}
+			if(in_array('crudShow',$tCrud)){
+				$detail.='<br />Cr&eacute;ation fichier module/'.$sModule.'/view/show.php';
+			}
+			if(in_array('crudDelete',$tCrud)){
+				$detail.='<br />Cr&eacute;ation fichier module/'.$sModule.'/view/delete.php';
+			}
 			
 			$sCode='<?php '."\n";
 			$sCode.='//instancier le module'."\n";
@@ -102,7 +113,7 @@ class module_moduleCrudEmbedded{
 		return $oTpl;
 	}
 	
-	private function genModelMainCrudembedded($sModule,$sTableName,$sClass,$tColumn){
+	private function genModelMain($sModule,$sTableName,$sClass,$tColumn,$tCrud){
 		//$tColumn=_root::getParam('tColumn');
 		$tType=_root::getParam('tType');
 		
@@ -115,7 +126,37 @@ class module_moduleCrudEmbedded{
 		$sInputUpload=$tMatch[1][0];
 	
 		$sInputUpload=preg_replace('/oExamplemodel/','o'.ucfirst($sTableName),$sInputUpload);
-	
+		
+		$sMethodNew=null;
+		$sMethodEdit=null;
+		$sMethodShow=null;
+		$sMethodDelete=null;
+		$sMethodProcessDelete=null;
+		
+		if(in_array('crudNew',$tCrud)){
+			preg_match_all('/#methodNew(.*)?methodNew#/s',$sContent,$tMatch);
+			$sMethodNew=$tMatch[1][0];
+		}
+		
+		if(in_array('crudEdit',$tCrud)){
+			preg_match_all('/#methodEdit(.*)?methodEdit#/s',$sContent,$tMatch);
+			$sMethodEdit=$tMatch[1][0];
+		}
+		
+		if(in_array('crudShow',$tCrud)){
+			preg_match_all('/#methodShow(.*)?methodShow#/s',$sContent,$tMatch);
+			$sMethodShow=$tMatch[1][0];
+		}
+		
+		if(in_array('crudDelete',$tCrud)){
+			preg_match_all('/#methodDelete(.*)?methodDelete#/s',$sContent,$tMatch);
+			$sMethodDelete=$tMatch[1][0];
+		
+			preg_match_all('/#methodProcessDelete(.*)?methodProcessDelete#/s',$sContent,$tMatch);
+			$sMethodProcessDelete=$tMatch[1][0];
+		}
+		
+		
 		$sTable='';
 		foreach($tColumn as $i => $sColumn){
 			$sType=$tType[$i];
@@ -125,19 +166,31 @@ class module_moduleCrudEmbedded{
 			}
 			
 		}
-		$sContent=module_builder::getTools()->stringReplaceIn(array(
-										'oExamplemodel' => 'o'.ucfirst($sTableName),
-										'tExamplemodel' => 't'.ucfirst($sTableName),
-										'oModuleExamplemodule' => 'oModule'.ucfirst($sModule),
-										'examplemodule' => $sModule,
-										'examplemodel' => $sTableName,
-										'\/\/icishow' => $sTable,
-										'\/\/icinew' => $sTable,
-										'\/\/iciedit' => $sTable,
-										'\/\/icilist' => $sTable,
-										'\/\/iciuploadsave' => $sInputUpload,
-										'<\?php\/\*variables(.*)variables\*\/\?>' => '',
-									),
+		
+		$tReplace=array(
+				'\/\/iciMethodNew' => $sMethodNew,
+				'\/\/iciMethodEdit' => $sMethodEdit,
+				'\/\/iciMethodShow' => $sMethodShow,
+				'\/\/iciMethodDelete' => $sMethodDelete,
+				
+				'\/\/iciMethodProcessDelete' => $sMethodProcessDelete,
+		
+				'oExamplemodel' => 'o'.ucfirst($sTableName),
+				'tExamplemodel' => 't'.ucfirst($sTableName),
+				'examplemodule' => $sModule,
+				'examplemodel' => $sTableName,
+				
+				'\/\/icishow' => $sTable,
+				'\/\/icinew' => $sTable,
+				'\/\/iciedit' => $sTable,
+				'\/\/icilist' => $sTable,
+				'\/\/iciuploadsave' => $sInputUpload,
+				'<\?php\/\*variables(.*)variables\*\/\?>' => '',
+			);
+			
+			
+		$sContent=module_builder::getTools()->stringReplaceIn(
+									$tReplace,
 									'data/sources/fichiers/module/crudembedded/main.php'
 		);
 
@@ -146,13 +199,28 @@ class module_moduleCrudEmbedded{
 		$oFile->save();
 		$oFile->chmod(0666);
 	}
-	private function genModelTplCrudembedded($sModule,$sClass,$tColumn,$sTableName){
+	private function genModelTpl($sModule,$sClass,$tColumn,$sTableName,$tCrud){
 		//$tColumn=_root::getParam('tColumn');
 		$tType=_root::getParam('tType');
 		
+		$tCrud[]='list';
+		
 		$tTpl=array('list','show','edit','new','delete');
 		
+		$tTplCrud=array(
+				'show' => 'crudShow',
+				'new' => 'crudNew',
+				'delete' => 'crudDelete',
+				'edit' => 'crudEdit',
+				'list' => 'list',
+		);
+		
 		foreach($tTpl as $sTpl){
+			//print $sTpl;
+			if(!in_array( $tTplCrud[$sTpl],$tCrud)){
+				//print "skip $sTpl ";
+				continue;
+			}
 			
 			$oFile=new _file('data/sources/fichiers/module/crudembedded/view/'.$sTpl.'.php');
 			$sContent=$oFile->getContent();	
@@ -172,11 +240,40 @@ class module_moduleCrudEmbedded{
 				preg_match_all('/#upload(.*)?#fin_upload/s',$sContent,$tMatch);
 				$sInputUpload=$tMatch[1][0];
 
+
+				$sLinks='';
+				$sLinkNew='';
+				
 				if($sTpl=='list'){
-				//TH
-				preg_match_all('/#ligneth(.*)?#fin_ligneth/s',$sContent,$tMatch);
-				$sLigneTH=$tMatch[1][0];
-				}				
+					//TH
+					preg_match_all('/#ligneth(.*)?#fin_ligneth/s',$sContent,$tMatch);
+					$sLigneTH=$tMatch[1][0];
+					
+					//liens
+					preg_match_all('/#linkNew(.*)?linkNew#/s',$sContent,$tMatch);
+					$tLink['crudNew']=$tMatch[1][0];
+					preg_match_all('/#linkEdit(.*)?linkEdit#/s',$sContent,$tMatch);
+					$tLink['crudEdit']=$tMatch[1][0];
+					preg_match_all('/#linkShow(.*)?linkShow#/s',$sContent,$tMatch);
+					$tLink['crudShow']=$tMatch[1][0];
+					preg_match_all('/#linkDelete(.*)?linkDelete#/s',$sContent,$tMatch);
+					$tLink['crudDelete']=$tMatch[1][0];
+					
+					$iMaxCrud=count($tCrud);
+					$iMaxCrud-=2;
+					foreach($tCrud as $i => $sAction){
+						if(in_array($sAction,array('crudNew','list'))){ continue; }
+						if(!isset($tLink[$sAction])){ continue; }
+						$sLinks.=$tLink[$sAction];
+						if($i < $iMaxCrud){
+							$sLinks .= '| ';
+						}
+					}
+					if(in_array('crudNew',$tCrud)){
+						$sLinkNew=$tLink['crudNew'];
+					}
+					
+				}			
 
 				$sTable='';
 				$sTableTh='';
@@ -203,15 +300,25 @@ class module_moduleCrudEmbedded{
 
 					$sTableTh.=preg_replace('/exampleth/',$sColumn,$sLigneTH);
 				}
-				$sContent=module_builder::getTools()->stringReplaceIn(array(
-												'oExamplemodel' => 'o'.ucfirst($sTableName),
-												'tExamplemodel' => 't'.ucfirst($sTableName),
-												'examplemodule' => $sModule,
-												'<\?php \/\/enctype\?>' => $sEnctype,
-												'<\?php \/\/ici\?>' => $sTable,
-												'<\?php \/\/icith\?>' => $sTableTh,
-												'<\?php\/\*variables(.*)variables\*\/\?>' => '',
-											),
+				
+				$tReplace=array(
+					'<\?php \/\/linknew\?>' => $sLinkNew,
+					'<\?php \/\/links\?>' => $sLinks,
+				
+					'oExamplemodel' => 'o'.ucfirst($sTableName),
+					'tExamplemodel' => 't'.ucfirst($sTableName),
+					'examplemodule' => $sModule,
+					
+					
+					'<\?php \/\/enctype\?>' => $sEnctype,
+					'<\?php \/\/ici\?>' => $sTable,
+					'<\?php \/\/icith\?>' => $sTableTh,
+					'<\?php\/\*variables(.*)variables\*\/\?>' => '',
+				);
+				
+				
+				$sContent=module_builder::getTools()->stringReplaceIn(
+											$tReplace,
 											'data/sources/fichiers/module/crudembedded/view/'.$sTpl.'.php'
 				);
 			

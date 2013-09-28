@@ -9,26 +9,16 @@
 		<?php //ici?>
 		<td>
 			
-			<a href="<?php echo module_examplemodule::getLink('edit',array(
-													'id'=>$oExamplemodel->getId()
-												) 
-										)?>">Edit</a>
-			|
-			<a href="<?php echo module_examplemodule::getLink('show',array(
-													'id'=>$oExamplemodel->getId()
-												) 
-										)?>">Show</a>
-			|
-			<a href="<?php echo module_examplemodule::getLink('delete',array(
-													'id'=>$oExamplemodel->getId()
-												) 
-										)?>">Delete</a>
+			<?php //links?>
+			
+			
 		</td>
 	</tr>	
 	<?php endforeach;?>
 	<?php endif;?>
 </table>
-<p><a href="<?php echo module_examplemodule::getLink('new') ?>">New</a></p>
+<?php //linknew?>
+
 <?php/*variables
 #lignetd
 		<td>exampletd</td>
@@ -42,5 +32,30 @@
 #textarea<?php echo $oExamplemodel->examplecolumn ?>#fin_textarea
 #select<?php if(isset($this->tJoinexamplemodel[$oExamplemodel->examplecolumn])){ echo $this->tJoinexamplemodel[$oExamplemodel->examplecolumn];}else{ echo $oExamplemodel->examplecolumn ;}?>#fin_select
 #upload<?php echo $oExamplemodel->examplecolumn ?>#fin_upload
+
+#linkEdit
+<a href="<?php echo module_examplemodule::getLink('edit',array(
+										'id'=>$oExamplemodel->getId()
+									) 
+							)?>">Edit</a>
+linkEdit#
+
+#linkShow
+<a href="<?php echo module_examplemodule::getLink('show',array(
+										'id'=>$oExamplemodel->getId()
+									) 
+							)?>">Show</a>
+linkShow#
+
+#linkDelete
+<a href="<?php echo module_examplemodule::getLink('delete',array(
+										'id'=>$oExamplemodel->getId()
+									) 
+							)?>">Delete</a>
+linkDelete#
+
+#linkNew
+<p><a href="<?php echo module_examplemodule::getLink('new') ?>">New</a></p>
+linkNew#
 
 variables*/?>

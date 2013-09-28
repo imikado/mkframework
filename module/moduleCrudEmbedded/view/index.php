@@ -24,12 +24,36 @@
 <div class="table">
 	<?php if($this->tColumn)?>
 	<form action="" method="POST">
-	<p>Nom du module &agrave cr&eacute;er <input type="text" name="moduleToCreate" value="<?php echo _root::getParam('moduleToCreate',$this->sModuleToCreate)?>"/></>
 	<?php if(!_root::getParam('moduleToCreate') and file_exists(_root::getConfigVar('path.generation')._root::getParam('id').'/module/'.$this->sModuleToCreate)):?>
 		<p class="error">Le module module/<?php echo $this->sModuleToCreate?> existe d&eacute;j&agrave;, veuillez indiquer un autre nom </p>
 	<?php endif;?>
 
 	<input type="hidden" name="sClass" value="<?php echo $this->sClass?>" />
+	
+	<table>
+		<tr>
+			<th>Nom du module &agrave cr&eacute;er</th>
+			<td><input type="text" name="moduleToCreate" value="<?php echo _root::getParam('moduleToCreate',$this->sModuleToCreate)?>"/></td>
+			
+			<td style="border:0px">&nbsp;</td>
+			
+			<th>
+				Actions CRUD
+			</th>
+			
+			<td>
+				<input type="checkbox" name="crud[]" value="crudNew" checked="checked" /> Formulaire d'ajout<br/>
+				<input type="checkbox" name="crud[]" value="crudEdit" checked="checked" /> Formulaire de modification<br/>
+				<input type="checkbox" name="crud[]" value="crudDelete" checked="checked" /> Formulaire de suppression<br/>
+				<input type="checkbox" name="crud[]" value="crudShow" checked="checked" /> Page d'affichage du d&eacute;tail<br/>
+				
+				
+			</td>
+		</tr>
+	</table>
+	
+	<br/>
+	
 	<table>
 		<tr>
 			<th></th>

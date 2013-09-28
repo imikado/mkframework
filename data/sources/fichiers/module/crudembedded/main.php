@@ -56,71 +56,18 @@ class module_examplemodule extends abstract_moduleembedded{
 		return $oView;
 	}
 	
-
-	public function _new(){
-		$tMessage=$this->save();
+	//iciMethodNew
 	
-		$oExamplemodel=new row_examplemodel;
-		
-		$oView=new _view('examplemodule::new');
-		$oView->oExamplemodel=$oExamplemodel;
-		
-		//icinew
-		
-		$oPluginXsrf=new plugin_xsrf();
-		$oView->token=$oPluginXsrf->getToken();
-		$oView->tMessage=$tMessage;
-		
-		return $oView;
-	}
+	//iciMethodEdit
 	
+	//iciMethodShow
 	
-	public function _edit(){
-		$tMessage=$this->save();
-		
-		$oExamplemodel=model_examplemodel::getInstance()->findById( module_examplemodule::getParam('id') );
-		
-		$oView=new _view('examplemodule::edit');
-		$oView->oExamplemodel=$oExamplemodel;
-		$oView->tId=model_examplemodel::getInstance()->getIdTab();
-		
-		//iciedit
-		
-		$oPluginXsrf=new plugin_xsrf();
-		$oView->token=$oPluginXsrf->getToken();
-		$oView->tMessage=$tMessage;
-		
-		return $oView;
-	}
-
-	public function _show(){
-		$oExamplemodel=model_examplemodel::getInstance()->findById( module_examplemodule::getParam('id') );
-		
-		$oView=new _view('examplemodule::show');
-		$oView->oExamplemodel=$oExamplemodel;
-		
-		//icishow
-		return $oView;
-	}
+	//iciMethodDelete
 	
-	public function _delete(){
-		$tMessage=$this->delete();
 
-		$oExamplemodel=model_examplemodel::getInstance()->findById( module_examplemodule::getParam('id') );
-		
-		$oView=new _view('examplemodule::delete');
-		$oView->oExamplemodel=$oExamplemodel;
-		
-		//icishow
+	
 
-		$oPluginXsrf=new plugin_xsrf();
-		$oView->token=$oPluginXsrf->getToken();
-		$oView->tMessage=$tMessage;
-		
-		return $oView;
-	}
-
-	public function save(){
+	public function processSave(){
 		if(!_root::getRequest()->isPost() or _root::getParam('formmodule')!=self::$sModuleName ){ //si ce n'est pas une requete POST on ne soumet pas
 			return null;
 		}
@@ -158,7 +105,97 @@ class module_examplemodule extends abstract_moduleembedded{
 		
 	}
 
-	public function delete(){
+	
+	//iciMethodProcessDelete
+	
+	
+	
+}
+
+/*variables
+#select		$oView->tJoinexamplemodel=examplemodel::getInstance()->getSelect();#fin_select
+#uploadsave $oPluginUpload=new plugin_upload($sColumn);
+			if($oPluginUpload->isValid()){
+				$sNewFileName=_root::getConfigVar('path.upload').$sColumn.'_'.date('Ymdhis');
+
+				$oPluginUpload->saveAs($sNewFileName);
+				$oExamplemodel->$sColumn=$oPluginUpload->getPath();
+				continue;	
+			}else #fin_uploadsave
+
+
+#methodNew
+	public function _new(){
+		$tMessage=$this->processSave();
+	
+		$oExamplemodel=new row_examplemodel;
+		
+		$oView=new _view('examplemodule::new');
+		$oView->oExamplemodel=$oExamplemodel;
+		
+		//icinew
+		
+		$oPluginXsrf=new plugin_xsrf();
+		$oView->token=$oPluginXsrf->getToken();
+		$oView->tMessage=$tMessage;
+		
+		return $oView;
+	}
+methodNew#
+	
+#methodEdit
+	public function _edit(){
+		$tMessage=$this->processSave();
+		
+		$oExamplemodel=model_examplemodel::getInstance()->findById( module_examplemodule::getParam('id') );
+		
+		$oView=new _view('examplemodule::edit');
+		$oView->oExamplemodel=$oExamplemodel;
+		$oView->tId=model_examplemodel::getInstance()->getIdTab();
+		
+		//iciedit
+		
+		$oPluginXsrf=new plugin_xsrf();
+		$oView->token=$oPluginXsrf->getToken();
+		$oView->tMessage=$tMessage;
+		
+		return $oView;
+	}
+methodEdit#
+
+#methodShow
+	public function _show(){
+		$oExamplemodel=model_examplemodel::getInstance()->findById( module_examplemodule::getParam('id') );
+		
+		$oView=new _view('examplemodule::show');
+		$oView->oExamplemodel=$oExamplemodel;
+		
+		//icishow
+		return $oView;
+	}
+methodShow#
+
+#methodDelete	
+	public function _delete(){
+		$tMessage=$this->processDelete();
+
+		$oExamplemodel=model_examplemodel::getInstance()->findById( module_examplemodule::getParam('id') );
+		
+		$oView=new _view('examplemodule::delete');
+		$oView->oExamplemodel=$oExamplemodel;
+		
+		//icishow
+
+		$oPluginXsrf=new plugin_xsrf();
+		$oView->token=$oPluginXsrf->getToken();
+		$oView->tMessage=$tMessage;
+		
+		return $oView;
+	}
+methodDelete#
+
+#methodProcessDelete
+	public function processDelete(){
 		if(!_root::getRequest()->isPost() or _root::getParam('formmodule')!=self::$sModuleName){ //si ce n'est pas une requete POST on ne soumet pas
 			return null;
 		}
@@ -175,21 +212,8 @@ class module_examplemodule extends abstract_moduleembedded{
 		$this->redirect('list');
 		
 	}
-	
-	
-	
-	
-}
+methodProcessDelete#
 
-/*variables
-#select		$oView->tJoinexamplemodel=examplemodel::getInstance()->getSelect();#fin_select
-#uploadsave $oPluginUpload=new plugin_upload($sColumn);
-			if($oPluginUpload->isValid()){
-				$sNewFileName=_root::getConfigVar('path.upload').$sColumn.'_'.date('Ymdhis');
-
-				$oPluginUpload->saveAs($sNewFileName);
-				$oExamplemodel->$sColumn=$oPluginUpload->getPath();
-				continue;	
-			}else #fin_uploadsave
+			
 variables*/
 
