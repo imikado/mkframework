@@ -59,12 +59,14 @@
 		<tr>
 			<th></th>
 			<th>Champ</th>
+			<th>Libell&eacute;</th>
 			<th>Type</th>
 		</tr>
 	<?php foreach($this->tColumn as $sColumn):?>
 		<tr>
 			<td><input type="checkbox" name="tEnable[]" value="<?php echo $sColumn?>" <?php if(!is_array($tEnable)):?>checked="checked"<?php elseif(in_array($sColumn,$tEnable)):?>checked="checked"<?php endif;?> /></td>
 			<td><?php echo $sColumn?><input type="hidden" name="tColumn[]" value="<?php echo $sColumn?>" /></td>
+			<td><input type="text" name="tLabel[]" value="<?php echo $sColumn?>"/></td>
 			<td><select name="tType[]">
 				<option value="text">text</option>
 				<option value="textarea">textarea</option>

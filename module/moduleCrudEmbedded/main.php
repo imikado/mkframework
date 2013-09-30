@@ -50,6 +50,7 @@ class module_moduleCrudEmbedded{
 			$sModuleToCreate=_root::getParam('moduleToCreate');
 			$sClass=_root::getParam('sClass');
 			$tColumn=_root::getParam('tColumn');
+			$tLabel=_root::getParam('tLabel');
 			$tType=_root::getParam('tType');
 			$tEnable=_root::getParam('tEnable');
 
@@ -68,7 +69,7 @@ class module_moduleCrudEmbedded{
 			$tCrud= _root::getParam('crud',null);
 
 			$this->genModelMain($sModuleToCreate,$oModel->getTable(),$sClass,$tColumn,$tCrud);
-			$this->genModelTpl($sModuleToCreate,$sClass,$tColumn,$oModel->getTable(),$tCrud);
+			$this->genModelTpl($sModuleToCreate,$sClass,$tColumn,$oModel->getTable(),$tCrud,$tLabel);
 			
 			$msg='Module '.$sModule.' g&eacute;n&eacute;r&eacute; avec succ&egrave;s';
 			$detail='Cr&eacute;ation repertoire module/'.$sModule;
@@ -199,7 +200,7 @@ class module_moduleCrudEmbedded{
 		$oFile->save();
 		$oFile->chmod(0666);
 	}
-	private function genModelTpl($sModule,$sClass,$tColumn,$sTableName,$tCrud){
+	private function genModelTpl($sModule,$sClass,$tColumn,$sTableName,$tCrud,$tLabel){
 		//$tColumn=_root::getParam('tColumn');
 		$tType=_root::getParam('tType');
 		
@@ -279,6 +280,8 @@ class module_moduleCrudEmbedded{
 				$sTableTh='';
 				$sEnctype='';
 				foreach($tColumn as $i => $sColumn){
+					$sLabel=$tLabel[$i];
+					
 					$sType=$tType[$i];
 					if($sType=='text' or $sType=='date'){
 						$sInput=preg_replace('/examplecolumn/',$sColumn,$sInputText);
@@ -296,9 +299,9 @@ class module_moduleCrudEmbedded{
 
 						$sEnctype=' enctype="multipart/form-data"';//changement du enctype du formulaire
 					}
-					$sTable.=preg_replace('/examplecolumn/',$sColumn,preg_replace('/exampletd/',$sInput,$sLigne));
+					$sTable.=preg_replace('/examplecolumn/',$sLabel,preg_replace('/exampletd/',$sInput,$sLigne));
 
-					$sTableTh.=preg_replace('/exampleth/',$sColumn,$sLigneTH);
+					$sTableTh.=preg_replace('/exampleth/',$sLabel,$sLigneTH);
 				}
 				
 				$tReplace=array(
