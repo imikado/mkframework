@@ -59,24 +59,29 @@ class module_exampleauth extends abstract_module{
 			return null;
 		}
 		
+		$tAccount=model_example::getInstance()->getListAccount();
+		
+		$sLogin=_root::getParam('login');
 		$sPassword=_root::getParam('password');
 
 		if($sPassword!=_root::getParam('password2')){
-			return 'Les deux mots de passe doivent etre identique';
+			return 'Les deux mots de passe doivent etre identiques';
 		}elseif(_root::getParam('login')==''){
 			return 'Vous devez remplir le nom d utilisateur';
 		}elseif($sPassword==''){
 			return 'Vous devez remplir le mot de passe';
 		}elseif(strlen($sPassword) > $this->maxPasswordLength){
 			return 'Mot de passe trop long';
+		}elseif(isset($tAccount[$sLogin]) ){
+			return 'Utilisateur d&eacute;j&agrave; existant';
 		}
 
 		$oExample=new row_example;
-		$oExample->loginField=_root::getParam('login');
-		$oExample->passField=model_example::getInstance()->hashPassword(_root::getParam('password'));
+		$oExample->loginField=$sLogin;
+		$oExample->passField=model_example::getInstance()->hashPassword($sPassword);
 		$oExample->save();
 
-		return 'Votre compte a bien été créé';
+		return 'Votre compte a bien &eacute;t&eacute; cr&eacute;&eacute;';
 
 	}
 

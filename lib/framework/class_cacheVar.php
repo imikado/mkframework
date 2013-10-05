@@ -65,6 +65,14 @@ class _cacheVar{
 		$this->_oFile->setContent($sData );
 		$this->_oFile->save();
 	}
+	/** 
+	* supprime l'objet _view $sId en cache
+	* @access public
+	* @param string $sId
+	*/
+	public function clearCache($sId){		
+		$this->_oFile->delete();
+	}
 
 
 }

@@ -44,7 +44,7 @@ class plugin_routing{
 		foreach($this->tRoute as $sUrl=>$tUrl){
 			if($tUrl['nav']==$sNav and !isset($tUrl['tParam']) and $tParam==null){				
 					return $this->convertUrl($sUrl,$tParam);//si pas de parametres des deux cotes, c est la bonne regle
-			}elseif($tUrl['nav']==$sNav and is_array($tUrl['tParam']) and is_array($tParam) ){
+			}elseif($tUrl['nav']==$sNav and isset($tUrl['tParam']) and is_array($tUrl['tParam']) and is_array($tParam) ){
 				
 				foreach($tUrl['tParam'] as $val){
 					if(!isset($tParam[$val])){	
@@ -73,6 +73,12 @@ class plugin_routing{
 			foreach($this->tRoute as $sPattern => $tUrl){
 				$sPattern=preg_replace('/:([^:])*:/','([^/]*)',$sPattern);
 				$sPattern=preg_replace('/\//','\/',$sPattern);
+				
+				if(isset($tUrl['tParamHidden'])){
+				foreach($tUrl['tParamHidden'] as $key => $val){
+					_root::setParam($key,$val);
+				}
+				}
 				
 				if(preg_match_all('/^'.$sPattern.'$/',$sUrl,$tTrouve)){
 					_root::getRequest()->loadModuleAndAction($tUrl['nav']);

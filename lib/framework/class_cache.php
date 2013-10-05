@@ -54,6 +54,7 @@ class _cache{
 	/** 
 	* met l'objet _view $sId en cache
 	* @access public
+	* @param string $sId
 	* @param object $oTpl
 	*/
 	public function setCache($sId,$oView){
@@ -61,6 +62,16 @@ class _cache{
 		$oFile->setContent($oView->show() );
 		$oFile->save();
 	}
+	/** 
+	* supprime l'objet _view $sId en cache
+	* @access public
+	* @param string $sId
+	*/
+	public function clearCache($sId){
+		$oFile=new _file(_root::getConfigVar('path.cache').$sId.'.cache');
+		$oFile->delete();
+	}
+	
 
 
 }
