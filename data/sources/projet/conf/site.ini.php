@@ -43,6 +43,7 @@ layout.erreur=../layout/erreurprod.php
 enabled=0
 class=plugin_routing
 conf=../conf/routing.php
+use4O4=0
 
 [security]
 ;XSRF ou CSRF,bSecuriteXSRF utilisation de jeton dans le CRUD, plus d'infos: http://fr.wikipedia.org/wiki/Cross-Site_Request_Forgeries

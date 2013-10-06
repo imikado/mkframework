@@ -80,6 +80,23 @@ class module_code extends abstract_module{
 
 		$this->oLayout->add('main',$oView);
 	}
+	public function _editfullcode(){
+		$this->saveFullCode();
+		
+		$this->oLayout=new _layout('templateCodeFrame');
+		$oFile=new _file(_root::getParam('file'));
+		
+		if(!$oFile->exist()){
+			$oView=new _view('code::nocode');
+		}else{
+			$oView=new _view('code::fullcode');
+		}
+		
+		$oView->oFile=$oFile;
+		
+
+		$this->oLayout->add('main',$oView);
+	}
 	private function saveCode(){
 		if(!_root::getRequest()->isPost()){
 			return null;
@@ -104,6 +121,28 @@ class module_code extends abstract_module{
 		$tLine=array_map('rtrim',$tLine);
 		$oFile->setContent(implode($tLine,"\n"));
 		$oFile->save();
+		
+	}
+	private function saveFullCode(){
+		if(!_root::getRequest()->isPost()){
+			return null;
+		}
+		
+		$sContent=$_POST['content'];
+		
+	
+		$oFile=new _file(_root::getParam('file'));
+		
+		//backup
+		$oBackupFile=new _file(_root::getParam('file').'.bak');
+		$oBackupFile->setContent($oFile->getContent());
+		$oBackupFile->save();
+		
+		$tLine=$oFile->getTab();
+		$oFile->setContent($sContent);
+		$oFile->save();
+		
+		_root::redirect('code::editcode',array('project'=>_root::getParam('project'),'file'=>_root::getParam('file')));
 		
 	}
 	

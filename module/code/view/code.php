@@ -105,10 +105,8 @@ if($sTypeFile!=module_code::$INI and $tFunction):?>
 </div>
 <?php endif;?>
 
-
-
-<table>
-	</table>
+<p style="text-align:center"><a class="btn" href="<?php echo _root::getLink('code::editfullcode',array('project'=>_root::getParam('project'),'file'=>_root::getParam('file')))?>">EDITER EN ENTIER</a></p>
+	
 <?php foreach($tCode as $i=>$sCode):?>
 
 	<?php if($sTypeFile==module_code::$INI and $i==0){ continue; };?>
@@ -177,6 +175,7 @@ if($sTypeFile!=module_code::$INI and $tFunction):?>
 	}
 	
 	?>
+	
 	
 	<?php if($sTypeFile==module_code::$INI):?>
 		<?php if(preg_match('/=/',$tLine[(int)$iLine-1])):?>

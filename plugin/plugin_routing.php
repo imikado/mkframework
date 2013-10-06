@@ -74,12 +74,6 @@ class plugin_routing{
 				$sPattern=preg_replace('/:([^:])*:/','([^/]*)',$sPattern);
 				$sPattern=preg_replace('/\//','\/',$sPattern);
 				
-				if(isset($tUrl['tParamHidden'])){
-				foreach($tUrl['tParamHidden'] as $key => $val){
-					_root::setParam($key,$val);
-				}
-				}
-				
 				if(preg_match_all('/^'.$sPattern.'$/',$sUrl,$tTrouve)){
 					_root::getRequest()->loadModuleAndAction($tUrl['nav']);
 					if(isset($tUrl['tParam']) and is_array($tTrouve[1])){
@@ -92,12 +86,19 @@ class plugin_routing{
 							_root::setParam($tUrl['tParam'][$j],$found[0]);
 						}
 					}
+					if(isset($tUrl['tParamHidden'])){
+						foreach($tUrl['tParamHidden'] as $key => $val){
+							_root::setParam($key,$val);
+						}
+					}
 					return;
 				}
 			}
 			/*LOG*/_root::getLog()->info('plugin_routing regle non trouve, 
 				utilisation de 404 loadModuleAndAction('.$this->tRoute['404']['nav'].')');
-			_root::getRequest()->loadModuleAndAction($this->tRoute['404']['nav']);
+			if(_root::getConfigVar('urlrewriting.use4O4')==1){
+				_root::getRequest()->loadModuleAndAction($this->tRoute['404']['nav']);
+			}
 		}
 	}
 	
