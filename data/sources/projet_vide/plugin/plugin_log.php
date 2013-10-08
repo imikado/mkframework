@@ -117,7 +117,7 @@ class plugin_log{
 		$oFileLog=new _file(_root::getConfigVar('path.log','data/log/').date('Y-m-d').'_log.csv');
 		if($oFileLog->exist()){ $oFileLog->load();}
 		
-		$oFileLog->addContent(date('Y-m-d').';'.date('h:i:s').';'.$sMessage."\n");
+		$oFileLog->addContent(date('Y-m-d').';'.date('H:i:s').';'.$sMessage."\n");
 		
 		try{
 		  $oFileLog->save();

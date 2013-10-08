@@ -15,6 +15,8 @@ $autoloader = Zend_Loader_Autoloader::getInstance();
 $autoloader->setFallbackAutoloader(false);
 */
 
+$iMicrotime=microtime();
+
 //on parse le fichier ini pour trouver l'adresse de la librairie
 $tIni=parse_ini_file('../conf/site.ini.php',true);
 //enregistrement de l'auto loader du framework
@@ -37,3 +39,7 @@ $oRoot->addRequest($_GET);
 $oRoot->addRequest($_POST);
 $oRoot->run();
 
+if(_root::getConfigVar('site.mode')=='dev'){
+	$oDebug=new plugin_debug($iMicrotime);
+	echo $oDebug->display();
+}
