@@ -41,7 +41,7 @@ class plugin_debug{
 		
 		$sVarIniConfig=_root::getConfigVar('model.ini.var','db');
 		$tClassSgbd=_root::getConfigVar($sVarIniConfig);
-		$this->addComplex('Connexions',$tClassSgbd);
+		$this->addComplexIni('Connexions',array($sVarIniConfig=>$tClassSgbd));
 		
 		$tConfigSection=array(
 			'path' ,
@@ -62,7 +62,7 @@ class plugin_debug{
 			$tConfig[$sSection]=_root::getConfigVar($sSection);
 		}
 		
-		$this->addComplex('Config',$tConfig);
+		$this->addComplexIni('Config',$tConfig);
 		
 		if(self::$tSpy){
 			$this->addComplexSpy('Spy variables',self::$tSpy);
@@ -104,12 +104,21 @@ class plugin_debug{
 		
 		$this->addPopupPrintr($key,$value);
 	}
+	private function addComplexIni($key,$value){
+		$this->addHtml('<input type="button" value="'.$key.'" onclick="openPopupDebug(\'popupDebug'.$key.'\')" />');
+		$this->addSep();
+		
+		$value=$this->parseIni($value);
+		
+		$this->addPopup($key,$value);
+	}
 	private function addComplexSpy($key,$value){
 		$this->addHtml('<input type="button" value="'.$key.'" onclick="openPopupDebug(\'popupDebug'.$key.'\')" />');
 		$this->addSep();
 		
+		$sValue=$this->parseSpy($value);
 		
-		$this->addPopupVardump($key,$value);
+		$this->addPopup($key,$sValue);
 	}
 	
 	private function addFileLog($key,$value){
@@ -118,7 +127,7 @@ class plugin_debug{
 		
 		$value=$this->parseLog($value);
 		
-		$this->addPopupLog($key,$value);
+		$this->addPopup($key,$value);
 	}
 	
 	private function add($key,$value){
@@ -127,27 +136,15 @@ class plugin_debug{
 	}
 	
 	private function addPopupPrintr($key,$value){
-		$this->addHtml('<div id="popupDebug'.$key.'" style="height:350px;width:400px;overflow:auto;display:none;position:absolute;left:0px;bottom:0px;border:2px solid gray;background:white">
+		$this->addHtml('<div id="popupDebug'.$key.'" style="display:none;position:absolute;left:0px;bottom:0px;border:2px solid gray;background:white">
 		<p style="text-align:right;background:#ccc;margin:0px;"><a href="#" onclick="closePopup()">Fermer</a></p>
-		<div style="padding:10px;"><pre>'.print_r(customHtmlentities($value),1).'</pre></div></div>');
-	}
-	
-	private function addPopupVardump($key,$value){
-		$this->addHtml('<div id="popupDebug'.$key.'" style="height:350px;width:400px;overflow:auto;display:none;position:absolute;left:0px;bottom:0px;border:2px solid gray;background:white">
-		<p style="text-align:right;background:#ccc;margin:0px;"><a href="#" onclick="closePopup()">Fermer</a></p>
-		<div style="padding:10px;"><pre>'.print_r($value,1).'</pre></div></div>');
+		<div style="height:350px;width:400px;overflow:auto;padding:10px;"><pre>'.customHtmlentities(print_r($value,1)).'</pre></div></div>');
 	}
 	
 	private function addPopup($key,$value){
-		$this->addHtml('<div id="popupDebug'.$key.'" style="height:350px;width:400px;overflow:auto;display:none;position:absolute;left:0px;bottom:0px;border:2px solid gray;background:white">
+		$this->addHtml('<div id="popupDebug'.$key.'" style="display:none;position:absolute;left:0px;bottom:0px;border:2px solid gray;background:white">
 		<p style="text-align:right;background:#ccc;margin:0px;"><a href="#" onclick="closePopup()">Fermer</a></p>
-		<div style="padding:10px;">'.$value.'</pre></div></div>');
-	}
-	
-	private function addPopupLog($key,$value){
-		$this->addHtml('<div id="popupDebug'.$key.'" style="height:350px;width:600px;overflow:auto;display:none;position:absolute;left:0px;bottom:0px;border:2px solid gray;background:white">
-		<p style="text-align:right;background:#ccc;margin:0px;"><a href="#" onclick="closePopup()">Fermer</a></p>
-		<div style="padding:10px;">'.$value.'</pre></div></div>');
+		<div style="height:350px;width:800px;overflow:auto;padding:10px;">'.$value.'</pre></div></div>');
 	}
 	
 	private function addSep(){
@@ -193,9 +190,37 @@ class plugin_debug{
 				$sHtml.=$sLog;
 			
 			$sHtml.='</p>';
+			
+			if(preg_match('/module a appeler/',$sLog)){ 
+				$sHtml.='<p>&nbsp;</p>';
+			}
+			
 		}
 		return $sHtml;
 	}
 	
+	private function parseSpy($tValue){
+		$sHtml=null;
+		foreach($tValue as $tDetail){
+			foreach($tDetail as $ref => $value){
+				$sHtml.='<h2 style="border-bottom:1px solid black">'.$ref.'</h2>';
+				$sHtml.='<p><pre>'.customHtmlentities(print_r($value,1)).'</pre></p>';
+			}
+		}
+		
+		return $sHtml;
+	}
+	
+	private function parseIni($tValue){
+		$sHtml=null;
+		foreach($tValue as $sSection => $tDetail){
+			$sHtml.='<h2 style="border-bottom:1px solid black">'.$sSection.'</h2>';
+			foreach($tDetail as $sKey => $sValue){
+				$sHtml.='<p style="margin:0px;margin-left:10px;"><strong>'.$sKey.'</strong> = <span style="color:darkgreen"> '.$sValue.'</span></p>';
+			}
+		}
+		
+		return $sHtml;
+	}
 	
 }

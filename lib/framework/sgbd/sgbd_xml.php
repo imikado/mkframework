@@ -120,6 +120,7 @@ class sgbd_xml extends abstract_sgbd{
 	private function query($sReq,$sClassRow){
 		//traitement de la requete $sReq
 		$sReq=trim($sReq);
+		$this->_sReq=$sReq;
 		
 		if(substr($sReq,0,6)== 'SELECT'){
 			

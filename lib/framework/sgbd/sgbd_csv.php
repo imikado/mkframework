@@ -130,7 +130,7 @@ class sgbd_csv extends abstract_sgbd{
 		$tDir=$oDir->getList();
 		$tSDir=array();
 		foreach($tDir as $oDir){
-			$tSDir[]= preg_replace('/.csv/','',$oDir->getName());
+			$tSDir[]= preg_replace('/\.csv/','',$oDir->getName());
 		}
 		return $tSDir;
 	}
@@ -138,7 +138,7 @@ class sgbd_csv extends abstract_sgbd{
 	private function query($sReq,$sClassRow){
 		//traitement de la requete $sReq
 		$sReq=trim($sReq);
-
+		$this->_sReq=$sReq;
 		if(substr($sReq,0,6)== 'SELECT'){
 			
 			$tReq=$this->explainSql($sReq);
