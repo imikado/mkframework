@@ -226,7 +226,9 @@ abstract class abstract_sgbd_pdo{
 	}
 	
 	protected function query($sReq,$tParam=null){
-	
+		if($tParam==null){
+			$tParam=array();
+		}
 		$this->connect();
 		$this->_sReq=$sReq.' [ '.implode(' | ',$tParam).' ]';
 		$this->_pDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING); 
