@@ -5,13 +5,21 @@ class plugin_debug{
 	private $sHtml;
 	
 	private static $tSpy;
+	private static $tTime;
+	private static $tTimeById;
 	
-	public function __construct($iMicrotime){
-		$this->iStartMicrotime=$iMicrotime;
+	public function __construct($sMicrotime){
 		
-		$iDiff=(microtime()-$this->iStartMicrotime);
+		$this->iStartMicrotime=self::microtime($sMicrotime);
 		
-		$this->add('Time',$iDiff);
+		$iEndTime=self::microtime();
+		self::$tTime[]=array('End',$iEndTime);
+		
+		$iDiff=($iEndTime-$this->iStartMicrotime);
+		
+		$this->add('Time',sprintf('%0.3f',$iDiff).'s');
+		
+		$this->addComplexTimes('times',self::$tTime);
 		
 		$this->addComplex('$_GET',print_r($_GET,1));
 		
@@ -73,6 +81,23 @@ class plugin_debug{
 		self::$tSpy[][$uLabel]=$uVar;
 	}
 	
+	public static function addChrono($uLabel){
+		$iTime=self::microtime();
+		self::$tTime[]=array($uLabel,$iTime);
+	}
+	
+	public static function startChrono($uLabel){
+		$iTime=self::microtime();
+		self::$tTimeById[$uLabel]['start']=$iTime;
+	}
+	public static function stopChrono($uLabel){
+		$iTime=self::microtime();
+		self::$tTimeById[$uLabel]['end']=$iTime;
+	}
+	
+	
+	
+	
 	public function display(){
 		echo '<script>
 		var activePopup=\'\';
@@ -92,9 +117,22 @@ class plugin_debug{
 					}
 				}
 			}
+			function showHideDebugBar(){
+				var a=getById(\'debugBar\');
+				if(a){
+					if(a.style.display==\'none\'){
+						a.style.display=\'block\';
+					}else{
+						a.style.display=\'none\';
+					}
+				}
+			}
 			</script>';
-		echo '<div style="position:absolute;border:2px solid #444;background:#ddd;bottom:0px;left:0px;width:80%">';
+		echo '<div style="position:fixed;border:2px solid #444;background:#ddd;bottom:0px;left:0px;">';
+		echo '<div  style="float:left"><input type="button" value="Masquer" onclick="showHideDebugBar()"/></div>';
+		echo '<div id="debugBar" style="width:970px">';
 		echo $this->sHtml;
+		echo '</div>';
 		echo '</div>';
 	}
 	
@@ -103,6 +141,14 @@ class plugin_debug{
 		$this->addSep();
 		
 		$this->addPopupPrintr($key,$value);
+	}
+	private function addComplexTimes($key,$value){
+		$this->addHtml('<input type="button" value="'.$key.'" onclick="openPopupDebug(\'popupDebug'.$key.'\')" />');
+		$this->addSep();
+		
+		$value=$this->parseTime($value);
+		
+		$this->addPopup($key,$value);
 	}
 	private function addComplexIni($key,$value){
 		$this->addHtml('<input type="button" value="'.$key.'" onclick="openPopupDebug(\'popupDebug'.$key.'\')" />');
@@ -221,6 +267,48 @@ class plugin_debug{
 		}
 		
 		return $sHtml;
+	}
+	private function parseTime($tValue){
+		$sHtml=null;
+		//$sHtml.='<p><strong>Start</strong> : '.$this->iStartMicrotime.'</p>';
+		$iPreviousTime=$this->iStartMicrotime;
+		$sPreviousStep='Start';
+		foreach($tValue as $tDetail){
+			list($sLabel,$iTime)=$tDetail;
+			$iDelta=($iTime-$iPreviousTime);
+			$sHtml.='<p><strong>'.$sPreviousStep.' &gt;&gt; '.$sLabel.'</strong> : '.sprintf('%0.3f',$iDelta).'s</p>';
+			
+			$iPreviousTime=$iTime;
+			$sPreviousStep=$sLabel;
+		}
+		
+		$sHtml.='<p style="border-top:1px solid gray"><strong>Total</strong> '.sprintf('%0.3f',($iTime-$this->iStartMicrotime)).'s</p>';
+		
+		if(self::$tTimeById){
+			
+			$sHtml.='<p>&nbsp;</p>';
+			
+			foreach(self::$tTimeById as $sLabel => $tValue){
+				
+				if(isset($tValue['end']) and isset($tValue['start'])){
+					$iDelta=($tValue['end']-$tValue['start']);
+					
+					$sHtml.='<p><strong>'.$sLabel.' </strong> : '.sprintf('%0.3f',$iDelta).'s</p>';
+				}else{
+					$sHtml.='<p><strong>'.$sLabel.' </strong> : <span style="color:red"> Erreur il manque startChrono ou stopChrono</span></p>';
+				}
+				
+			}
+			
+		}
+		
+		return $sHtml;
+	}
+	
+	public static function microtime($sMicrotime=null){
+		if($sMicrotime==null){ $sMicrotime=microtime(); }
+		$tMicrotime = explode(" ", $sMicrotime);
+		return ((float)$tMicrotime[0] + (float)$tMicrotime[1]);
 	}
 	
 }

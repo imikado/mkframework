@@ -114,6 +114,8 @@ class plugin_log{
 
 	private function writefile($sMessage){
 		
+		$sMessage= preg_replace('/\s+/',' ',$sMessage);
+		
 		$oFileLog=new _file(_root::getConfigVar('path.log','data/log/').date('Y-m-d').'_log.csv');
 		if($oFileLog->exist()){ $oFileLog->load();}
 		
