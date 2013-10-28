@@ -19,6 +19,7 @@
 </div>
 <br />
 
+
 <?php if(_root::getParam('class') !=''):?>
 <a id="editcrud" name="editcrud"></a>
 <div class="table">
@@ -49,7 +50,17 @@
 				
 			</td>
 		</tr>
+		
+		<tr>
+			<th>Options</th>
+			<td>
+				<input type="checkbox" name="withPagination" value="1" <?php if(_root::getParam('withPagination')):?>checked="checked"<?php endif;?>/> avec pagination  
+			</td>
+		</tr>
+		
 	</table>
+	
+	
 			
 		
 	<br/>

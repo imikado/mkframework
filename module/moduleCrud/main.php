@@ -67,8 +67,10 @@ class module_moduleCrud{
 			module_builder::getTools()->projetmkdir('module/'.$sModule.'/view');
 			
 			$tCrud= _root::getParam('crud',null);
+			
+			$bWithPagination=_root::getParam('withPagination');
 
-			$this->genModelMainCrud($sModuleToCreate,$oModel->getTable(),$sClass,$tColumn,$tCrud);
+			$this->genModelMainCrud($sModuleToCreate,$oModel->getTable(),$sClass,$tColumn,$tCrud,$bWithPagination);
 			$this->genModelTplCrud($sModuleToCreate,$sClass,$tColumn,$oModel->getTable(),$tCrud,$tLabel);
 			
 			$msg='Module '.$sModule.' g&eacute;n&eacute;r&eacute; avec succ&egrave;s';
@@ -101,7 +103,7 @@ class module_moduleCrud{
 	
 	}
 	
-	private function genModelMainCrud($sModule,$sTableName,$sClass,$tColumn,$tCrud){
+	private function genModelMainCrud($sModule,$sTableName,$sClass,$tColumn,$tCrud,$bWithPagination){
 		//$tColumn=_root::getParam('tColumn');
 		$tType=_root::getParam('tType');
 		
@@ -115,11 +117,21 @@ class module_moduleCrud{
 	
 		$sInputUpload=preg_replace('/oExamplemodel/','o'.ucfirst($sTableName),$sInputUpload);
 		
+		$sMethodList=null;
 		$sMethodNew=null;
 		$sMethodEdit=null;
 		$sMethodShow=null;
 		$sMethodDelete=null;
 		$sMethodProcessDelete=null;
+		
+		if($bWithPagination==1){
+			preg_match_all('/#methodPaginationList(.*)?methodPaginationList#/s',$sContent,$tMatch);
+			$sMethodList=$tMatch[1][0];
+		}else{
+			preg_match_all('/#methodList(.*)?methodList#/s',$sContent,$tMatch);
+			$sMethodList=$tMatch[1][0];
+		}		
+		
 		
 		if(in_array('crudNew',$tCrud)){
 			preg_match_all('/#methodNew(.*)?methodNew#/s',$sContent,$tMatch);
@@ -145,6 +157,23 @@ class module_moduleCrud{
 		}
 		
 		
+		$tab="\t\t\t";
+		$ret="\n";
+		
+		$sPaginationList='';
+		if($bWithPagination==1){
+			$sPaginationList.=$tab.'$oModulePagination=new module_pagination;'.$ret;
+			$sPaginationList.=$tab.'$oModulePagination->setModuleAction(\''.$sModule.'::list\');'.$ret;
+			$sPaginationList.=$tab.'$oModulePagination->setParamPage(\'page\');'.$ret;
+			$sPaginationList.=$tab.'$oModulePagination->setLimit(2);'.$ret;
+			$sPaginationList.=$tab.'$oModulePagination->setPage( _root::getParam(\'page\') );'.$ret;
+			$sPaginationList.=$tab.'$oModulePagination->setTab( $'.'t'.ucfirst($sTableName).' );'.$ret;
+			$sPaginationList.=$ret;
+			$sPaginationList.=$tab.'$oViewPagination=$oModulePagination->build();'.$ret;
+			$sPaginationList.=$tab.'$this->oLayout->add(\'main\',$oViewPagination);'.$ret;
+		}
+		
+		
 		$sTable='';
 		foreach($tColumn as $i => $sColumn){
 			$sType=$tType[$i];
@@ -156,6 +185,7 @@ class module_moduleCrud{
 		}
 		
 		$tReplace=array(
+				'\/\/iciMethodList' => $sMethodList,
 				'\/\/iciMethodNew' => $sMethodNew,
 				'\/\/iciMethodEdit' => $sMethodEdit,
 				'\/\/iciMethodShow' => $sMethodShow,
@@ -172,6 +202,7 @@ class module_moduleCrud{
 				'\/\/icinew' => $sTable,
 				'\/\/iciedit' => $sTable,
 				'\/\/icilist' => $sTable,
+				'\/\/icipaginationlist' => $sPaginationList,
 				'\/\/iciuploadsave' => $sInputUpload,
 				'<\?php\/\*variables(.*)variables\*\/\?>' => '',
 			);

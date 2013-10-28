@@ -13,17 +13,7 @@ class module_examplemodule extends abstract_module{
 	    $this->_list();
 	}
 	
-	public function _list(){
-		
-		$tExamplemodel=model_examplemodel::getInstance()->findAll();
-		
-		$oView=new _view('examplemodule::list');
-		$oView->tExamplemodel=$tExamplemodel;
-		
-		//icilist
-
-		$this->oLayout->add('main',$oView);
-	}
+	//iciMethodList
 	
 	//iciMethodNew
 	
@@ -92,6 +82,51 @@ class module_examplemodule extends abstract_module{
 				$oExamplemodel->$sColumn=$oPluginUpload->getPath();
 				continue;	
 			}else #fin_uploadsave
+
+#methodList
+	public function _list(){
+		
+		$tExamplemodel=model_examplemodel::getInstance()->findAll();
+		
+		$oView=new _view('examplemodule::list');
+		$oView->tExamplemodel=$tExamplemodel;
+		
+		//icilist
+		
+		$this->oLayout->add('main',$oView);
+		 
+	}
+methodList#
+
+#methodPaginationList
+	public function _list(){
+		
+		$tExamplemodel=model_examplemodel::getInstance()->findAll();
+		
+		$oView=new _view('examplemodule::list');
+		$oView->tExamplemodel=$tExamplemodel;
+		
+		//icilist
+		
+		$oModulePagination=new module_pagination;
+		$oModulePagination->setModuleAction('examplemodule::list');
+		$oModulePagination->setParamPage('page');
+		$oModulePagination->setLimit(5);
+		$oModulePagination->setPage( _root::getParam('page') );
+		$oModulePagination->setTab( $tExamplemodel );
+		
+		$oView=new _view('examplemodule::list');
+		$oView->tExamplemodel=$oModulePagination->getPageElement();
+		
+		$this->oLayout->add('main',$oView);
+		
+		
+		$oViewPagination=$oModulePagination->build();
+		
+		$this->oLayout->add('main',$oViewPagination);
+		 
+	}
+methodPaginationList#
 			
 #methodNew
 	public function _new(){
