@@ -48,9 +48,9 @@
 	
 	//mois avant	
 	$oDate=new plugin_date($sDate);
-	$oDate->removeMois(1);
-	$iMoisAvant=$oDate->getMois();
-	$iAnneeAvant=$oDate->getAnnee();
+	$oDate->removeMonth(1);
+	$iMoisAvant=$oDate->getMonth();
+	$iAnneeAvant=$oDate->getYear();
 	$tParamTmp=$this->tParam;
 	$tParamTmp[ $this->sNavMois ]=$iMoisAvant;
 	$tParamTmp[ $this->sNavAnnee ]=$iAnneeAvant;
@@ -58,9 +58,9 @@
 	
 	//mois apres
 	$oDate2=new plugin_date($sDate);
-	$oDate2->addMois(1);
-	$iMoisApres=$oDate2->getMois();
-	$iAnneeApres=$oDate2->getAnnee();
+	$oDate2->removeMonth(1);
+	$iMoisApres=$oDate2->getMonth();
+	$iAnneeApres=$oDate2->getYear();
 	$tParamTmp=$this->tParam;
 	$tParamTmp[ $this->sNavMois ]=$iMoisApres;
 	$tParamTmp[ $this->sNavAnnee ]=$iAnneeApres;

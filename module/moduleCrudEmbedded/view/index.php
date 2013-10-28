@@ -58,6 +58,7 @@
 		<tr>
 			<th></th>
 			<th>Champ</th>
+			<th>Libell&eacute;</th>
 			<th>Type</th>
 		</tr>
 	<?php foreach($this->tColumn as $sColumn):?>
