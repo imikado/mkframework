@@ -124,6 +124,10 @@ class module_builder extends abstract_module{
 			$this->oLayout->addModule('main','moduleCsv::index');//OK
 		}elseif(_root::getParam('action')=='sqlite'){
 			$this->oLayout->addModule('main','moduleSqlite::index');
+		}elseif(_root::getParam('action')=='json'){
+			$this->oLayout->addModule('main','moduleJson::index');
+		}elseif(_root::getParam('action')=='jsonindex'){
+			$this->oLayout->addModule('main','moduleJsonIndex::index');
 			
 		//menu
 		}elseif(_root::getParam('action')=='addmodulemenu'){//OK

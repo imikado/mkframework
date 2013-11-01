@@ -55,9 +55,11 @@ Class module_menu extends abstract_module{
 			'Base de donn&eacute;es embarqu&eacute;es' => 'title',
 			
 				'Cr&eacute;er une base xml' => 'xml',
-				'Cr&eacute;er un index sur base xml' => 'xmlindex',
+				'Cr&eacute;er un index sur une base xml' => 'xmlindex',
 				'Cr&eacute;er une base csv' => 'csv',
 				'Cr&eacute;er une base sqlite' => 'sqlite',
+				'Cr&eacute;er une base json' => 'json',
+				'Cr&eacute;er un index sur une base json' => 'jsonindex',
 		);
 		
 		$oTpl=new _tpl('menu::projet');

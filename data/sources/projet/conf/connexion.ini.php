@@ -22,20 +22,17 @@ pdoSqliteExple.password=root
 
 xmlExple.dsn=
 xmlExple.sgbd=xml
-xmlExple.hostname=
 xmlExple.database=../data/xml/base/
-xmlExple.username=
-xmlExple.password=
 
 csvExple.dsn=
 csvExple.sgbd=csv
-csvExple.hostname=
 csvExple.database=../data/csv/base/
-csvExple.username=
-csvExple.password=
 
 sqlserverExple.dsn="dblib:dbname=blog;host=localhost"
 sqlserverExple.sgbd=pdo_mssql
 sqlserverExple.username=root
 sqlserverExple.password=root
 
+jsonExple.dsn=
+jsonExple.sgbd=json
+jsonExple.database=../data/json/base/
