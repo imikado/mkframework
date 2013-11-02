@@ -177,13 +177,16 @@ class plugin_html{
 		}
 		$sHtml='';
 		$tOption2['class']='inputDateJour';
-		$sHtml.= '<input type="input" name="'.$sName.'_jour" value="'.$sValueJour.'"'.$this->getOptionFromTab($tOption2).'/>';
+		$sOptions=$this->getOptionFromTab($tOption2);
+		$sHtml.= '<input type="input" name="'.$sName.'_jour" value="'.$sValueJour.'"'.$sOptions.'/>';
 		$sHtml.= ' / ';
 		$tOption2['class']='inputDateMois';
-		$sHtml.= '<input type="input" name="'.$sName.'_mois" value="'.$sValueMois.'"'.$this->getOptionFromTab($tOption2).'/>';
+		$sOptions=$this->getOptionFromTab($tOption2);
+		$sHtml.= '<input type="input" name="'.$sName.'_mois" value="'.$sValueMois.'"'.$sOptions.'/>';
 		$sHtml.= ' / ';
 		$tOption2['class']='inputDateAnnee';
-		$sHtml.= '<input type="input" name="'.$sName.'_annee" value="'.$sValueAnnee.'"'.$this->getOptionFromTab($tOption2).'/>';
+		$sOptions=$this->getOptionFromTab($tOption2);
+		$sHtml.= '<input type="input" name="'.$sName.'_annee" value="'.$sValueAnnee.'"'.$sOptions.'/>';
 		if(!isset($tOption['class'])){ $tOption['class']='inputDate'; }
 		return $this->getDiv($sHtml,$tOption);
 	}
@@ -207,7 +210,7 @@ class plugin_html{
 		if($tOption==null){ return null;}
 		$sOption='';
 		foreach($tOption as $sVar => $sVal){
-			$sOption.=' '.$sVar.'='.'"'.preg_replace("/'/",'\'',$sVal).'"';
+			$sOption.=' '.$sVar.'="'.preg_replace("/'/",'\'',$sVal).'"';
 		}
 		return $sOption;
 	}

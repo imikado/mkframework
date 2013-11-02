@@ -34,7 +34,8 @@ class plugin_gestionuser{
 		$_SESSION['gestionuser_tabAllowDeny']=$this->tabAllowDeny;
 	}
 	
-	/** purge les permissions en session (appeler avant de reassigner de nouvelles permissions pour eviter la concatenation)
+	/** purge les permissions en session 
+	* (appeler avant de reassigner de nouvelles permissions pour eviter la concatenation)
 	* @access public
 	* @return void
 	*/

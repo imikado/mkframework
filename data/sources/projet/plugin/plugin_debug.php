@@ -182,15 +182,25 @@ class plugin_debug{
 	}
 	
 	private function addPopupPrintr($key,$value){
-		$this->addHtml('<div id="popupDebug'.$key.'" style="display:none;position:absolute;left:0px;bottom:0px;border:2px solid gray;background:white">
-		<p style="text-align:right;background:#ccc;margin:0px;"><a href="#" onclick="closePopup()">Fermer</a></p>
-		<div style="height:350px;width:400px;overflow:auto;padding:10px;"><pre>'.customHtmlentities(print_r($value,1)).'</pre></div></div>');
+		$this->addHtml(
+		'<div id="popupDebug'.$key.'" 
+			style="display:none;position:absolute;left:0px;bottom:0px;border:2px solid gray;background:white">
+			<p style="text-align:right;background:#ccc;margin:0px;"><a href="#" onclick="closePopup()">Fermer</a></p>
+			<div style="height:350px;width:400px;overflow:auto;padding:10px;">
+				<pre>'.customHtmlentities(print_r($value,1)).'</pre>
+			</div>
+		</div>');
 	}
 	
 	private function addPopup($key,$value){
-		$this->addHtml('<div id="popupDebug'.$key.'" style="display:none;position:absolute;left:0px;bottom:0px;border:2px solid gray;background:white">
-		<p style="text-align:right;background:#ccc;margin:0px;"><a href="#" onclick="closePopup()">Fermer</a></p>
-		<div style="height:350px;width:800px;overflow:auto;padding:10px;">'.$value.'</pre></div></div>');
+		$this->addHtml(
+		'<div id="popupDebug'.$key.'" 
+			style="display:none;position:absolute;left:0px;bottom:0px;border:2px solid gray;background:white">
+			<p style="text-align:right;background:#ccc;margin:0px;"><a href="#" onclick="closePopup()">Fermer</a></p>
+			<div style="height:350px;width:800px;overflow:auto;padding:10px;">
+			'.$value.'
+			</div>
+		</div>');
 	}
 	
 	private function addSep(){
@@ -212,12 +222,26 @@ class plugin_debug{
 			$sLine=$tLine[$i];
 				
 			$tCase=explode(';',$sLine,4);
-			$sDate=null;if(isset($tCase[0])){ $sDate=$tCase[0]; }
-			$sTime=null;if(isset($tCase[1])){ $sTime=$tCase[1]; }
-			$sType=null;if(isset($tCase[2])){ $sType=$tCase[2]; }
-			$sLog=null;if(isset($tCase[3])){ $sLog=$tCase[3]; }
+			$sDate=null;
+			if(isset($tCase[0])){ 
+				$sDate=$tCase[0]; 
+			}
+			$sTime=null;
+			if(isset($tCase[1])){ 
+				$sTime=$tCase[1]; 
+			}
+			$sType=null;
+			if(isset($tCase[2])){ 
+				$sType=$tCase[2]; 
+			}
+			$sLog=null;
+			if(isset($tCase[3])){ 
+				$sLog=$tCase[3]; 
+			}
 			
-			if($sDate==null){ continue;}
+			if($sDate==null){ 
+				continue;
+			}
 			
 			$sHtml.='<p style="border-bottom:1px dotted gray">';
 		
@@ -262,7 +286,9 @@ class plugin_debug{
 		foreach($tValue as $sSection => $tDetail){
 			$sHtml.='<h2 style="border-bottom:1px solid black">'.$sSection.'</h2>';
 			foreach($tDetail as $sKey => $sValue){
-				$sHtml.='<p style="margin:0px;margin-left:10px;"><strong>'.$sKey.'</strong> = <span style="color:darkgreen"> '.$sValue.'</span></p>';
+				$sHtml.='<p style="margin:0px;margin-left:10px;">';
+				$sHtml.='<strong>'.$sKey.'</strong> = <span style="color:darkgreen"> '.$sValue.'</span>';
+				$sHtml.='</p>';
 			}
 		}
 		
@@ -270,7 +296,6 @@ class plugin_debug{
 	}
 	private function parseTime($tValue){
 		$sHtml=null;
-		//$sHtml.='<p><strong>Start</strong> : '.$this->iStartMicrotime.'</p>';
 		$iPreviousTime=$this->iStartMicrotime;
 		$sPreviousStep='Start';
 		foreach($tValue as $tDetail){
@@ -282,7 +307,9 @@ class plugin_debug{
 			$sPreviousStep=$sLabel;
 		}
 		
-		$sHtml.='<p style="border-top:1px solid gray"><strong>Total</strong> '.sprintf('%0.3f',($iTime-$this->iStartMicrotime)).'s</p>';
+		$sHtml.='<p style="border-top:1px solid gray">';
+		$sHtml.='<strong>Total</strong> '.sprintf('%0.3f',($iTime-$this->iStartMicrotime)).'s';
+		$sHtml.='</p>';
 		
 		if(self::$tTimeById){
 			
@@ -295,7 +322,8 @@ class plugin_debug{
 					
 					$sHtml.='<p><strong>'.$sLabel.' </strong> : '.sprintf('%0.3f',$iDelta).'s</p>';
 				}else{
-					$sHtml.='<p><strong>'.$sLabel.' </strong> : <span style="color:red"> Erreur il manque startChrono ou stopChrono</span></p>';
+					$sHtml.='<p><strong>'.$sLabel.' </strong> : <span style="color:red">';
+					$sHtml.=' Erreur il manque startChrono ou stopChrono</span></p>';
 				}
 				
 			}

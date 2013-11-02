@@ -48,6 +48,9 @@ class plugin_mail{
 	public function addTo($sTo){
 		$this->tTo[$sTo]=$sTo;
 	}
+	public function addCC($sCC){
+		$this->tCC[$sCC]=$sCC;
+	}
 	public function setBcc($sBCC){
 		$this->sBCC=$sBCC;
 	}
@@ -121,11 +124,13 @@ class plugin_mail{
 		$n=$n0;
 		$nn=$n0.$n0 ;
 		$rn=$r0.$n0 ;
-		$rnn=$r0.$n0.$n0 ;
 		
 		$sHeader = 'From: "'.$this->sFromLibelle.'" <'.$this->sFrom.'>'.$n;
 		if($this->sBCC!=''){
 			$sHeader .= 'Bcc: '.$this->sBCC."\r\n";
+		}
+		if($this->tCC){
+			$sHeader .= 'Cc: '.implode(',',$this->tCC)."\r\n";
 		}
 		$sHeader .= 'Return-Path: <'.$this->sFrom.'>'.$n;
 		$sHeader .= 'MIME-Version: 1.0'.$n;
