@@ -23,8 +23,27 @@ class module_examplemodule extends abstract_module{
 	
 	//iciMethodDelete
 	
+	
+	private function fillRow($oExamplemodel){
+		if(!_root::getRequest()->isPost() ){ //si ce n'est pas une requete POST on ne soumet pas
+			return $oExamplemodel;
+		}
+		
+		$tId=model_examplemodel::getInstance()->getIdTab();
+		$tColumn=model_examplemodel::getInstance()->getListColumn();
+		foreach($tColumn as $sColumn){
+			if( _root::getParam($sColumn,null) === null ){ 
+				continue;
+			}else if( in_array($sColumn,$tId)){
+				 continue;
+			}
+			
+			$oExamplemodel->$sColumn=_root::getParam($sColumn,null) ;
+		}
+		return $oExamplemodel;
+	}
 
-	public function processSave(){
+	private function processSave(){
 		if(!_root::getRequest()->isPost() ){ //si ce n'est pas une requete POST on ne soumet pas
 			return null;
 		}
@@ -133,6 +152,7 @@ methodPaginationList#
 		$tMessage=$this->processSave();
 	
 		$oExamplemodel=new row_examplemodel;
+		$oExamplemodel=$this->fillRow($oExamplemodel);
 		
 		$oView=new _view('examplemodule::new');
 		$oView->oExamplemodel=$oExamplemodel;
@@ -152,6 +172,7 @@ methodNew#
 		$tMessage=$this->processSave();
 		
 		$oExamplemodel=model_examplemodel::getInstance()->findById( _root::getParam('id') );
+		$oExamplemodel=$this->fillRow($oExamplemodel);
 		
 		$oView=new _view('examplemodule::edit');
 		$oView->oExamplemodel=$oExamplemodel;

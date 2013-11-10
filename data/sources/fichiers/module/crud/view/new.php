@@ -18,9 +18,9 @@
 	</tr>
 #fin_lignetd
 
-#input<input name="examplecolumn" /><?php if($this->tMessage and isset($this->tMessage['examplecolumn'])): echo implode(',',$this->tMessage['examplecolumn']); endif;?>#fin_input
-#textarea<textarea name="examplecolumn"></textarea><?php if($this->tMessage and isset($this->tMessage['examplecolumn'])): echo implode(',',$this->tMessage['examplecolumn']); endif;?>#fin_textarea
-#select<?php echo $oPluginHtml->getSelect('examplecolumn',$this->tJoinexamplemodel)?><?php if($this->tMessage and isset($this->tMessage['examplecolumn'])): echo implode(',',$this->tMessage['examplecolumn']); endif;?>#fin_select
+#input<input name="examplecolumn" value="<?php echo $this->oExamplemodel->examplecolumn ?>" /><?php if($this->tMessage and isset($this->tMessage['examplecolumn'])): echo implode(',',$this->tMessage['examplecolumn']); endif;?>#fin_input
+#textarea<textarea name="examplecolumn"><?php echo $this->oExamplemodel->examplecolumn ?></textarea><?php if($this->tMessage and isset($this->tMessage['examplecolumn'])): echo implode(',',$this->tMessage['examplecolumn']); endif;?>#fin_textarea
+#select<?php echo $oPluginHtml->getSelect('examplecolumn',$this->tJoinexamplemodel,$this->oExamplemodel->examplecolumn)?><?php if($this->tMessage and isset($this->tMessage['examplecolumn'])): echo implode(',',$this->tMessage['examplecolumn']); endif;?>#fin_select
 #upload<input type="file" name="examplecolumn" /><?php if($this->tMessage and isset($this->tMessage['examplecolumn'])): echo implode(',',$this->tMessage['examplecolumn']); endif;?>#fin_upload
 
 
