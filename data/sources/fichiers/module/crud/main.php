@@ -134,7 +134,6 @@ methodList#
 		$oModulePagination->setPage( _root::getParam('page') );
 		$oModulePagination->setTab( $tExamplemodel );
 		
-		$oView=new _view('examplemodule::list');
 		$oView->tExamplemodel=$oModulePagination->getPageElement();
 		
 		$this->oLayout->add('main',$oView);
