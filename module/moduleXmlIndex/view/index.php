@@ -1,6 +1,7 @@
 <h2>Configuration: <?php echo _root::getParam('config')?></h2>
 <?php $sTableSelected=_root::getParam('sTable')?>
-<br/>Choisir la table o&ugrave; cr&eacute;er l'index<br />
+<p>Choisir la table o&ugrave; cr&eacute;er l'index</p>
+<div class="smenu">
 <ul>
 <?php foreach($this->tTables as $sTable):?>
 	<?php if($sTable == $sTableSelected):?>
@@ -16,6 +17,7 @@
 	<?php endif;?>
 <?php endforeach;?>
 </ul>
+</div>
 
 <?php if($sTableSelected!=''):?>
 <h2><?php echo $sTableSelected?></h2>

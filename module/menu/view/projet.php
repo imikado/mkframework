@@ -24,7 +24,7 @@
 												'id'=>_root::getParam('id'),
 												'action'=>$sLink
 											)
-										) ?>"><?php echo $sLibelle ?></a></li>
+										) ?>#createon"><?php echo $sLibelle ?></a></li>
 	<?php else:?>
 		<li><a href="<?php echo $this->getLink(
 											'builder::edit',
