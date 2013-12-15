@@ -6,6 +6,7 @@ Class module_menu extends abstract_module{
 		$tLink=array(
 			'Articles' => 'article::list',
 			'Articles pagine' => 'article::listPagination',
+			'Graphiques' => 'chart::examples',
 			'Prive' => 'prive::list',
 		);
 

@@ -88,7 +88,11 @@ class _request{
 	}
 	
 	public function getParams(){
-		return $this->_tVar;
+		if( (int)_root::getConfigVar('security.xss.enabled')==1){
+			return array_map('customHtmlentities',$this->_tVar);
+		}else{
+			return $this->_tVar;
+		}
 	}
 	
 	/** 
