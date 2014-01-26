@@ -7,6 +7,7 @@ Class module_menu extends abstract_module{
 			'Articles' => 'article::list',
 			'Articles pagine' => 'article::listPagination',
 			'Graphiques' => 'chart::examples',
+			'Google Map' => 'default::googleMap',
 			'Prive' => 'prive::list',
 		);
 

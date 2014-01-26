@@ -4,8 +4,10 @@ enabled=0
 lifetime= (0*3600)
 
 [encodage]
-;indique l'encodage des fichiers de code, utilise par defaut pour plugin_html::encode($texte) 
+;indique l'encodage des fichiers de code, utilise pour la protection des tableaux de contexte ($_GET,$_POST)
 charset=ISO-8859-1
+;indique si le framework encode en html le code deja en html
+double_encode=0
 
 [language]
 ;fr / en... //sLangue

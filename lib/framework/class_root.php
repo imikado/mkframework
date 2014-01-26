@@ -718,6 +718,23 @@ class _root{
 		header('Location:'.self::getLink($uNav,$tParam,false));
 		exit(0);
 	}
+	
+	/** 
+	* retourne le lien framework en reprenant les parametres actuels
+	* @access public static
+	* @param array $tParam les parametres supplementaires de l'url
+	* @param bool $bAmp utilise ou non &amp; dans les liens (passer a false dans le cas d'un header location)
+	*/
+	public static function getLinkWithCurrent($tParam=null,$bAmp=true){
+		$tOriginParam=self::getRequest()->getParamsGET();
+		unset($tOriginParam[ _root::getConfigVar('navigation.var') ] );
+		
+		$tNewParam=array_merge($tOriginParam,$tParam);
+		$sNav=self::getParamNav();
+		
+		return self::getLink($sNav,$tNewParam,$bAmp);
+	}
+	
 	/** 
 	* retourne le lien framework
 	* @access public static
@@ -799,6 +816,6 @@ function stripslashes_deep($value){
 }
 function customHtmlentities($string){
 	if(is_array($string)){ return array_map('customHtmlentities',$string) ;}
-	return _root::nullbyteprotect(htmlentities($string,ENT_QUOTES,_root::getConfigVar('encodage.charset')));
+	return _root::nullbyteprotect(htmlentities($string,ENT_QUOTES,_root::getConfigVar('encodage.charset'),_root::getConfigVar('encodage.double_encode',1)));
 }
 			

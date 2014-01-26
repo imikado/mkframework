@@ -10,7 +10,7 @@ class module_chart extends abstract_module{
 	
 	public function _examples(){
 		
-		$oView=new _view('chart::examples');
+		$oView=new _view('chart::charts');
 		
 		 //histo
 	    $tData=array(

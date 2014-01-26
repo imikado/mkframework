@@ -35,11 +35,9 @@ class _request{
 	public function __construct(){
 		
 		$this->_sModule=_root::getConfigVar('navigation.module.default',null);
-		if($this->_sModule==null){ $this->_sModule=_root::getConfigVar('navigation.module.default');}
 		
-		$this->sAction=_root::getConfigVar('navigation.action.default',null);
-		if($this->_sAction==null){ $this->_sAction=_root::getConfigVar('navigation.action.default');}
-		
+		$this->_sAction=_root::getConfigVar('navigation.action.default',null);
+				
 		$this->_tVar=array();
 	
 		$this->_bHasNavigation=false;
@@ -57,7 +55,7 @@ class _request{
 				if(is_array($this->_tVar[$sVar]) ){
 					return array_map('customHtmlentities',$this->_tVar[$sVar]);
 				}
-				return _root::nullbyteprotect(htmlentities($this->_tVar[$sVar],ENT_QUOTES,_root::getConfigVar('encodage.charset')));
+				return customHtmlentities($this->_tVar[$sVar]);
 			}else{
 				return $this->_tVar[$sVar];
 			}	
@@ -87,11 +85,39 @@ class _request{
 		}
 	}
 	
+	/**
+	* recupere un tableau de l'ensemble des parametres
+	*/
 	public function getParams(){
 		if( (int)_root::getConfigVar('security.xss.enabled')==1){
 			return array_map('customHtmlentities',$this->_tVar);
 		}else{
 			return $this->_tVar;
+		}
+	}
+	
+	/**
+	* recupere un tableau de l'ensemble des parametres GET (hors navigation: module::action)
+	*/
+	public function getParamsGET(){
+		if( (int)_root::getConfigVar('security.xss.enabled')==1){
+			$tParam= array_map('customHtmlentities',$_GET);
+		}else{
+			$tParam= $_GET;
+		}
+		unset($tParam[ _root::getConfigVar('navigation.var') ] );
+		
+		return $tParam;
+	}
+	
+	/**
+	* recupere un tableau de l'ensemble des parametres POST
+	*/
+	public function getParamsPOST(){
+		if( (int)_root::getConfigVar('security.xss.enabled')==1){
+			return array_map('customHtmlentities',$_POST);
+		}else{
+			return $_POST;
 		}
 	}
 	
