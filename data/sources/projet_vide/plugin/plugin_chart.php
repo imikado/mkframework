@@ -31,11 +31,22 @@ class plugin_chart{
 	private $tData;
 	private $iWidth;
 	private $height;
+	
+	private $oChart;
 
-	public function __construct($iWidth=null,$iHeight=null,$tData=null){
+	public function __construct($sType,$iWidth=null,$iHeight=null){
 		$this->iWidth=$iWidth;
 		$this->iHeight=$iHeight;
-		$this->tData=$tData;
+		
+		if($sType==self::$PIE){
+			$this->oChart=new plugin_chartPie($this->iWidth,$this->iHeight);
+		}else if($sType==self::$HISTO){
+			$this->oChart=new plugin_chartHisto($this->iWidth,$this->iHeight);
+		}else if($sType==self::$LINES){
+			$this->oChart=new plugin_chartLine($this->iWidth,$this->iHeight);
+		}else{
+			throw new Exception('sType non reconnu, attendu: (PIE,HISTO,LINES)');
+		}
 	}
 	
 	/**
@@ -44,55 +55,24 @@ class plugin_chart{
 	* @param array $tData: tableau de donnees
 	*/
 	public function setData($tData){
-		$this->tData=$tData;
+		$this->oChart->setData($tData);
 	}
 	
-	private function setType($sType){
-		if(!in_array($sType,array(self::$PIE,self::$HISTO,self::$LINES))){
-			return false;
-		}
-		$this->sType=$sType;
-	}
-	/**
-	* indique de choisir le type histogramme
-	* @access public
-	*/
-	public function chooseHisto(){
-		$this->setType(self::$HISTO);
-	}
-	/**
-	* indique de choisir le type camembert
-	* @access public
-	*/
-	public function choosePie(){
-		$this->setType(self::$PIE);
-	}
-	/**
-	* indique de choisir le type lignes
-	* @access public
-	*/
-	public function chooseLines(){
-		$this->setType(self::$LINES);
-	}
 	/**
 	* retourne le code du graphique a afficher
 	* @access public
 	* @return string retourne le code du graphique
 	*/
-	public function show(){
-		if($this->sType==self::$PIE){
-			$oPie=new plugin_chartPie($this->iWidth,$this->iHeight,$this->tData);
-			return $oPie->show();
-		}elseif($this->sType==self::$HISTO){
-			$oPie=new plugin_chartHisto($this->iWidth,$this->iHeight,$this->tData);
-			return $oPie->show();
-		}elseif($this->sType==self::$LINES){
-			$oPie=new plugin_chartLine($this->iWidth,$this->iHeight,$this->tData);
-			return $oPie->show();
-		}
+	public function show(){ 
+		return $this->oChart->show();
 	}
 	
-	
+	public function addGroup($sLabel,$sColor){
+		$this->oChart->addGroup($sLabel,$sColor);
+	}
+	public function addPoint($x,$y){
+		$this->oChart->addPoint($x,$y);
+	}
 	
 }
 class abstract_pluginChart{
@@ -110,10 +90,9 @@ class abstract_pluginChart{
 	
 	protected $tColor;
 	
-	public function __construct($iWidth=null,$iHeight=null,$tData=null){
+	public function __construct($iWidth=null,$iHeight=null){
 		$this->iWidth=$iWidth;
 		$this->iHeight=$iHeight;
-		$this->tData=$tData;
 		
 		$this->tColor=array(
 				'green',
@@ -124,6 +103,9 @@ class abstract_pluginChart{
 		self::$uid+=1;
 		
 		$this->id='canvasPluginChart'.self::$uid;
+	}
+	public function setData($tData){
+		$this->tData=$tData;
 	}
 	public function setColorTab($tColor){
 		$this->tColor=$tColor;
@@ -291,78 +273,117 @@ class plugin_chartHisto extends abstract_pluginChart{
 }
 class plugin_chartLine extends abstract_pluginChart{
 	
+	private $tmpGroup;
+	
 	public function show(){
 		$this->loadCanvas();
 		
-		foreach($this->tData as $tLine){
-			foreach($tLine as $j => $iValue){
+		$iMaxX=0;
+		$iMaxY=0;
+		
+		$iMinX='';
+		$iMinY='';
+		
+		foreach($this->tData as $sGroup => $tDetail){
+			foreach($tDetail['tPoint'] as $tPoint){
 			
-				if($j==0){
-					continue;
+				list($x,$y)=$tPoint;
+				
+				if($iMaxX < $x){
+					$iMaxX=$x;
 				}
-			
-				if($iValue > $this->iMax){
-					$this->iMax=$iValue;
+				if($iMaxY < $y){
+					$iMaxY=$y;
 				}
+				
+				if($iMinX=='' or $iMinX > $x){
+					$iMinX=$x;
+				}
+				if($iMinY=='' or $iMinY > $y){
+					$iMinY=$y;
+				}
+				
 			}
 		}
-		$iWidthBar=($this->iWidth-200)/(count($this->tData[0])-1);
-		$iWidthBar=$iWidthBar*0.8;
-		
-		$iWidthSpace=$iWidthBar*0.2;
 		
 		$this->startScript();
 		
+		$iHeight=$this->iHeight-40;
+		$iWidth=$this->iWidth-200;
 		
-		
-		$j=0;
-		foreach($this->tData as $i=> $tLine){
-			
-			foreach($tLine as $j => $iValue){
+		$deltaX=$iMaxX-$iMinX;
+		$deltaY=$iMaxY-$iMinY;
+	
+		foreach($this->tData as $sGroup => $tDetail){
+			$lastX=null;
+			$lastY=null;
+			foreach($tDetail['tPoint'] as $j => $tPoint){
 				
-				$j2=$j-1;
+				list($x,$y)=$tPoint;
 				
-				if($j==0){
-					$lastX=null;
-					$lastY=null;
-					continue;
+				$x2=(($x-$iMinX)/($iMaxX-$iMinX))*$iWidth;
+				$y2=(1-$y/$iMaxY)*$iHeight;
+				
+				$x3=$x2-3;
+				$y3=$y2-3;
+				
+				if($x3<=0){
+					$x3=0;
 				}
-				 
-				$iHeight=1-(($iValue/$this->iMax)*($this->iHeight));
-				
-				$x=$j2*($iWidthBar+3);
-				$y=$this->iHeight+$iHeight;
-				
-				$this->rect($x,$y,6,6,$this->tColor[$i]);
-				
-				if($j>1){
-					$this->lineFromTo($lastX,$lastY,$x,$y,$this->tColor[$i]);
-					plugin_debug::addSpy('line '.$i, 'line '.$lastX.' '.$lastY.' '.$x.' '.$y.' ');
+				if($y3<=0){
+					$y3=0;
 				}
 				
-				$lastX=$x;
-				$lastY=$y;
+				$this->rect($x3,$y3,6,6,$tDetail['color']);
+				
+				if($j>0){
+					$this->lineFromTo($lastX,$lastY,$x2,$y2,$tDetail['color']);
+					
+				}
+				
+				$lastX=$x2;
+				$lastY=$y2;
 				
 			}
 		}
 		
-		foreach($this->tData as $i => $tLine){
-			$sLabel=$tLine[0];
+		$i=0;
+		foreach($this->tData as $sGroup => $tDetail){
+			$sLabel=$sGroup;
 			
 			$x=200;
 			$y=$i*20+50;
 			
-			$this->rect($x,$y-8,10,10,$this->tColor[$i]);
+			$this->rect($x,$y-8,10,10,$tDetail['color']);
 			$this->text($x+16,$y,$sLabel);
 			
+			$i++;
 		}
 		
+		$this->text(0,10,$iMaxY);
+		$this->text(0,(1-$iMinY/$iMaxY)*$iHeight,$iMinY);
 		
-		$this->lineFromTo(0,0,0,$this->iHeight);
-		$this->lineFromTo(0,$this->iHeight,$this->iWidth-200,$this->iHeight);
+		$this->lineFromTo(0,0,0,$this->iHeight-10);
+		$this->lineFromTo(0,$this->iHeight-10,$this->iWidth-200,$this->iHeight-10);
+		
+		$this->text(0,$this->iHeight,$iMinX);
+		
+		$this->text($this->iWidth-200,$this->iHeight,$iMaxX);
 		
 		$this->endScript();
 		
 		return $this->sHtml;
 	}
+	
+	
+	public function addGroup($sLabel,$sColor){
+		$this->tmpGroup=$sLabel;
+		
+		$this->tData[$this->tmpGroup]['label']=$sLabel;
+		$this->tData[$this->tmpGroup]['color']=$sColor;
+	}
+	public function addPoint($x,$y){
+		$this->tData[$this->tmpGroup]['tPoint'][]=array($x,$y);
+	}
+	
 }

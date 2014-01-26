@@ -61,7 +61,7 @@ class module_examplemodule extends abstract_module{
 		}
 		
 		$tId=model_examplemodel::getInstance()->getIdTab();
-		$tColumn=model_examplemodel::getInstance()->getListColumn();
+		$tColumn=//icitColumn
 		foreach($tColumn as $sColumn){
 			//iciuploadsave if( _root::getParam($sColumn,null) === null ){ 
 				continue;

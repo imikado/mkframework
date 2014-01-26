@@ -159,14 +159,17 @@ class module_moduleCrudEmbedded{
 		
 		
 		$sTable='';
+		$tArrayColumn=array();
 		foreach($tColumn as $i => $sColumn){
 			$sType=$tType[$i];
 			if(substr($sType,0,7)=='select;'){
 				$sInput=preg_replace('/examplemodel/',substr($sType,7),$sInputSelect);
 				$sTable.=$sInput;
 			}
-			
+			$tArrayColumn[]="'$sColumn'";
 		}
+		
+		$stColumn='array('.implode(',',$tArrayColumn).');';
 		
 		$tReplace=array(
 				'\/\/iciMethodNew' => $sMethodNew,
@@ -186,6 +189,7 @@ class module_moduleCrudEmbedded{
 				'\/\/iciedit' => $sTable,
 				'\/\/icilist' => $sTable,
 				'\/\/iciuploadsave' => $sInputUpload,
+				'\/\/icitColumn' => $stColumn,
 				'<\?php\/\*variables(.*)variables\*\/\?>' => '',
 			);
 			

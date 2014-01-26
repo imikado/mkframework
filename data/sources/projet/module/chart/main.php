@@ -19,8 +19,7 @@ class module_chart extends abstract_module{
 			array( 2013 , 45)
 		);
 		
-	    $oChartHisto=new plugin_chart(400,200);
-	    $oChartHisto->chooseHisto();
+	    $oChartHisto=new plugin_chart('HISTO',400,200);
 	    $oChartHisto->setData($tData);
 		
 		$oView->oChartHisto=$oChartHisto;
@@ -32,23 +31,23 @@ class module_chart extends abstract_module{
 			array( 'or' , 65),
 		);
 		
-		$oChartPie=new plugin_chart(400,200);
-		$oChartPie->choosePie();
+		$oChartPie=new plugin_chart('PIE',400,200);
 		$oChartPie->setData($tData);
 		
 		$oView->oChartPie=$oChartPie;
 		
-		
-		 //lines
-	    $tData=array(
-			array( 2011 , 50,45,35,20),
-			array( 2012 , 70,55,45,22),
-			array( 2013 , 50,35,20,12),
-		);
-		
-	    $oChartLine=new plugin_chart(400,200);
-	    $oChartLine->chooseLines();
-	    $oChartLine->setData($tData);
+		//lines
+	    $oChartLine=new plugin_chart('LINES',400,200);
+	    $oChartLine->addGroup('or','green');
+			$oChartLine->addPoint(2009,100);
+			$oChartLine->addPoint(2011,110);
+			$oChartLine->addPoint(2014,170);
+			
+			
+		$oChartLine->addGroup('bois','blue');
+			$oChartLine->addPoint(2010,80);
+			$oChartLine->addPoint(2011,20);
+			$oChartLine->addPoint(2013,170);
 		
 		$oView->oChartLine=$oChartLine;
 		

@@ -28,6 +28,7 @@ class plugin_upload{
 	private $sNewPath;
 	private $sExtension;
 	private $bValid;
+	private $salt='1EE7a89';
 
 	/** 
 	* constructeur
@@ -53,7 +54,7 @@ class plugin_upload{
 	* @return bool true/false selon que l'upload a bien fonctionne
 	*/
 	public function saveAs($sNewFileName){
-		$this->sNewPath=$sNewFileName.'.'.$this->sExtension;
+		$this->sNewPath=sha1($this->salt.$sNewFileName).'.'.$this->sExtension;
 
 		if(move_uploaded_file($this->sTmpFileName, $this->sNewPath)){
 			return true;
