@@ -18,6 +18,15 @@ class model_article extends abstract_model{
 	public function findAll(){
 		return $this->findMany('SELECT * FROM '.$this->sTable.' ORDER BY id ASC');
 	}
+	public function findAllOrderBy($sField,$sSide){
+		if($sSide=='asc'){
+			$side='ASC';
+		}else{
+			$side='DESC';
+		}
+		
+		return $this->findMany('SELECT * FROM '.$this->sTable.' ORDER BY ? '.$side,$sField);
+	}
 	
 	public function findAllOrderByPriority(){
 		return $this->findMany('SELECT * FROM '.$this->sTable.' ORDER BY priority DESC');

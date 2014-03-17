@@ -71,6 +71,78 @@ border:1px solid gray;
 padding:3px;
 }
 
+
+ 
+
+
+.main .content .tb_list th{
+background:#90a4b4;
+}
+.tb_list tr th .tb_list tr td{
+border:1px solid gray;
+padding:3px;
+}
+.tb_list tr.alt td{
+background:#eee;
+}
+
+.main .content .tb_list2 th{
+background:#90a4b4;
+}
+.tb_list2 tr th .tb_list2 tr td{
+border:1px solid gray;
+padding:3px;
+}
+.tb_list2 tr.alt td{
+background:#eee;
+}
+.tb_list2 tr:hover td{
+background:orange;
+}
+.tb_list2 tr td a{
+color:black;
+display:block;
+text-decoration:none;
+}
+
+.main .content .tb_list3 th{
+background:#90a4b4;
+}
+.tb_list3 tr th .tb_list3 tr td{
+border:1px solid gray;
+padding:3px;
+}
+.tb_list3 tr.alt td{
+background:#eee;
+}
+.tb_list3 tr:hover td{
+background:orange;
+}
+.tb_list3 tr td a{
+color:black;
+display:block;
+text-decoration:none;
+}
+.tb_list3 thead{
+display:block;
+width:530px;
+}
+.tb_list3 tbody{
+width:540px;
+display:block;
+height:50px;
+overflow-y:auto;
+}
+.tb_list3 .titre{
+width:200px;
+}
+.tb_list3 .auteur{
+width:150px;
+}
+.tb_list3 .priority{
+width:110px;
+}
+
 .main .content form .textarea, .main .content form .input{
 width:100%;
 }

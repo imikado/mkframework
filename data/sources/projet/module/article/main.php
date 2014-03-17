@@ -16,9 +16,24 @@ class module_article extends abstract_module{
 	public function _list(){
 		
 		$oArticleModel=new model_article;
-		$tArticle=$oArticleModel->findAll();
+		$tArticle=$oArticleModel->findAllOrderBy(module_table::getParam('order','titre'),module_table::getParam('side'));
 		
 		$oView=new _view('article::list');
+		$oView->tArticle=$tArticle;
+		$oView->tColumn=$oArticleModel->getListColumn();//array('id','titre');//
+
+		//on recupere un tableau indexe des auteurs pour afficher leur nom a la place de leur id
+		$oView->tJoinAuteur=model_auteur::getInstance()->getSelect();
+		
+
+		$this->oLayout->add('main',$oView);
+	}
+	public function _listModuleTable(){
+		
+		$oArticleModel=new model_article;
+		$tArticle=$oArticleModel->findAllOrderBy(module_table::getParam('order','titre'),module_table::getParam('side'));
+		
+		$oView=new _view('article::listViaModule');
 		$oView->tArticle=$tArticle;
 		$oView->tColumn=$oArticleModel->getListColumn();//array('id','titre');//
 

@@ -54,7 +54,7 @@ class plugin_upload{
 	* @return bool true/false selon que l'upload a bien fonctionne
 	*/
 	public function saveAs($sNewFileName){
-		$this->sNewPath=sha1($this->salt.$sNewFileName).'.'.$this->sExtension;
+		$this->sNewPath=$sNewFileName.sha1($this->salt.$sNewFileName).'.'.time().'.'.$this->sExtension;
 
 		if(move_uploaded_file($this->sTmpFileName, $this->sNewPath)){
 			return true;

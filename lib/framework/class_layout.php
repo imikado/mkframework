@@ -122,6 +122,29 @@ class _layout{
 		include _root::getConfigVar('path.layout').$this->_sLayout.'.php';
 	}
 	/** 
+	* recupere le layout et son contenu
+	* @access public
+	*/
+	public function getOutput(){
+		
+		/*LOG*/_root::getLog()->info('-layout: getOutput ['._root::getConfigVar('path.layout').$this->_sLayout.'.php]');
+		if(!file_exists( _root::getConfigVar('path.layout').$this->_sLayout.'.php')){
+			$tErreur=array(
+				'layout '.$this->_sLayout.' introuvable dans '._root::getConfigVar('path.layout'),
+				_root::getConfigVar('path.layout').$this->_sLayout.'.php introuvable',
+			);
+			throw new Exception(implode("\n",$tErreur));
+		}
+		ob_start();
+		include _root::getConfigVar('path.layout').$this->_sLayout.'.php';
+		
+		$sSortie=ob_get_contents();
+		ob_end_clean();
+		
+		return $sSortie;
+	}
+	
+	/** 
 	* retourne le contenu d'un objet _tpl a l'emplacement $sPlace
 	* @access public
 	* @return string

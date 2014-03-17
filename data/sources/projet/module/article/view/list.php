@@ -1,4 +1,3 @@
-<?php $tHidden=array('id')?>
 <table>
 	<tr>
 		

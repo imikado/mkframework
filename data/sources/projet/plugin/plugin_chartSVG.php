@@ -20,7 +20,7 @@ along with Mkframework.  If not, see <http://www.gnu.org/licenses/>.
 * @author Mika
 * @link http://mkf.mkdevs.com/
 */
-class plugin_chart{
+class plugin_chartSVG{
 
 	public static $PIE='PIE';
 	public static $HISTO='HISTO';
@@ -40,13 +40,13 @@ class plugin_chart{
 		$this->iHeight=$iHeight;
 		
 		if($sType==self::$PIE){
-			$this->oChart=new plugin_chartPie($this->iWidth,$this->iHeight);
+			$this->oChart=new plugin_chartPieSVG($this->iWidth,$this->iHeight);
 		}else if($sType==self::$HISTO){
-			$this->oChart=new plugin_chartHisto($this->iWidth,$this->iHeight);
+			$this->oChart=new plugin_chartHistoSVG($this->iWidth,$this->iHeight);
 		}else if($sType==self::$LINES){
-			$this->oChart=new plugin_chartLine($this->iWidth,$this->iHeight);
+			$this->oChart=new plugin_chartLineSVG($this->iWidth,$this->iHeight);
 		}else if($sType==self::$BAR){
-			$this->oChart=new plugin_chartBar($this->iWidth,$this->iHeight);
+			$this->oChart=new plugin_chartBarSVG($this->iWidth,$this->iHeight);
 		}else{
 			throw new Exception('sType non reconnu, attendu: (PIE,HISTO,LINES)');
 		}
@@ -118,7 +118,7 @@ class plugin_chart{
 	}
 	
 }
-class abstract_pluginChart{
+class abstract_pluginChartSVG{
 	protected $tData;
 	protected $iWidth;
 	protected $height;
@@ -130,6 +130,7 @@ class abstract_pluginChart{
 	protected $iMax=0;
 	
 	protected $sHtml;
+	protected $sSvg;
 	
 	protected $tColor;
 	
@@ -170,6 +171,8 @@ class abstract_pluginChart{
 		
 		$this->iMarginLeft=0;
 		$this->textsizeLegend=12;
+		
+		$this->sSvg=null;
 	}
 	public function setData($tData){
 		$this->tData=$tData;
@@ -221,28 +224,31 @@ class abstract_pluginChart{
 	
 	
 	public function loadCanvas(){
-		$this->sHtml.='<canvas id="'.$this->id.'" width="'.$this->iWidth.'px" height="'.$this->iHeight.'px" ></canvas>';
-		
-		$this->startScript();
-		
-		$this->sHtml.='var canvas = document.getElementById("'.$this->id.'"); ';
-		$this->sHtml.='var context = canvas.getContext("2d")';
-		
-		$this->endScript();
+		 
 	}
 	
 	public function startScript(){
-		$this->sHtml.='<script>';
+		
+		$this->sSvg.='<svg width="'.$this->iWidth.'px" height="'.$this->iHeight.'px">  ';
+		
+		$this->sSvg.='<style>
+		.chartRect{
+		cursor:help;
+		}
+		</style>';
+		
 	}
 	public function endScript(){
-		$this->sHtml.='</script>';
+		$this->sSvg.='</svg>';
 	}
 	
-	protected function rect($x,$y,$iWidth,$iHeight,$sColor){
-		$this->sHtml.='context.beginPath();'."\n";
-		$this->sHtml.='context.fillStyle="'.$sColor.'";   '."\n";
-		$this->sHtml.='context.rect('.$x.','.$y.','.$iWidth.','.$iHeight.');'."\n";
-		$this->sHtml.='context.fill();'."\n";
+	protected function rect($x,$y,$iWidth,$iHeight,$sColor,$alt=null){
+		$this->sSvg.='<rect class="chartRect" id="rect'.$x.$y.'" x="'.$x.'" y="'.$y.'" width="'.$iWidth.'" height="'.$iHeight.'" style="fill:'.$sColor.'">
+			<title>'.$alt.'</title>
+		</rect>';
+		
+		 
+		
 	}
 	
 	protected function partPie($x,$y,$diameter,$degStart,$degEnd,$sColor){
@@ -251,33 +257,28 @@ class abstract_pluginChart{
 		$this->sHtml.='context.arc('.$x.','.$y.','.$diameter.','.$degStart.','.$degEnd.');'."\n";
 		$this->sHtml.='context.lineTo('.$x.','.$y.');'."\n";
 		$this->sHtml.='context.fill();'."\n";
+		
+		
+		
+		$this->sSvg.='<path d="M'.$x.','.$y.' L10,10 A'.$x+($diameter/2).','.$y+($diameter/2).' 0 0,1  z" fill="'.$sColor.'"  />';
 	}
 	
 	protected function text($x,$y,$sText,$sColor='black',$font='10px arial'){
 		$this->sHtml.='context.font="'.$font.'";'."\n";
 		$this->sHtml.='context.fillStyle="'.$sColor.'";   '."\n";
 		$this->sHtml.='context.fillText("'.$sText.'",'.$x.','.$y.');'."\n";
+		
+		$this->sSvg.='<text x="'.$x.'" y="'.$y.'" fill="'.$sColor.'">'.$sText.'</text>';
 	}
 	
 	protected function lineFromTo($x,$y,$x2,$y2,$sColor='black',$opacity=1){
 		
-		$this->sHtml.='context.globalAlpha='.$opacity.';'."\n";
-		
-		$this->sHtml.='context.strokeStyle="'.$sColor.'";'."\n";
-		$this->sHtml.='context.beginPath(); '."\n";
-		$this->sHtml.='context.moveTo('.$x.','.$y.'); '."\n";
-		$this->sHtml.='context.lineTo('.$x2.','.$y2.');'."\n";
-		$this->sHtml.='context.stroke();'."\n";
-		
-		$this->sHtml.='context.globalAlpha=1;'."\n";
+		$this->sSvg.=' <line x1="'.$x.'" y1="'.$y.'" x2="'.$x2.'" y2="'.$y2.'" style="stroke:'.$sColor.';stroke-width:2" stroke-opacity="'.$opacity.'" />';
 	}
 }
-class plugin_chartPie extends abstract_pluginChart{
+class plugin_chartPieSVG extends abstract_pluginChartSVG{
 	
 	public function show(){
-		
-		
-		$this->loadCanvas();
 		
 		$iTotal=0;
 		foreach($this->tData as $tLine){
@@ -332,16 +333,19 @@ class plugin_chartPie extends abstract_pluginChart{
 		
 		$this->endScript();
 		
-		return $this->sHtml;
+		return "pas encore disponible";
+		
+		return $this->sSvg;
+		
+		
 	}
 		
 		
 	
 }
-class plugin_chartHisto extends abstract_pluginChart{
+class plugin_chartHistoSVG extends abstract_pluginChartSVG{
 	
 	public function show(){
-		$this->loadCanvas();
 		
 		foreach($this->tData as $tLine){
 			list($sLabel,$iValue)=$tLine;
@@ -357,15 +361,13 @@ class plugin_chartHisto extends abstract_pluginChart{
 		
 		$this->startScript();
 		
-		
-		
 		$j=0;
 		foreach($this->tData as $j=> $tLine){
 			list($sLabel,$iValue)=$tLine;
 			
-			$iHeight=1-(($iValue/$this->iMax)*($this->iHeight-24));
+			$iHeight=(($iValue/$this->iMax)*($this->iHeight-24));
 			
-			$this->rect($j*($iWidthBar+3),$this->iHeight,($iWidthBar),$iHeight,$this->tColor[$j]);
+			$this->rect($j*($iWidthBar+3),$this->iHeight-$iHeight,($iWidthBar),$iHeight,$this->tColor[$j],$iValue);
 			
 			$j++;
 		}
@@ -389,10 +391,10 @@ class plugin_chartHisto extends abstract_pluginChart{
 		
 		$this->endScript();
 		
-		return $this->sHtml;
+		return $this->sSvg;
 	}
 }
-class plugin_chartLine extends abstract_pluginChart{
+class plugin_chartLineSVG extends abstract_pluginChartSVG{
 	
 	private $tmpGroup;
 	
@@ -400,7 +402,6 @@ class plugin_chartLine extends abstract_pluginChart{
 	
 	
 	public function show(){
-		$this->loadCanvas();
 		
 		$iMaxX=0;
 		$iMaxY=0;
@@ -409,7 +410,7 @@ class plugin_chartLine extends abstract_pluginChart{
 		$iMinY='';
 		
 		
-		
+		if($this->tData)
 		foreach($this->tData as $sGroup => $tDetail){
 			foreach($tDetail['tPoint'] as $tPoint){
 			
@@ -484,7 +485,7 @@ class plugin_chartLine extends abstract_pluginChart{
 				$this->lineFromTo($this->iMarginLeft,$y,$this->iWidth-200,$y,$color,0.5	);
 			}
 		}
-	
+		if($this->tData)
 		foreach($this->tData as $sGroup => $tDetail){
 			$lastX=null;
 			$lastY=null;
@@ -505,7 +506,7 @@ class plugin_chartLine extends abstract_pluginChart{
 					$y3=0;
 				}
 				
-				$this->rect($x3,$y3,6,6,$tDetail['color']);
+				$this->rect($x3,$y3,6,6,$tDetail['color'],$y);
 				
 				if($j>0){
 					$this->lineFromTo($lastX,$lastY,$x2,$y2,$tDetail['color']);
@@ -520,6 +521,7 @@ class plugin_chartLine extends abstract_pluginChart{
 		
 		//legend
 		$i=0;
+		if($this->tData)
 		foreach($this->tData as $sGroup => $tDetail){
 			$sLabel=$sGroup;
 			
@@ -568,7 +570,7 @@ class plugin_chartLine extends abstract_pluginChart{
 		
 		$this->endScript();
 		
-		return $this->sHtml;
+		return $this->sSvg;
 	}
 	
 	
@@ -583,16 +585,14 @@ class plugin_chartLine extends abstract_pluginChart{
 	}
 	
 }
-class plugin_chartBar extends abstract_pluginChart{
+class plugin_chartBarSVG extends abstract_pluginChartSVG{
 	
 	private $tmpGroup;
 	
 	
 	
 	
-	public function show(){
-		$this->loadCanvas();
-		
+	public function show(){		
 		$iMaxX=0;
 		$iMaxY=0;
 		
@@ -600,7 +600,7 @@ class plugin_chartBar extends abstract_pluginChart{
 		$iMinY='';
 		
 		
-		
+		if($this->tData)
 		foreach($this->tData as $sGroup => $tDetail){
 			foreach($tDetail['tPoint'] as $tPoint){
 			
@@ -677,6 +677,7 @@ class plugin_chartBar extends abstract_pluginChart{
 		}
 	
 		$k=0;
+		if($this->tData)
 		foreach($this->tData as $sGroup => $tDetail){
 			$lastX=null;
 			$lastY=null;
@@ -697,7 +698,7 @@ class plugin_chartBar extends abstract_pluginChart{
 					$y3=0;
 				}
 				
-				$this->rect($x3+($k*8),$y3,6,$iHeight-$y3,$tDetail['color']);
+				$this->rect($x3+($k*8),$y3,6,$iHeight-$y3,$tDetail['color'],$y);
 				
 			 
 				$lastX=$x2;
@@ -709,6 +710,7 @@ class plugin_chartBar extends abstract_pluginChart{
 		
 		//legend
 		$i=0;
+		if($this->tData)
 		foreach($this->tData as $sGroup => $tDetail){
 			$sLabel=$sGroup;
 			
@@ -757,7 +759,7 @@ class plugin_chartBar extends abstract_pluginChart{
 		
 		$this->endScript();
 		
-		return $this->sHtml;
+		return $this->sSvg;
 	}
 	
 	

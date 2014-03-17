@@ -77,16 +77,28 @@ class plugin_gestionuser{
 	* @param string $ressource ressource l'action est autorise sur $ressource	
 	*/
 	public function can($action,$ressource){
+		
+		$ok=true;
+	
 		if(!isset($this->tabAllowDeny[$ressource]) ){
-			return false;
+			$ok=false;
 		}
 		if(!isset($this->tabAllowDeny[$ressource][$action]) ){
-			return false;
+			$ok=false;
 		}
-		if($this->tabAllowDeny[$ressource][$action]==1){
-			return true;
+	
+		
+		if(_root::getConfigVar('site.mode')== 'dev'){
+			$tAskCan=_root::getConfigVar('tAskCan');
+			$tAskCan[]=array($action,$ressource,$ok);
+			_root::setConfigVar('tAskCan',$tAskCan);
 		}
-		return false;
+		
+		if($ok){ $sOk ='oui'; }else{ $sOk='non'; }
+		_root::getLog()->info('ACL can "'.$action.'" on "'.$ressource.'" ? : '.$sOk);
+		
+		return $ok;
+		
 	}
 
 

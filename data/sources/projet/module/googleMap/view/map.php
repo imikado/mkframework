@@ -32,6 +32,37 @@ function setPoint(address,sTitle,sLink){
 			document.location.href=sLink;
 		});
 		
+		
+	  }
+	});
+
+}
+
+function setPointWithContent(address,sTitle,sContent){
+
+	var myWindowOptions = {
+		content:
+			sContent
+	};
+
+	var myInfoWindow = new google.maps.InfoWindow(myWindowOptions);
+
+	geocoder.geocode( { 'address': address}, function(results, status) {
+	  if (status == google.maps.GeocoderStatus.OK) {
+		map.setCenter(results[0].geometry.location);
+		
+		
+		
+		var marker = new google.maps.Marker({
+			map: map,
+			position: results[0].geometry.location,
+			title: sTitle,
+		});
+		google.maps.event.addListener(marker, 'click', function() {
+			myInfoWindow.open(map,marker);
+		});
+		
+		
 	  }
 	});
 
@@ -46,12 +77,27 @@ function setPoint(address,sTitle,sLink){
 
 <script>initialize();</script>
 
-<?php if($this->tPosition):?>
+<?php if($this->tPosition or $this->tPositionWithContent):?>
 <script>
-<?php if($this->tPosition) ?>
-<?php foreach($this->tPosition as $tAdresse):?>
-<?php list($sAdresse,$sTitle,$sLink)=$tAdresse?>
-setPoint('<?php echo $sAdresse?>','<?php echo $sTitle?>','<?php echo $sLink?>');
-<?php endforeach;?>
+<?php 
+if($this->tPosition):
+	foreach($this->tPosition as $tAdresse):
+		list($sAdresse,$sTitle,$sLink)=$tAdresse;
+		?>setPoint('<?php echo $sAdresse?>','<?php echo $sTitle?>','<?php echo $sLink?>');<?php
+	endforeach;
+endif;
+
+if($this->tPositionWithContent):
+	foreach($this->tPositionWithContent as $tAdresse):
+		list($sAdresse,$sTitle,$tContent)=$tAdresse;
+		$sContent='';
+		foreach($tContent as $sLine){
+			$sContent.=str_replace("'",'\'',$sLine);
+		}
+		?>setPointWithContent('<?php echo $sAdresse?>','<?php echo $sTitle?>','<?php echo $sContent?>');<?php
+	endforeach;
+endif;
+
+?>
 </script>
 <?php endif;?>

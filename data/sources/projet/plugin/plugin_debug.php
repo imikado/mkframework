@@ -75,6 +75,8 @@ class plugin_debug{
 		if(self::$tSpy){
 			$this->addComplexSpy('Spy variables',self::$tSpy);
 		}
+		
+		$this->addAcl();
 	}
 	
 	public static function addSpy($uLabel,$uVar){
@@ -122,15 +124,23 @@ class plugin_debug{
 				if(a){
 					if(a.style.display==\'none\'){
 						a.style.display=\'block\';
+						var b=getById(\'debugBtn\');
+						if(b){
+							b.style.width=\'100%\';
+						}
 					}else{
 						a.style.display=\'none\';
+						var b=getById(\'debugBtn\');
+						if(b){
+							b.style.width=\'80px\';
+						}
 					}
 				}
 			}
 			</script>';
-		echo '<div style="position:fixed;border:2px solid #444;background:#ddd;bottom:0px;left:0px;">';
+		echo '<div id="debugBtn" style="position:fixed;border:2px solid #444;background:#ddd;bottom:0px;left:0px;width:100%">';
 		echo '<div  style="float:left"><input type="button" value="Masquer" onclick="showHideDebugBar()"/></div>';
-		echo '<div id="debugBar" style="width:970px">';
+		echo '<div id="debugBar" style="width:100%">';
 		echo $this->sHtml;
 		echo '</div>';
 		echo '</div>';
@@ -192,15 +202,40 @@ class plugin_debug{
 		</div>');
 	}
 	
-	private function addPopup($key,$value){
+	private function addPopup($key,$value,$width=800){
 		$this->addHtml(
 		'<div id="popupDebug'.$key.'" 
 			style="display:none;position:absolute;left:0px;bottom:0px;border:2px solid gray;background:white">
 			<p style="text-align:right;background:#ccc;margin:0px;"><a href="#" onclick="closePopup()">Fermer</a></p>
-			<div style="height:350px;width:800px;overflow:auto;padding:10px;">
+			<div style="height:350px;width:'.$width.'px;overflow:auto;padding:10px;">
 			'.$value.'
 			</div>
 		</div>');
+	}
+	
+	private function addAcl(){
+		$this->addHtml('<input type="button" value="Permissions" onclick="openPopupDebug(\'popupDebugACL\')" />');
+		$this->addSep();
+		
+		$sHtml='<div style="position:absolute">';
+		$sHtml.='<table style="background:white;border-collapse:collapse">
+		<tr>
+			<th style="border:1px solid gray;">Action</th>
+			<th style="border:1px solid gray;">Component</th>
+		</tr>';
+		$tab=_root::getConfigVar('tAskCan');
+		if($tab and is_array($tab)):
+		foreach($tab as $tVal):
+		$sHtml.='<tr>
+			<td style="border:1px solid gray;';if($tVal[2]): $sHtml.='color:green;'; else: $sHtml.='color:red'; endif; $sHtml.='">'.$tVal[0].'</td>
+			<td style="border:1px solid gray;';if($tVal[2]): $sHtml.='color:green;'; else: $sHtml.='color:red'; endif; $sHtml.='">'.$tVal[1].'</td>
+			 
+		</tr>';
+		endforeach;
+		endif;
+		$sHtml.='</table>'; 
+		
+		$this->addPopup('ACL', $sHtml,300);
 	}
 	
 	private function addSep(){

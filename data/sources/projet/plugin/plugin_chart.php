@@ -25,6 +25,7 @@ class plugin_chart{
 	public static $PIE='PIE';
 	public static $HISTO='HISTO';
 	public static $LINES='LINES';
+	public static $BAR='BAR';
 
 	private $sType;
 	
@@ -44,6 +45,8 @@ class plugin_chart{
 			$this->oChart=new plugin_chartHisto($this->iWidth,$this->iHeight);
 		}else if($sType==self::$LINES){
 			$this->oChart=new plugin_chartLine($this->iWidth,$this->iHeight);
+		}else if($sType==self::$BAR){
+			$this->oChart=new plugin_chartBar($this->iWidth,$this->iHeight);
 		}else{
 			throw new Exception('sType non reconnu, attendu: (PIE,HISTO,LINES)');
 		}
@@ -74,6 +77,46 @@ class plugin_chart{
 		$this->oChart->addPoint($x,$y);
 	}
 	
+	public function setMarginLeft($x){
+		$this->oChart->setMarginLeft($x);
+	}
+	public function setMaxX($x){
+		$this->oChart->setMaxX($x);
+	}
+	public function setMinX($x){
+		$this->oChart->setMinX($x);
+	}
+	public function setMaxY($x){
+		$this->oChart->setMaxY($x);
+	}
+	public function setMinY($x){
+		$this->oChart->setMinY($x);
+	}
+	public function addMarkerY($y,$color='#ccc'){
+		$this->oChart->addMarkerY($y,$color);
+	}
+	public function setPaddingX($padding){
+		$this->oChart->setPaddingX($padding);
+	}
+	public function setPaddingY($padding){
+		$this->oChart->setPaddingY($padding);
+	}
+	public function setGridY($y,$color){
+		$this->oChart->setGridY($y,$color);
+	}
+	public function setTextSizeLegend($size){
+		$this->oChart->setTextSizeLegend($size);
+	}
+	public function setCoordLegend($x,$y){
+		$this->oChart->setCoordLegend($x,$y);
+	}
+	public function setStepX($stepX){
+		$this->oChart->setStepX($stepX);
+	}
+	public function setStepY($stepY){
+		$this->oChart->setStepY($stepY);
+	}
+	
 }
 class abstract_pluginChart{
 	protected $tData;
@@ -90,6 +133,27 @@ class abstract_pluginChart{
 	
 	protected $tColor;
 	
+	protected $iMarginLeft;
+	protected $iMinX;
+	protected $iMaxX;	
+	protected $iMinY;
+	protected $iMaxY;
+	
+	protected $tMarkerY=array();
+	
+	protected $paddingX;
+	protected $paddingY;
+	
+	protected $gridY;
+	
+	protected $textsizeLegend;
+	
+	protected $legendX=200;
+	protected $legendY=50;
+	
+	protected $stepX=null;
+	protected $stepY=null;
+	
 	public function __construct($iWidth=null,$iHeight=null){
 		$this->iWidth=$iWidth;
 		$this->iHeight=$iHeight;
@@ -103,6 +167,9 @@ class abstract_pluginChart{
 		self::$uid+=1;
 		
 		$this->id='canvasPluginChart'.self::$uid;
+		
+		$this->iMarginLeft=0;
+		$this->textsizeLegend=12;
 	}
 	public function setData($tData){
 		$this->tData=$tData;
@@ -110,6 +177,48 @@ class abstract_pluginChart{
 	public function setColorTab($tColor){
 		$this->tColor=$tColor;
 	}
+	public function setMarginLeft($iMarginLeft){
+		$this->iMarginLeft=$iMarginLeft;
+	}
+	public function setMaxX($iMaxX){
+		$this->iMaxX=$iMaxX;
+	}
+	public function setMinX($iMinX){
+		$this->iMinX=$iMinX;
+	}
+	public function setMaxY($iMaxX){
+		$this->iMaxY=$iMaxX;
+	}
+	public function setMinY($iMinX){
+		$this->iMinY=$iMinX;
+	}
+	public function addMarkerY($y,$color='#444'){
+		$this->tMarkerY[]=array($y,$color);
+	}
+	public function setPaddingX($padding){
+		$this->paddingX=$padding;
+	}
+	public function setPaddingY($padding){
+		$this->paddingY=$padding;
+	}
+	public function setGridY($y,$color){
+		$this->gridY=array($y,$color);
+	}
+	public function setTextSizeLegend($size){
+		$this->textsizeLegend=$size;
+	}
+	public function setCoordLegend($x,$y){
+		$this->legendX=$x;
+		$this->legendY=$y;
+	}
+	
+	public function setStepX($stepX){
+		$this->stepX=$stepX;
+	}
+	public function setStepY($stepY){
+		$this->stepY=$stepY;
+	}
+	
 	
 	public function loadCanvas(){
 		$this->sHtml.='<canvas id="'.$this->id.'" width="'.$this->iWidth.'px" height="'.$this->iHeight.'px" ></canvas>';
@@ -144,17 +253,23 @@ class abstract_pluginChart{
 		$this->sHtml.='context.fill();'."\n";
 	}
 	
-	protected function text($x,$y,$sText,$sColor='black'){
+	protected function text($x,$y,$sText,$sColor='black',$font='10px arial'){
+		$this->sHtml.='context.font="'.$font.'";'."\n";
 		$this->sHtml.='context.fillStyle="'.$sColor.'";   '."\n";
 		$this->sHtml.='context.fillText("'.$sText.'",'.$x.','.$y.');'."\n";
 	}
 	
-	protected function lineFromTo($x,$y,$x2,$y2,$sColor='black'){
+	protected function lineFromTo($x,$y,$x2,$y2,$sColor='black',$opacity=1){
+		
+		$this->sHtml.='context.globalAlpha='.$opacity.';'."\n";
+		
 		$this->sHtml.='context.strokeStyle="'.$sColor.'";'."\n";
 		$this->sHtml.='context.beginPath(); '."\n";
 		$this->sHtml.='context.moveTo('.$x.','.$y.'); '."\n";
 		$this->sHtml.='context.lineTo('.$x2.','.$y2.');'."\n";
 		$this->sHtml.='context.stroke();'."\n";
+		
+		$this->sHtml.='context.globalAlpha=1;'."\n";
 	}
 }
 class plugin_chartPie extends abstract_pluginChart{
@@ -173,16 +288,19 @@ class plugin_chartPie extends abstract_pluginChart{
 		
 		$this->startScript();
 		
-		$x=100;
-		$y=100;
-		$diameter=50;
+		$diameter=($this->iWidth/4)-10;
+		
+		$x=$diameter+2;
+		$y=$diameter+2;
+		
+		
 		$degTotal=6.3;
 		
 		$degStart=0;
 		
 		$this->sHtml.='context.beginPath(); '."\n";
 		$this->sHtml.='context.arc('.$x.','.$y.','.$diameter.',0,Math.PI*2);'."\n";
-		$this->sHtml.='context.stroke();'."\n";
+		//$this->sHtml.='context.stroke();'."\n";
 		
 		$tPct=array();
 		
@@ -204,11 +322,11 @@ class plugin_chartPie extends abstract_pluginChart{
 		foreach($this->tData as $i => $tLine){
 			list($sLabel,$iValue)=$tLine;
 			
-			$x=200;
-			$y=$i*20+50;
+			$x=$this->legendX;
+			$y=$i*20+$this->legendY;
 			
 			$this->rect($x,$y-8,10,10,$this->tColor[$i]);
-			$this->text($x+16,$y,$sLabel.': '.$tPct[$i].'%');
+			$this->text($x+16,$y,$sLabel.': '.$tPct[$i].'%','#000',$this->textsizeLegend);
 			
 		}
 		
@@ -252,15 +370,18 @@ class plugin_chartHisto extends abstract_pluginChart{
 			$j++;
 		}
 		
-		foreach($this->tData as $i => $tLine){
-			list($sLabel,$iValue)=$tLine;
+		//legend
+		$i=0;
+		foreach($this->tData as $j => $tDetail){
+			$sLabel=$tDetail[0];
 			
-			$x=200;
-			$y=$i*20+50;
+			$x=$this->legendX;
+			$y=$i*20+$this->legendY;
 			
-			$this->rect($x,$y-8,10,10,$this->tColor[$i]);
-			$this->text($x+16,$y,$sLabel.': '.$iValue.'');
+			$this->rect($x,$y-8,10,10,$this->tColor[$j]);
+			$this->text($x+16,$y,$sLabel,'#000',$this->textsizeLegend);
 			
+			$i++;
 		}
 		
 		$this->lineFromTo(0,0,0,$this->iHeight);
@@ -275,6 +396,9 @@ class plugin_chartLine extends abstract_pluginChart{
 	
 	private $tmpGroup;
 	
+	
+	
+	
 	public function show(){
 		$this->loadCanvas();
 		
@@ -283,6 +407,8 @@ class plugin_chartLine extends abstract_pluginChart{
 		
 		$iMinX='';
 		$iMinY='';
+		
+		
 		
 		foreach($this->tData as $sGroup => $tDetail){
 			foreach($tDetail['tPoint'] as $tPoint){
@@ -306,13 +432,58 @@ class plugin_chartLine extends abstract_pluginChart{
 			}
 		}
 		
+		
+		if($this->iMaxX){
+			$iMaxX=$this->iMaxX;
+		}
+		if($this->iMinX){
+			$iMinX=$this->iMinX;
+		}
+		if($this->iMaxY){
+			$iMaxY=$this->iMaxY;
+		}
+		if($this->iMinY!=null){
+			$iMinY=$this->iMinY;
+		}
+		
+		if($this->paddingX ){
+			$iMinX-=$this->paddingX;
+			$iMaxX+=$this->paddingX;
+		}
+		if($this->paddingY ){
+			$iMinY-=$this->paddingY;
+			$iMaxY+=$this->paddingY;
+		}
+		
 		$this->startScript();
 		
-		$iHeight=$this->iHeight-40;
-		$iWidth=$this->iWidth-200;
+		$iHeight=$this->iHeight-10;
+		$iWidth=$this->iWidth-200-$this->iMarginLeft;
 		
 		$deltaX=$iMaxX-$iMinX;
 		$deltaY=$iMaxY-$iMinY;
+		
+		if($this->gridY){
+			$step=$this->gridY[0];
+			$color=$this->gridY[1];
+			
+			for($y=$iMinY;$y<$iMaxY;$y+=$step){
+				
+				$y2=(1-($y-$iMinY)/($iMaxY-$iMinY))*$iHeight;
+				$this->lineFromTo($this->iMarginLeft,$y2,$this->iWidth-200,$y2,$color,0.5	);
+			}
+			
+		}
+		
+		if($this->tMarkerY){
+			foreach($this->tMarkerY as $tLineY){
+				
+				list($y,$color)=$tLineY;
+				$y=(1-($y-$iMinY)/($iMaxY-$iMinY))*$iHeight;
+				
+				$this->lineFromTo($this->iMarginLeft,$y,$this->iWidth-200,$y,$color,0.5	);
+			}
+		}
 	
 		foreach($this->tData as $sGroup => $tDetail){
 			$lastX=null;
@@ -321,8 +492,8 @@ class plugin_chartLine extends abstract_pluginChart{
 				
 				list($x,$y)=$tPoint;
 				
-				$x2=(($x-$iMinX)/($iMaxX-$iMinX))*$iWidth;
-				$y2=(1-$y/$iMaxY)*$iHeight;
+				$x2=(($x-$iMinX)/($iMaxX-$iMinX))*$iWidth+$this->iMarginLeft;
+				$y2=(1-($y-$iMinY)/($iMaxY-$iMinY))*$iHeight;
 				
 				$x3=$x2-3;
 				$y3=$y2-3;
@@ -347,28 +518,244 @@ class plugin_chartLine extends abstract_pluginChart{
 			}
 		}
 		
+		//legend
 		$i=0;
+		if($this->tData)
 		foreach($this->tData as $sGroup => $tDetail){
 			$sLabel=$sGroup;
 			
-			$x=200;
-			$y=$i*20+50;
+			$x=$this->legendX;
+			$y=$i*20+$this->legendY;
 			
 			$this->rect($x,$y-8,10,10,$tDetail['color']);
-			$this->text($x+16,$y,$sLabel);
+			$this->text($x+16,$y,$sLabel,'#000',$this->textsizeLegend);
 			
 			$i++;
 		}
 		
-		$this->text(0,10,$iMaxY);
-		$this->text(0,(1-$iMinY/$iMaxY)*$iHeight,$iMinY);
+		$this->lineFromTo($this->iMarginLeft,0,$this->iMarginLeft,$this->iHeight-10);
+		$this->lineFromTo($this->iMarginLeft,$this->iHeight-10,$this->iWidth-200,$this->iHeight-10);
 		
-		$this->lineFromTo(0,0,0,$this->iHeight-10);
-		$this->lineFromTo(0,$this->iHeight-10,$this->iWidth-200,$this->iHeight-10);
 		
-		$this->text(0,$this->iHeight,$iMinX);
+		//step
+		if($this->stepX !== null){
+			for($x=($iMinX);$x<$iMaxX;$x+=$this->stepX){
+				$x2=(($x-$iMinX)/($iMaxX-$iMinX))*$iWidth+$this->iMarginLeft;
+				
+				$this->lineFromTo($x2,($this->iHeight-10),$x2,($this->iHeight-5) );
+				
+				$this->text($x2+2,($this->iHeight),$x);
+			}
+		}else{
+			$this->text(0,$this->iHeight,$iMinX);
 		
-		$this->text($this->iWidth-200,$this->iHeight,$iMaxX);
+			$this->text($this->iWidth-200,$this->iHeight,$iMaxX);
+		}
+		
+		//step
+		if($this->stepY !== null){
+			for($y=($iMinY);$y<$iMaxY;$y+=$this->stepY){
+				$y2=(1-($y-$iMinY)/($iMaxY-$iMinY))*$iHeight;
+				
+				$this->lineFromTo($this->iMarginLeft-5,$y2,$this->iMarginLeft,$y2 );
+				
+				$this->text(0,$y2,$y);
+			}
+		}else{
+			$this->text(0,10,$iMaxY);
+			$this->text(0,$this->iHeight-10	,$iMinY);
+		}
+		
+		
+		$this->endScript();
+		
+		return $this->sHtml;
+	}
+	
+	
+	public function addGroup($sLabel,$sColor){
+		$this->tmpGroup=$sLabel;
+		
+		$this->tData[$this->tmpGroup]['label']=$sLabel;
+		$this->tData[$this->tmpGroup]['color']=$sColor;
+	}
+	public function addPoint($x,$y){
+		$this->tData[$this->tmpGroup]['tPoint'][]=array($x,$y);
+	}
+	
+}
+class plugin_chartBar extends abstract_pluginChart{
+	
+	private $tmpGroup;
+	
+	
+	
+	
+	public function show(){
+		$this->loadCanvas();
+		
+		$iMaxX=0;
+		$iMaxY=0;
+		
+		$iMinX='';
+		$iMinY='';
+		
+		
+		
+		foreach($this->tData as $sGroup => $tDetail){
+			foreach($tDetail['tPoint'] as $tPoint){
+			
+				list($x,$y)=$tPoint;
+				
+				if($iMaxX < $x){
+					$iMaxX=$x;
+				}
+				if($iMaxY < $y){
+					$iMaxY=$y;
+				}
+				
+				if($iMinX=='' or $iMinX > $x){
+					$iMinX=$x;
+				}
+				if($iMinY=='' or $iMinY > $y){
+					$iMinY=$y;
+				}
+				
+			}
+		}
+		
+		
+		if($this->iMaxX){
+			$iMaxX=$this->iMaxX;
+		}
+		if($this->iMinX){
+			$iMinX=$this->iMinX;
+		}
+		if($this->iMaxY){
+			$iMaxY=$this->iMaxY;
+		}
+		if($this->iMinY!=null){
+			$iMinY=$this->iMinY;
+		}
+		
+		if($this->paddingX ){
+			$iMinX-=$this->paddingX;
+			$iMaxX+=$this->paddingX;
+		}
+		if($this->paddingY ){
+			$iMinY-=$this->paddingY;
+			$iMaxY+=$this->paddingY;
+		}
+		
+		$this->startScript();
+		
+		$iHeight=$this->iHeight-10;
+		$iWidth=$this->iWidth-200-$this->iMarginLeft-(4);
+		
+		$deltaX=$iMaxX-$iMinX;
+		$deltaY=$iMaxY-$iMinY;
+		
+		if($this->gridY){
+			$step=$this->gridY[0];
+			$color=$this->gridY[1];
+			
+			for($y=$iMinY;$y<$iMaxY;$y+=$step){
+				
+				$y2=(1-($y-$iMinY)/($iMaxY-$iMinY))*$iHeight;
+				$this->lineFromTo($this->iMarginLeft,$y2,$this->iWidth-200,$y2,$color,0.5	);
+			}
+			
+		}
+		
+		if($this->tMarkerY){
+			foreach($this->tMarkerY as $tLineY){
+				
+				list($y,$color)=$tLineY;
+				$y=(1-($y-$iMinY)/($iMaxY-$iMinY))*$iHeight;
+				
+				$this->lineFromTo($this->iMarginLeft,$y,$this->iWidth-200,$y,$color,0.5	);
+			}
+		}
+	
+		$k=0;
+		if($this->tData)
+		foreach($this->tData as $sGroup => $tDetail){
+			$lastX=null;
+			$lastY=null;
+			foreach($tDetail['tPoint'] as $j => $tPoint){
+				
+				list($x,$y)=$tPoint;
+				
+				$x2=(($x-$iMinX)/($iMaxX-$iMinX))*$iWidth+$this->iMarginLeft;
+				$y2=(1-($y-$iMinY)/($iMaxY-$iMinY))*$iHeight;
+				
+				$x3=$x2;
+				$y3=$y2-3;
+				
+				if($x3<=0){
+					$x3=0;
+				}
+				if($y3<=0){
+					$y3=0;
+				}
+				
+				$this->rect($x3+($k*8),$y3,6,$iHeight-$y3,$tDetail['color']);
+				
+			 
+				$lastX=$x2;
+				$lastY=$y2;
+				
+			}
+			$k++;
+		}
+		
+		//legend
+		$i=0;
+		foreach($this->tData as $sGroup => $tDetail){
+			$sLabel=$sGroup;
+			
+			$x=$this->legendX;
+			$y=$i*20+$this->legendY;
+			
+			$this->rect($x,$y-8,10,10,$tDetail['color']);
+			$this->text($x+16,$y,$sLabel,'#000',$this->textsizeLegend);
+			
+			$i++;
+		}
+		
+		$this->lineFromTo($this->iMarginLeft,0,$this->iMarginLeft,$this->iHeight-10);
+		$this->lineFromTo($this->iMarginLeft,$this->iHeight-10,$this->iWidth-200,$this->iHeight-10);
+		
+		
+		//step
+		if($this->stepX !== null){
+			for($x=($iMinX);$x<$iMaxX;$x+=$this->stepX){
+				$x2=(($x-$iMinX)/($iMaxX-$iMinX))*$iWidth+$this->iMarginLeft;
+				
+				$this->lineFromTo($x2,($this->iHeight-10),$x2,($this->iHeight-5) );
+				
+				$this->text($x2+2,($this->iHeight),$x);
+			}
+		}else{
+			$this->text(0,$this->iHeight,$iMinX);
+		
+			$this->text($this->iWidth-200,$this->iHeight,$iMaxX);
+		}
+		
+		//step
+		if($this->stepY !== null){
+			for($y=($iMinY);$y<$iMaxY;$y+=$this->stepY){
+				$y2=(1-($y-$iMinY)/($iMaxY-$iMinY))*$iHeight;
+				
+				$this->lineFromTo($this->iMarginLeft-5,$y2,$this->iMarginLeft,$y2 );
+				
+				$this->text(0,$y2,$y);
+			}
+		}else{
+			$this->text(0,10,$iMaxY);
+			$this->text(0,$this->iHeight-10	,$iMinY);
+		}
+		
 		
 		$this->endScript();
 		
