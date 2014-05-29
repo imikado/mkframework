@@ -8,10 +8,14 @@
 							<a style="margin-left:10px;color:white" class="buttons" href="<?php echo _root::getLink(
 								'code::index',
 								array('project'=>_root::getParam('id'))
-								)?>">Explorer le projet <sup>BETA</sup></a>
+								)?>">Explorer le projet </a>
 								
 								
-								<a style="margin-left:10px;color:white;" class="buttons" target="_blank" href="<?php echo _root::getConfigVar('path.generation')?><?php echo _root::getParam('id')?>">Voir le site</a>	</h1>
+								<a style="margin-left:30px;color:white;" class="buttons" target="_blank" href="<?php echo _root::getConfigVar('path.generation')?><?php echo _root::getParam('id')?>">Voir le site</a>
+
+
+								<a style="margin-left:30px;color:white;" class="buttons" href="<?php echo _root::getLink('builder::export',array('id'=>_root::getParam('id')))?>">Exporter le projet<sup>BETA</sup></a>
+									</h1>
 <ul>
 <?php foreach($this->tLink as $sLibelle => $sLink): ?>
 

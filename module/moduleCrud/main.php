@@ -70,8 +70,8 @@ class module_moduleCrud{
 			
 			$bWithPagination=_root::getParam('withPagination');
 
-			$this->genModelMainCrud($sModuleToCreate,$oModel->getTable(),$sClass,$tColumn,$tCrud,$bWithPagination);
-			$this->genModelTplCrud($sModuleToCreate,$sClass,$tColumn,$oModel->getTable(),$tCrud,$tLabel);
+			$this->genModelMain($sModuleToCreate,$oModel->getTable(),$sClass,$tColumn,$tCrud,$bWithPagination);
+			$this->genModelTpl($sModuleToCreate,$sClass,$tColumn,$oModel->getTable(),$tCrud,$tLabel);
 			
 			$msg='Module '.$sModule.' g&eacute;n&eacute;r&eacute; avec succ&egrave;s';
 			$detail='Cr&eacute;ation repertoire module/'.$sModule;
@@ -103,20 +103,16 @@ class module_moduleCrud{
 	
 	}
 	
-	private function genModelMainCrud($sModule,$sTableName,$sClass,$tColumn,$tCrud,$bWithPagination){
+	private function genModelMain($sModule,$sTableName,$sClass,$tColumn,$tCrud,$bWithPagination){
 		//$tColumn=_root::getParam('tColumn');
 		$tType=_root::getParam('tType');
 		
 		$oFile=new _file('data/sources/fichiers/module/crud/main.php');
 		$sContent=$oFile->getContent();
-		preg_match_all('/#select(.*)?#fin_select/s',$sContent,$tMatch);
-		$sInputSelect=$tMatch[1][0];
-
-		preg_match_all('/#uploadsave(.*)?#fin_uploadsave/s',$sContent,$tMatch);
-		$sInputUpload=$tMatch[1][0];
-	
-		$sInputUpload=preg_replace('/oExamplemodel/','o'.ucfirst($sTableName),$sInputUpload);
 		
+		$oVar=simplexml_load_file('data/sources/fichiers/module/crud/main.php.xml');
+		
+		$uploadsave=null;
 		$sMethodList=null;
 		$sMethodNew=null;
 		$sMethodEdit=null;
@@ -124,36 +120,29 @@ class module_moduleCrud{
 		$sMethodDelete=null;
 		$sMethodProcessDelete=null;
 		
+		$sInputSelect=(string)$oVar->select;
+		
 		if($bWithPagination==1){
-			preg_match_all('/#methodPaginationList(.*)?methodPaginationList#/s',$sContent,$tMatch);
-			$sMethodList=$tMatch[1][0];
+			$sMethodList=(string)$oVar->methodPaginationList;
 		}else{
-			preg_match_all('/#methodList(.*)?methodList#/s',$sContent,$tMatch);
-			$sMethodList=$tMatch[1][0];
+			$sMethodList=(string)$oVar->methodList;
 		}		
 		
-		
 		if(in_array('crudNew',$tCrud)){
-			preg_match_all('/#methodNew(.*)?methodNew#/s',$sContent,$tMatch);
-			$sMethodNew=$tMatch[1][0];
+			$sMethodNew=(string)$oVar->methodNew;
 		}
 		
 		if(in_array('crudEdit',$tCrud)){
-			preg_match_all('/#methodEdit(.*)?methodEdit#/s',$sContent,$tMatch);
-			$sMethodEdit=$tMatch[1][0];
+			$sMethodEdit=(string)$oVar->methodEdit;
 		}
 		
 		if(in_array('crudShow',$tCrud)){
-			preg_match_all('/#methodShow(.*)?methodShow#/s',$sContent,$tMatch);
-			$sMethodShow=$tMatch[1][0];
+			$sMethodShow=(string)$oVar->methodShow;
 		}
 		
 		if(in_array('crudDelete',$tCrud)){
-			preg_match_all('/#methodDelete(.*)?methodDelete#/s',$sContent,$tMatch);
-			$sMethodDelete=$tMatch[1][0];
-		
-			preg_match_all('/#methodProcessDelete(.*)?methodProcessDelete#/s',$sContent,$tMatch);
-			$sMethodProcessDelete=$tMatch[1][0];
+			$sMethodDelete=(string)$oVar->methodDelete;
+			$sMethodProcessDelete=(string)$oVar->methodProcessDelete;
 		}
 		
 		
@@ -176,16 +165,26 @@ class module_moduleCrud{
 		
 		$sTable='';
 		$tArrayColumn=array();
+		$tArrayColumnUpload=array();
 		foreach($tColumn as $i => $sColumn){
 			$sType=$tType[$i];
 			if(substr($sType,0,7)=='select;'){
 				$sInput=preg_replace('/examplemodel/',substr($sType,7),$sInputSelect);
 				$sTable.=$sInput;
+			}elseif($sType=='upload'){
+				$tArrayColumnUpload[]="'$sColumn'";
+				continue;
 			}
 			$tArrayColumn[]="'$sColumn'";
 		}
 		
 		$stColumn='array('.implode(',',$tArrayColumn).');';
+		$stColumnUpload='array('.implode(',',$tArrayColumnUpload).');';
+		
+		if($tArrayColumnUpload){
+			$uploadsave=(string)$oVar->uploadsave;
+			$uploadsave=str_replace('//tColumnUpload',$stColumnUpload,$uploadsave);
+		}
 		
 		$tReplace=array(
 				'\/\/iciMethodList' => $sMethodList,
@@ -195,6 +194,7 @@ class module_moduleCrud{
 				'\/\/iciMethodDelete' => $sMethodDelete,
 				
 				'\/\/iciMethodProcessDelete' => $sMethodProcessDelete,
+				'\/\/iciUpload' => $uploadsave,
 		
 				'oExamplemodel' => 'o'.ucfirst($sTableName),
 				'tExamplemodel' => 't'.ucfirst($sTableName),
@@ -206,9 +206,8 @@ class module_moduleCrud{
 				'\/\/iciedit' => $sTable,
 				'\/\/icilist' => $sTable,
 				'\/\/icipaginationlist' => $sPaginationList,
-				'\/\/iciuploadsave' => $sInputUpload,
 				'\/\/icitColumn' => $stColumn,
-				'<\?php\/\*variables(.*)variables\*\/\?>' => '',
+				
 			);
 		
 		
@@ -222,7 +221,7 @@ class module_moduleCrud{
 		$oFile->save();
 		$oFile->chmod(0666);
 	}
-	private function genModelTplCrud($sModule,$sClass,$tColumn,$sTableName,$tCrud,$tLabel){
+	private function genModelTpl($sModule,$sClass,$tColumn,$sTableName,$tCrud,$tLabel){
 		//$tColumn=_root::getParam('tColumn');
 		$tType=_root::getParam('tType');
 		
@@ -247,40 +246,33 @@ class module_moduleCrud{
 			
 			$oFile=new _file('data/sources/fichiers/module/crud/view/'.$sTpl.'.php');
 			$sContent=$oFile->getContent();	
+			
+			$oVar=simplexml_load_file('data/sources/fichiers/module/crud/view/'.$sTpl.'.php.xml');
+			
 				
-				preg_match_all('/#lignetd(.*)?#fin_lignetd/s',$sContent,$tMatch);
-				$sLigne=$tMatch[1][0];
+				$sLigne=(string)$oVar->lignetd;
 				
-				preg_match_all('/#input(.*)?#fin_input/s',$sContent,$tMatch);
-				$sInputText=$tMatch[1][0];
+				$sInputText=(string)$oVar->input;
 				
-				preg_match_all('/#textarea(.*)?#fin_textarea/s',$sContent,$tMatch);
-				$sInputTextarea=$tMatch[1][0];
+				$sInputTextarea=(string)$oVar->textarea;
 				
-				preg_match_all('/#select(.*)?#fin_select/s',$sContent,$tMatch);
-				$sInputSelect=$tMatch[1][0];
+				$sInputSelect=(string)$oVar->select;
 
-				preg_match_all('/#upload(.*)?#fin_upload/s',$sContent,$tMatch);
-				$sInputUpload=$tMatch[1][0];
-				
-				
+				$sInputUpload=(string)$oVar->upload;
+
+
 				$sLinks='';
 				$sLinkNew='';
 
 				if($sTpl=='list'){
 					//TH
-					preg_match_all('/#ligneth(.*)?#fin_ligneth/s',$sContent,$tMatch);
-					$sLigneTH=$tMatch[1][0];
+					$sLigneTH=(string)$oVar->ligneth;
 					
 					//liens
-					preg_match_all('/#linkNew(.*)?linkNew#/s',$sContent,$tMatch);
-					$tLink['crudNew']=$tMatch[1][0];
-					preg_match_all('/#linkEdit(.*)?linkEdit#/s',$sContent,$tMatch);
-					$tLink['crudEdit']=$tMatch[1][0];
-					preg_match_all('/#linkShow(.*)?linkShow#/s',$sContent,$tMatch);
-					$tLink['crudShow']=$tMatch[1][0];
-					preg_match_all('/#linkDelete(.*)?linkDelete#/s',$sContent,$tMatch);
-					$tLink['crudDelete']=$tMatch[1][0];
+					$tLink['crudNew']=(string)$oVar->linkNew;
+					$tLink['crudEdit']=(string)$oVar->linkEdit;
+					$tLink['crudShow']=(string)$oVar->linkShow;
+					$tLink['crudDelete']=(string)$oVar->linkDelete;
 					
 					$iMaxCrud=count($tCrud);
 					$iMaxCrud-=2;
@@ -338,7 +330,8 @@ class module_moduleCrud{
 					'<\?php \/\/enctype\?>' => $sEnctype,
 					'<\?php \/\/ici\?>' => $sTable,
 					'<\?php \/\/icith\?>' => $sTableTh,
-					'<\?php\/\*variables(.*)variables\*\/\?>' => '',
+					
+					'<\?php \/\/colspan\?>' => (count($tColumn)+1)
 				);
 				
 				

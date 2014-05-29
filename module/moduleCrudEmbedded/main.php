@@ -65,7 +65,7 @@ class module_moduleCrudEmbedded{
 			$sModule=$sModuleToCreate;
 			module_builder::getTools()->projetmkdir('module/'.$sModule );
 			module_builder::getTools()->projetmkdir('module/'.$sModule.'/view');
-
+			
 			$tCrud= _root::getParam('crud',null);
 
 			$this->genModelMain($sModuleToCreate,$oModel->getTable(),$sClass,$tColumn,$tCrud);
@@ -120,64 +120,73 @@ class module_moduleCrudEmbedded{
 		
 		$oFile=new _file('data/sources/fichiers/module/crudembedded/main.php');
 		$sContent=$oFile->getContent();
-		preg_match_all('/#select(.*)?#fin_select/s',$sContent,$tMatch);
-		$sInputSelect=$tMatch[1][0];
-
-		preg_match_all('/#uploadsave(.*)?#fin_uploadsave/s',$sContent,$tMatch);
-		$sInputUpload=$tMatch[1][0];
-	
-		$sInputUpload=preg_replace('/oExamplemodel/','o'.ucfirst($sTableName),$sInputUpload);
 		
+		$oVar=simplexml_load_file('data/sources/fichiers/module/crudembedded/main.php.xml');
+		
+		$uploadsave=null;
+		$sMethodList=null;
 		$sMethodNew=null;
 		$sMethodEdit=null;
 		$sMethodShow=null;
 		$sMethodDelete=null;
 		$sMethodProcessDelete=null;
 		
+		$sInputSelect=(string)$oVar->select;
+		
+		$sMethodList=(string)$oVar->methodList;	
+		
 		if(in_array('crudNew',$tCrud)){
-			preg_match_all('/#methodNew(.*)?methodNew#/s',$sContent,$tMatch);
-			$sMethodNew=$tMatch[1][0];
+			$sMethodNew=(string)$oVar->methodNew;
 		}
 		
 		if(in_array('crudEdit',$tCrud)){
-			preg_match_all('/#methodEdit(.*)?methodEdit#/s',$sContent,$tMatch);
-			$sMethodEdit=$tMatch[1][0];
+			$sMethodEdit=(string)$oVar->methodEdit;
 		}
 		
 		if(in_array('crudShow',$tCrud)){
-			preg_match_all('/#methodShow(.*)?methodShow#/s',$sContent,$tMatch);
-			$sMethodShow=$tMatch[1][0];
+			$sMethodShow=(string)$oVar->methodShow;
 		}
 		
 		if(in_array('crudDelete',$tCrud)){
-			preg_match_all('/#methodDelete(.*)?methodDelete#/s',$sContent,$tMatch);
-			$sMethodDelete=$tMatch[1][0];
-		
-			preg_match_all('/#methodProcessDelete(.*)?methodProcessDelete#/s',$sContent,$tMatch);
-			$sMethodProcessDelete=$tMatch[1][0];
+			$sMethodDelete=(string)$oVar->methodDelete;
+			$sMethodProcessDelete=(string)$oVar->methodProcessDelete;
 		}
+		
+		
 		
 		
 		$sTable='';
 		$tArrayColumn=array();
+		$tArrayColumnUpload=array();
 		foreach($tColumn as $i => $sColumn){
 			$sType=$tType[$i];
 			if(substr($sType,0,7)=='select;'){
 				$sInput=preg_replace('/examplemodel/',substr($sType,7),$sInputSelect);
 				$sTable.=$sInput;
+			}elseif($sType=='upload'){
+				$tArrayColumnUpload[]="'$sColumn'";
+				continue;
 			}
 			$tArrayColumn[]="'$sColumn'";
 		}
 		
 		$stColumn='array('.implode(',',$tArrayColumn).');';
+		$stColumnUpload='array('.implode(',',$tArrayColumnUpload).');';
+		
+		if($tArrayColumnUpload){
+			$uploadsave=(string)$oVar->uploadsave;
+			$uploadsave=str_replace('//tColumnUpload',$stColumnUpload,$uploadsave);
+		}
 		
 		$tReplace=array(
+				'\/\/iciMethodList' => $sMethodList,
 				'\/\/iciMethodNew' => $sMethodNew,
 				'\/\/iciMethodEdit' => $sMethodEdit,
 				'\/\/iciMethodShow' => $sMethodShow,
 				'\/\/iciMethodDelete' => $sMethodDelete,
 				
 				'\/\/iciMethodProcessDelete' => $sMethodProcessDelete,
+				'\/\/iciUpload' => $uploadsave,
 		
 				'oExamplemodel' => 'o'.ucfirst($sTableName),
 				'tExamplemodel' => 't'.ucfirst($sTableName),
@@ -188,12 +197,11 @@ class module_moduleCrudEmbedded{
 				'\/\/icinew' => $sTable,
 				'\/\/iciedit' => $sTable,
 				'\/\/icilist' => $sTable,
-				'\/\/iciuploadsave' => $sInputUpload,
 				'\/\/icitColumn' => $stColumn,
-				'<\?php\/\*variables(.*)variables\*\/\?>' => '',
+				
 			);
-			
-			
+		
+		
 		$sContent=module_builder::getTools()->stringReplaceIn(
 									$tReplace,
 									'data/sources/fichiers/module/crudembedded/main.php'
@@ -229,40 +237,33 @@ class module_moduleCrudEmbedded{
 			
 			$oFile=new _file('data/sources/fichiers/module/crudembedded/view/'.$sTpl.'.php');
 			$sContent=$oFile->getContent();	
+			
+			$oVar=simplexml_load_file('data/sources/fichiers/module/crudembedded/view/'.$sTpl.'.php.xml');
+			
 				
-				preg_match_all('/#lignetd(.*)?#fin_lignetd/s',$sContent,$tMatch);
-				$sLigne=$tMatch[1][0];
+				$sLigne=(string)$oVar->lignetd;
 				
-				preg_match_all('/#input(.*)?#fin_input/s',$sContent,$tMatch);
-				$sInputText=$tMatch[1][0];
+				$sInputText=(string)$oVar->input;
 				
-				preg_match_all('/#textarea(.*)?#fin_textarea/s',$sContent,$tMatch);
-				$sInputTextarea=$tMatch[1][0];
+				$sInputTextarea=(string)$oVar->textarea;
 				
-				preg_match_all('/#select(.*)?#fin_select/s',$sContent,$tMatch);
-				$sInputSelect=$tMatch[1][0];
+				$sInputSelect=(string)$oVar->select;
 
-				preg_match_all('/#upload(.*)?#fin_upload/s',$sContent,$tMatch);
-				$sInputUpload=$tMatch[1][0];
+				$sInputUpload=(string)$oVar->upload;
 
 
 				$sLinks='';
 				$sLinkNew='';
-				
+
 				if($sTpl=='list'){
 					//TH
-					preg_match_all('/#ligneth(.*)?#fin_ligneth/s',$sContent,$tMatch);
-					$sLigneTH=$tMatch[1][0];
+					$sLigneTH=(string)$oVar->ligneth;
 					
 					//liens
-					preg_match_all('/#linkNew(.*)?linkNew#/s',$sContent,$tMatch);
-					$tLink['crudNew']=$tMatch[1][0];
-					preg_match_all('/#linkEdit(.*)?linkEdit#/s',$sContent,$tMatch);
-					$tLink['crudEdit']=$tMatch[1][0];
-					preg_match_all('/#linkShow(.*)?linkShow#/s',$sContent,$tMatch);
-					$tLink['crudShow']=$tMatch[1][0];
-					preg_match_all('/#linkDelete(.*)?linkDelete#/s',$sContent,$tMatch);
-					$tLink['crudDelete']=$tMatch[1][0];
+					$tLink['crudNew']=(string)$oVar->linkNew;
+					$tLink['crudEdit']=(string)$oVar->linkEdit;
+					$tLink['crudShow']=(string)$oVar->linkShow;
+					$tLink['crudDelete']=(string)$oVar->linkDelete;
 					
 					$iMaxCrud=count($tCrud);
 					$iMaxCrud-=2;
@@ -278,7 +279,7 @@ class module_moduleCrudEmbedded{
 						$sLinkNew=$tLink['crudNew'];
 					}
 					
-				}			
+				}
 
 				$sTable='';
 				$sTableTh='';
@@ -320,7 +321,8 @@ class module_moduleCrudEmbedded{
 					'<\?php \/\/enctype\?>' => $sEnctype,
 					'<\?php \/\/ici\?>' => $sTable,
 					'<\?php \/\/icith\?>' => $sTableTh,
-					'<\?php\/\*variables(.*)variables\*\/\?>' => '',
+					
+					'<\?php \/\/colspan\?>' => (count($tColumn)+1)
 				);
 				
 				
@@ -341,5 +343,6 @@ class module_moduleCrudEmbedded{
 		
 		
 	}
+	
 	
 }

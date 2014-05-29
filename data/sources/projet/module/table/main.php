@@ -16,8 +16,24 @@ class module_table extends abstract_moduleembedded{
 	protected $iCurrentLine=-1;
 	protected $tHeader;
 	protected $tClassColumn;
+	protected $tStyleColumn;
 	
 	protected $sTableOption=null;
+	
+	protected $bodyNbLine=25;
+	protected $bodyHeight=300;
+	
+	protected $tableWidth=50;
+	
+	protected $bPaginationEnabled=0;
+	protected $iPaginationLimit=0;
+	protected $iPaginationPage=0;
+	protected $iPaginationMax;
+	protected $sPaginationParam='page';
+	
+	protected $bPaginationServerEnabled=0;
+	
+	protected $ajaxLink=null;
 	
 	public function __construct($sView='simple'){
 		self::setRootLink(_root::getParamNav(),null);
@@ -47,6 +63,10 @@ class module_table extends abstract_moduleembedded{
 		$this->tAltCycle[$id]=-1;
 	}
 	public function cycle($id=0){
+		if(!isset($this->tAltCycle[$id])){
+			return null;
+		}
+		
 		$this->tAltCycle[$id]+=1;
 		if($this->tAltCycle[$id] >= $this->tCountCycle[$id]){
 			$this->tAltCycle[$id]=0;
@@ -79,6 +99,19 @@ class module_table extends abstract_moduleembedded{
 	
 	public function setColumnClass($tClassColumn){
 		$this->tClassColumn=$tClassColumn;
+	}
+	
+	public function setColumnStyle($tStyleColumn){
+		$this->tStyleColumn=$tStyleColumn;
+	}
+	
+	public function setLimitLine($bodyNbLine,$bodyHeight){
+		$this->bodyNbLine=$bodyNbLine;
+		$this->bodyHeight=$bodyHeight;
+	}
+	
+	public function setWidthTable($tableWidth){
+		$this->tableWidth=$tableWidth;
 	}
 	
 	/*
@@ -121,6 +154,32 @@ class module_table extends abstract_moduleembedded{
 		$this->tLine[ $this->iCurrentLine ]['link']=$sLink;
 	}
 	
+	//pagination
+	public function enablePagination(){
+		$this->bPaginationEnabled=1;
+	}
+	public function setPaginationLimit($iLimit){
+		$this->iPaginationLimit=$iLimit;
+	}
+	public function selectPaginationPage($iPage){
+		$this->iPaginationPage=($iPage-1);
+		if($this->iPaginationPage==-1) $this->iPaginationPage=0;
+	}
+	public function setPaginationParam($sVar){
+		$this->sPaginationParam=$sVar;
+	}
+	//pagination server
+	public function enablePaginationServer(){
+		$this->bPaginationServerEnabled=1;
+	}
+	public function setPaginationMax($iMax){
+		$this->iPaginationMax=$iMax;
+	}
+	
+	public function setAjaxLink($sNav){
+		$this->ajaxLink=$sNav;
+	}
+	
 	/*
 	Pour integrer au sein d'un autre module:
 	
@@ -144,6 +203,41 @@ class module_table extends abstract_moduleembedded{
 		$oView->tLine=$this->tLine;
 		$oView->tHeader=$this->tHeader;
 		$oView->tClassColumn=$this->tClassColumn;
+		$oView->tStyleColumn=$this->tStyleColumn;
+		
+		$oView->bodyNbLine=$this->bodyNbLine;
+		$oView->bodyHeight=$this->bodyHeight;
+		
+		$oView->tableWidth=$this->tableWidth;
+		
+		if($this->bPaginationServerEnabled){
+			$this->selectPaginationPage( self::getParam($this->sPaginationParam) );
+			$oView->ajaxLink=$this->ajaxLink;
+			
+			$oViewPagination=new _view('table::pagination');
+			$oViewPagination->iPage=$this->iPaginationPage;
+			$oViewPagination->iMax=ceil( ($this->iPaginationMax/$this->iPaginationLimit) );
+			$oViewPagination->sParamPage=$this->sPaginationParam;
+			$oViewPagination->ajaxLink=$this->ajaxLink;
+
+			$oView->oModulePagination=$oViewPagination;
+			
+		}else if($this->bPaginationEnabled){
+	
+			$this->selectPaginationPage( self::getParam($this->sPaginationParam) );
+			$oView->tLine=$this->getPaginationPage();
+			$oView->ajaxLink=$this->ajaxLink;
+			
+			$oViewPagination=new _view('table::pagination');
+			$oViewPagination->iPage=$this->iPaginationPage;
+			$oViewPagination->iMax=ceil( ($this->iPaginationMax/$this->iPaginationLimit) );
+			$oViewPagination->sParamPage=$this->sPaginationParam;
+			$oViewPagination->ajaxLink=$this->ajaxLink;
+
+			$oView->oModulePagination=$oViewPagination;
+			
+		}
+		
 		
 		return $oView;
 	}
@@ -159,5 +253,20 @@ class module_table extends abstract_moduleembedded{
 		return $sOption;
 	}
 	
-	
+	private function getPaginationPage(){
+		$tPartElement=array();
+		
+		$this->iPaginationMax=count($this->tLine);
+		
+		$iMin=$this->iPaginationPage*$this->iPaginationLimit;
+		$iPart=$iMin+$this->iPaginationLimit;
+		if($iPart > $this->iPaginationMax){
+			$iPart=$this->iPaginationMax;
+		}
+		
+		for($i=$iMin;$i<$iPart;$i++){
+			$tPartElement[]=$this->tLine[$i];
+		}
+		return $tPartElement;
+	}
 }

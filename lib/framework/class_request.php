@@ -101,7 +101,11 @@ class _request{
 	*/
 	public function getParamsGET(){
 		if( (int)_root::getConfigVar('security.xss.enabled')==1){
-			$tParam= array_map('customHtmlentities',$_GET);
+			$tParam=array();
+			foreach($_GET as $key => $val){
+					$tParam[customHtmlentities($key)]=customHtmlentities($val);
+			}
+
 		}else{
 			$tParam= $_GET;
 		}

@@ -48,7 +48,7 @@ class plugin_chartSVG{
 		}else if($sType==self::$BAR){
 			$this->oChart=new plugin_chartBarSVG($this->iWidth,$this->iHeight);
 		}else{
-			throw new Exception('sType non reconnu, attendu: (PIE,HISTO,LINES)');
+			throw new Exception('sType non reconnu, attendu: (PIE,HISTO,LINES,BAR)');
 		}
 	}
 	

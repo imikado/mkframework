@@ -155,6 +155,49 @@
 		return $oModel->getListColumn();
 	}
 	
+	public function loadConfig($sClass){
+		$sPath=_root::getConfigVar('path.generation')._root::getParam('id').'/model/'.$sClass.'.php';
+		require_once( $sPath );
+		$oModel=new $sClass;
+		
+		$sConfig=$oModel->getConfig();
+		
+		if( _root::getConfigVar('db.'.$sConfig.'.sgbd') == 'xml' ){
+			if( !file_exists( _root::getConfigVar('db.'.$sConfig.'.database') ) ){
+				$sBuilderDbPath=_root::getConfigVar('path.data').'genere/'._root::getParam('id').'/public/'._root::getConfigVar('db.'.$sConfig.'.database');
+				if( file_exists($sBuilderDbPath) ){
+					_root::setConfigVar('db.'.$sConfig.'.database',$sBuilderDbPath);
+				}else{
+					throw new Exception('Base inexistante '._root::getConfigVar('db.'.$sConfig.'.database').' ni '.$sBuilderDbPath );
+				}
+			}
+		}
+		else if( _root::getConfigVar('db.'.$sConfig.'.sgbd') == 'csv' ){
+			if( !file_exists( _root::getConfigVar('db.'.$sConfig.'.database') ) ){
+				$sBuilderDbPath=_root::getConfigVar('path.data').'genere/'._root::getParam('id').'/public/'._root::getConfigVar('db.'.$sConfig.'.database');
+				if( file_exists($sBuilderDbPath) ){
+					_root::setConfigVar('db.'.$sConfig.'.database',$sBuilderDbPath);
+				}else{
+					throw new Exception('Base inexistante '._root::getConfigVar('db.'.$sConfig.'.database').' ni '.$sBuilderDbPath );
+				}
+			}
+		}
+		else if( _root::getConfigVar('db.'.$sConfig.'.sgbd') == 'json' ){
+			if( !file_exists( _root::getConfigVar('db.'.$sConfig.'.database') ) ){
+				$sBuilderDbPath=_root::getConfigVar('path.data').'genere/'._root::getParam('id').'/public/'._root::getConfigVar('db.'.$sConfig.'.database');
+				if( file_exists($sBuilderDbPath) ){
+					_root::setConfigVar('db.'.$sConfig.'.database',$sBuilderDbPath);
+				}else{
+					throw new Exception('Base inexistante '._root::getConfigVar('db.'.$sConfig.'.database').' ni '.$sBuilderDbPath );
+				}
+			}
+		}
+		
+		return $oModel->getListColumn();
+	}
+	
+	 
+	
 	public function getIdTabFromClass($sClass){
 		$sPath=_root::getConfigVar('path.generation')._root::getParam('id').'/model/'.$sClass.'.php';
 		require_once( $sPath );
@@ -177,6 +220,16 @@
 		);
 
 		$oFile=new _file( _root::getConfigVar('path.generation').$sProject.'/layout/template1.php' );
+		$oFile->setContent($sContent);
+		$oFile->save();
+		$oFile->chmod(0666);
+	}
+	public function updateFile($sProject,$tMatch,$sFile){
+		$sContent=$this->stringReplaceIn($tMatch,
+									_root::getConfigVar('path.generation').$sProject.'/'.$sFile
+		);
+
+		$oFile=new _file( _root::getConfigVar('path.generation').$sProject.'/'.$sFile );
 		$oFile->setContent($sContent);
 		$oFile->save();
 		$oFile->chmod(0666);

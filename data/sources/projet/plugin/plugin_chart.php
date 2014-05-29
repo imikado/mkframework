@@ -48,7 +48,7 @@ class plugin_chart{
 		}else if($sType==self::$BAR){
 			$this->oChart=new plugin_chartBar($this->iWidth,$this->iHeight);
 		}else{
-			throw new Exception('sType non reconnu, attendu: (PIE,HISTO,LINES)');
+			throw new Exception('sType non reconnu, attendu: (PIE,HISTO,LINES,BAR)');
 		}
 	}
 	
@@ -70,9 +70,21 @@ class plugin_chart{
 		return $this->oChart->show();
 	}
 	
+	/**
+	* ajoute un groupe au graphique
+	* @access public
+	* @param string $sLabel libelle du groupe
+	* @param string $sColor couleur utilise
+	*/
 	public function addGroup($sLabel,$sColor){
 		$this->oChart->addGroup($sLabel,$sColor);
 	}
+	/**
+	* ajoute un point au graphique
+	* @access public
+	* @param number $x coordonnee x du point
+	* @param number $y coordonnee y du point
+	*/
 	public function addPoint($x,$y){
 		$this->oChart->addPoint($x,$y);
 	}

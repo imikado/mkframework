@@ -23,6 +23,9 @@ $tIni=parse_ini_file('../conf/site.ini.php',true);
 include($tIni['path']['lib'].'/class_root.php');
 spl_autoload_register(array('_root','autoload'));
 
+//enregistrement de votre autoloader personnel
+include($tIni['path']['plugin'].'/plugin_autoload.php');
+spl_autoload_register(array('plugin_autoload','autoload'));
 
 
 //pour gerer toutes les erreurs en exception

@@ -8,6 +8,8 @@ Class module_menu extends abstract_module{
 			'Articles pagine' => 'article::listPagination',
 			'Articles via module table' => 'article::listModuleTable',
 			
+			'Utiliser des classes metiers' => 'article::myclass',
+			
 			'Graphiques' => 'chart::examples',
 			'Graphiques SVG' => 'chart::examplesSVG',
 			'Google Map' => 'default::googleMap',

@@ -126,12 +126,14 @@ text-decoration:none;
 .tb_list3 thead{
 display:block;
 width:530px;
+float:left;
 }
 .tb_list3 tbody{
 width:540px;
 display:block;
 height:50px;
 overflow-y:auto;
+float:left;
 }
 .tb_list3 .titre{
 width:200px;

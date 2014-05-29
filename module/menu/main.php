@@ -30,37 +30,92 @@ Class module_menu extends abstract_module{
 		
 		return $oTpl;
 	}
+	public function _export(){
+		$oTpl=new _tpl('menu::export');
+		
+		return $oTpl;
+	}
 	public function _projet(){
 		
-		$tLink=array(
-			//'Ajouter un module' => 'addmodule',
-			'Couche modele'=>'title',
-				'Cr&eacute;er la couche mod&egrave;le' => 'model',
+		$bBootstrap=0;
+		if(file_exists('data/genere/'._root::getParam('id').'/layout/bootstrap.php')){
+			$bBootstrap=1;
+		}
+		
+		if($bBootstrap){
 			
-			'Modules' => 'title',
-				'Cr&eacute;er un module' => 'module',
+			$supB=' <sup>Bootstrap</sup>';
+			
+			$tLink=array(
+				//'Ajouter un module' => 'addmodule',
+				'Couche modele'=>'title',
+					'Cr&eacute;er la couche mod&egrave;le' => 'model',
 				
-				'Cr&eacute;er un module CRUD' => 'crud',
-				'Cr&eacute;er un module Lecture seule' => 'crudreadonly',
+				'Modules' => 'title',
+					'Cr&eacute;er un module'.$supB => 'moduleWithBootstrap',
+					
+					'Cr&eacute;er un module CRUD'.$supB => 'crudWithBootstrap',
+					'Cr&eacute;er un module Lecture seule'.$supB => 'crudreadonlyWithBootstrap',
+					
+					'Cr&eacute;er un module d\'authentification'.$supB => 'authmoduleWithBootstrap',
+					'Cr&eacute;er un module d\'authentification avec inscription'.$supB => 'authwithinscriptionmoduleWithBootstrap',
 				
-				'Cr&eacute;er un module d\'authentification' => 'authmodule',
-				'Cr&eacute;er un module d\'authentification avec inscription' => 'authwithinscriptionmodule',
+				'Modules int&eacute;grable' => 'title',
+					'Cr&eacute;er un module menu '.$supB => 'addmodulemenuWithBootstrap',
+					//'Cr&eacute;er un module int&eacute;grable'.$supB => 'moduleembeddedWithBootstrap',
+					//'Cr&eacute;er un module CRUD int&eacute;grable'.$supB => 'crudembeddedWithBootstrap',
+					//'Cr&eacute;er un module Lecture seule int&eacute;grable'.$supB => 'crudembeddedreadonlyWithBootstrap',
+					
+				
+				'Base de donn&eacute;es embarqu&eacute;es' => 'title',
+				
+					'Cr&eacute;er une base xml' => 'xml',
+					'Cr&eacute;er un index sur une base xml' => 'xmlindex',
+					'Cr&eacute;er une base csv' => 'csv',
+					'Cr&eacute;er une base sqlite' => 'sqlite',
+					'Cr&eacute;er une base json' => 'json',
+					'Cr&eacute;er un index sur une base json' => 'jsonindex',
+			);
+		}else{
 			
-			'Modules int&eacute;grable' => 'title',
-				'Cr&eacute;er un module menu ' => 'addmodulemenu',
-				'Cr&eacute;er un module int&eacute;grable' => 'moduleembedded',
-				'Cr&eacute;er un module CRUD int&eacute;grable' => 'crudembedded',
-				'Cr&eacute;er un module Lecture seule int&eacute;grable' => 'crudembeddedreadonly',
+			$tLink=array(
+				//'Ajouter un module' => 'addmodule',
+				'Couche modele'=>'title',
+					'Cr&eacute;er la couche mod&egrave;le' => 'model',
+				
+				'Modules' => 'title',
+					'Cr&eacute;er un module' => 'module',
+					
+					'Cr&eacute;er un module CRUD' => 'crud',
+					'Cr&eacute;er un module Lecture seule' => 'crudreadonly',
+					
+					'Cr&eacute;er un module d\'authentification' => 'authmodule',
+					'Cr&eacute;er un module d\'authentification avec inscription' => 'authwithinscriptionmodule',
+				
+				'Modules int&eacute;grable' => 'title',
+					'Cr&eacute;er un module menu ' => 'addmodulemenu',
+					'Cr&eacute;er un module int&eacute;grable' => 'moduleembedded',
+					'Cr&eacute;er un module CRUD int&eacute;grable' => 'crudembedded',
+					'Cr&eacute;er un module Lecture seule int&eacute;grable' => 'crudembeddedreadonly',
+					
+				'Vues' => 'title',
+					'Cr&eacute;er un tableau simple (avec le module table)' => 'addviewtablemoduletablesimple',
+					//'Cr&eacute;er un tableau avec tri (avec le module table)' => 'addviewtablemoduletablewithorder',
+					//'Cr&eacute;er un tableau avec tri + ligne cliquable (avec le module table)' => 'addviewtablemoduletablewithorderclic',
+					'C&eacuteer un formulaire' => 'addviewform',
+					
+				
+				'Base de donn&eacute;es embarqu&eacute;es' => 'title',
+				
+					'Cr&eacute;er une base xml' => 'xml',
+					'Cr&eacute;er un index sur une base xml' => 'xmlindex',
+					'Cr&eacute;er une base csv' => 'csv',
+					'Cr&eacute;er une base sqlite' => 'sqlite',
+					'Cr&eacute;er une base json' => 'json',
+					'Cr&eacute;er un index sur une base json' => 'jsonindex',
+			);
 			
-			'Base de donn&eacute;es embarqu&eacute;es' => 'title',
-			
-				'Cr&eacute;er une base xml' => 'xml',
-				'Cr&eacute;er un index sur une base xml' => 'xmlindex',
-				'Cr&eacute;er une base csv' => 'csv',
-				'Cr&eacute;er une base sqlite' => 'sqlite',
-				'Cr&eacute;er une base json' => 'json',
-				'Cr&eacute;er un index sur une base json' => 'jsonindex',
-		);
+		}
 		
 		$oTpl=new _tpl('menu::projet');
 		$oTpl->tLink=$tLink;

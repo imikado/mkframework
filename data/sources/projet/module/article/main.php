@@ -30,8 +30,17 @@ class module_article extends abstract_module{
 	}
 	public function _listModuleTable(){
 		
+		$sOrder=module_table::getParam('order');
+		if($sOrder==''){
+			$sOrder='titre';
+		}
+		$sSide=module_table::getParam('side');
+		if($sSide==''){
+			$sSide='ASC';
+		}
+		
 		$oArticleModel=new model_article;
-		$tArticle=$oArticleModel->findAllOrderBy(module_table::getParam('order','titre'),module_table::getParam('side'));
+		$tArticle=$oArticleModel->findAllOrderBy($sOrder,$sSide);
 		
 		$oView=new _view('article::listViaModule');
 		$oView->tArticle=$tArticle;
@@ -43,6 +52,30 @@ class module_article extends abstract_module{
 
 		$this->oLayout->add('main',$oView);
 	}
+	
+	public function _listAjax(){
+		$sOrder=module_table::getParam('order');
+		if($sOrder==''){
+			$sOrder='titre';
+		}
+		$sSide=module_table::getParam('side');
+		if($sSide==''){
+			$sSide='ASC';
+		}
+		
+		$oArticleModel=new model_article;
+		$tArticle=$oArticleModel->findAllOrderBy($sOrder,$sSide);
+		
+		$oView=new _view('article::listViaModuleAjax');
+		$oView->tArticle=$tArticle;
+		$oView->tColumn=$oArticleModel->getListColumn();
+		
+		//on recupere un tableau indexe des auteurs pour afficher leur nom a la place de leur id
+		$oView->tJoinAuteur=model_auteur::getInstance()->getSelect();
+		
+		print $oView->show();exit;
+	}
+	
 	public function _listPagination(){
 		$oArticleModel=new model_article;
 		$tArticle=$oArticleModel->findAll();
@@ -60,6 +93,18 @@ class module_article extends abstract_module{
 		$oTpl->oModulePagination=$oModulePagination->build();
 		
 		$this->oLayout->add('main',$oTpl);
+	}
+	
+	public function _myclass(){
+		
+		$oMetier=new my_metier();
+		
+		$oView=new _view('article::myclass');
+		$oView->oMetier=$oMetier;
+		
+		$this->oLayout->add('main',$oView);
+		
+		
 	}
 
 	public function _new(){

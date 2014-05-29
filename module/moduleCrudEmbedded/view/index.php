@@ -75,6 +75,10 @@
 				<?php foreach($this->tRowMethodes as $sRowMethod => $sLabel):?>
 					<option value="select;<?php echo $sRowMethod?>">Select en utilisant <?php echo $sLabel?></option>
 				<?php endforeach;?>
+				
+				<?php foreach($this->tRowMethodes as $sRowMethod => $sLabel):?>
+					<option value="listCheckbox;<?php echo $sRowMethod?>">Liste checkbox en utilisant <?php echo $sLabel?></option>
+				<?php endforeach;?>
 			</select></td>
 		</tr>
 	<?php endforeach;?>

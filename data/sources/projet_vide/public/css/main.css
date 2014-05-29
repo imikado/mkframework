@@ -1,6 +1,7 @@
 *{
 font-family:arial;
 font-size:11px;
+color:#222;
 }
 img{
 border:none;
@@ -15,7 +16,8 @@ width:800px;
 }
 .main .menu{
 float:left;
-width:180px;
+width:154px;
+margin-right:6px;
 }
 	.main .menu ul{
 	margin:0px;
@@ -23,13 +25,17 @@ width:180px;
 	}
 	.main .menu a{
 	text-decoration:none;
+	display:block;
+	padding:3px;
+	color:#222;
 	}
 	.main .menu li{
 	padding:0px 2px;
 	border:1px solid #ccc;
 	margin:0px;
-	background:#ddd;
+	background:#ccc;
 	list-style:none;
+	margin-bottom:4px;
 	}
 	.main .menu .selectionne{
 	background:#fff;
@@ -38,9 +44,7 @@ width:180px;
 float:left;
 width:600px;
 border:1px solid #ccc;
-}
-.main .content table th{
-background:#ccc;
+padding:10px;
 }
 .main .content form .textarea, .main .content form .input{
 width:100%;
@@ -72,9 +76,7 @@ width:30px;
 .taches{
 border-collapse: collapse;
 }
-.taches th{
-text-align:left;
-}
+
 .content td{
 vertical-align:top;
 }
@@ -84,13 +86,22 @@ border-collapse: collapse;
 }
 .tb_list th,.tb_list td{
 border:1px solid gray;
+padding:4px;
 }
 .tb_list th{
 text-align:left;
+background:#ddd;
 }
 .tb_list td{
 vertical-align:top;
 }
 .tb_list .alt td{
 background:#eee;
+}
+.tb_edit th, .tb_new th, .tb_delete th, .tb_show th{
+padding:4px;
+text-align:right;
+}
+.tb_edit td, .tb_edit th, .tb_new th, .tb_new td, tb_delete td, .tb_delete th, .tb_show th, .tb_show td{
+padding:4px;
 }
