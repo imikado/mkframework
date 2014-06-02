@@ -1,6 +1,7 @@
 {
 	"name": "mkframework/mkframework",
 	"description": "A simple php framework.",
+	"license": "LGPLv3",
 	"require": {
 		"php": ">=5.2.0"
 	}
