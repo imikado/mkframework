@@ -2,6 +2,6 @@
 	"name": "mkframework/mkframework",
 	"description": "A simple php framework.",
 	"require": {
-	"php": ">=5.2.0",
+		"php": ">=5.2.0"
 	}
 }
