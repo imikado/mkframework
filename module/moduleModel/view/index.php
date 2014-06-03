@@ -44,6 +44,12 @@ $tSelectVal=_root::getParam('tSelectVal');
 <div class="table">
 <?php $bErrorExist=0?>
 <?php if($this->tTableColumn):?>
+
+
+<?php if(preg_match('/mysql/',$this->tConnexion[ _root::getParam('sConfig').'.sgbd' ])):?>
+<p><input type="checkbox" name="mysqlOnDuplicateKey" value="1"/> Utiliser "ON DUPLICATE KEY" (uniquement pour les bases mysql) </p>
+<?php endif;?>
+
 <table>
 	<tr>
 		<th></th>

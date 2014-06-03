@@ -65,12 +65,50 @@ class module_moduleModel{
 											'data/sources/fichiers/model/getSelect.php'
 			);
 		}
+		
+		$sSave='parent::save();';
+		
+		$sSaveDuplicateKey=null;
+		if(_root::getParam('mysqlOnDuplicateKey')==1){
+			
+			$soData='$o'.ucfirst($sTable);
+			
+			$tColumn=module_builder::getTools()->getListColumnFromConfigAndTable($sConfig,$sTable);
+			foreach($tColumn as $sColumn){
+				if($sColumn==$sId){
+					continue;
+				}
+				$tFieldSql[]=$sColumn;
+				
+				$tSqlInsert[]='?';
+				$tSqlUpdate[]=$sColumn.'=?';
+				
+				$tParam[]=$soData.'->'.$sColumn;
+			}
+			foreach($tColumn as $sColumn){
+				if($sColumn==$sId){
+					continue;
+				}
+				$tParam[]=$soData.'->'.$sColumn;
+			}
+			//$tParam[]=$soData.'->'.$sId;
+			
+			$sSqlUpdateId=$sId;
+			
+			$sSaveDuplicateKey.='public function save('.$soData.'){'."\n";
+			$sSaveDuplicateKey.="\t"."\t".'$this->execute(\'INSERT INTO \'.$this->sTable.\' ('.implode(',',$tFieldSql).') VALUES ('.implode(',',$tSqlInsert).') ON DUPLICATE KEY UPDATE '.implode(',',$tSqlUpdate).'  \',array('.implode(',',$tParam).'));'."\n";
+			$sSaveDuplicateKey.="\t".'}'."\n";
+			
+			$sSave='model_'.$sTable.'::getInstance()->save($this);';
+		}
 
 		$sContent=module_builder::getTools()->stringReplaceIn(array(
 											'exampletb' => $sTable,
 											'exampleid' => $sId,
 											'exampleconfig' => $sConfig,
 											'\/\/ICI' => $sContentGetSelect,
+											'\/\/sSaveDuplicateKey' => $sSaveDuplicateKey,
+											'\/\/save' => $sSave,
 										),
 										'data/sources/projet/model/model_example.sample.php'
 		);

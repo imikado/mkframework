@@ -20,6 +20,7 @@ class model_exampletb extends abstract_model{
 	}
 	
 	//ICI
+	//sSaveDuplicateKey
 }
 
 class row_exampletb extends abstract_row{
@@ -61,7 +62,7 @@ class row_exampletb extends abstract_row{
 		if(!$this->isValid()){
 			return false;
 		}
-		parent::save();
+		//save
 		return true;
 	}
 
