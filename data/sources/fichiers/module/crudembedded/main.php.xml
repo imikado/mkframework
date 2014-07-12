@@ -66,7 +66,6 @@
 		$tMessage=$this->processSave();
 	
 		$oExamplemodel=new row_examplemodel;
-		$oExamplemodel=$this->fillRow($oExamplemodel);
 		
 		$oView=new _view('examplemodule::new');
 		$oView->oExamplemodel=$oExamplemodel;
@@ -86,7 +85,6 @@
 		$tMessage=$this->processSave();
 		
 		$oExamplemodel=model_examplemodel::getInstance()->findById( module_examplemodule::getParam('id') );
-		$oExamplemodel=$this->fillRow($oExamplemodel);
 		
 		$oView=new _view('examplemodule::edit');
 		$oView->oExamplemodel=$oExamplemodel;

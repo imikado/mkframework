@@ -1,10 +1,13 @@
-<?php $oPluginHtml=new plugin_html?>
+<?php 
+$oForm=new plugin_form($this->oExamplemodel);
+$oForm->setMessage($this->tMessage);
+?>
 <form  class="form-horizontal" action="" method="POST" <?php //enctype?>>
 
 	<?php //ici?>
 
-<input type="hidden" name="token" value="<?php echo $this->token?>" />
-<?php if($this->tMessage and isset($this->tMessage['token'])): echo $this->tMessage['token']; endif;?>
+<?php echo $oForm->getToken('token',$this->token)?>
+
 
 <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">

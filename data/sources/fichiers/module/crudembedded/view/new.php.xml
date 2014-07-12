@@ -5,8 +5,8 @@
 		<td>exampletd</td>
 	</tr>
 ]]></lignetd>
-<input><![CDATA[<input name="examplecolumn" value="<?php echo $this->oExamplemodel->examplecolumn ?>" /><?php if($this->tMessage and isset($this->tMessage['examplecolumn'])): echo implode(',',$this->tMessage['examplecolumn']); endif;?>]]></input>
-<textarea><![CDATA[<textarea name="examplecolumn"><?php echo $this->oExamplemodel->examplecolumn ?></textarea><?php if($this->tMessage and isset($this->tMessage['examplecolumn'])): echo implode(',',$this->tMessage['examplecolumn']); endif;?>]]></textarea>
-<select><![CDATA[<?php echo $oPluginHtml->getSelect('examplecolumn',$this->tJoinexamplemodel,$this->oExamplemodel->examplecolumn)?><?php if($this->tMessage and isset($this->tMessage['examplecolumn'])): echo implode(',',$this->tMessage['examplecolumn']); endif;?>]]></select>
-<upload><![CDATA[<input type="file" name="examplecolumn" /><?php if($this->tMessage and isset($this->tMessage['examplecolumn'])): echo implode(',',$this->tMessage['examplecolumn']); endif;?>]]></upload>
+<input><![CDATA[<?php echo $oForm->getInputText('examplecolumn')?>]]></input>
+<textarea><![CDATA[<?php echo $oForm->getInputTextarea('examplecolumn')?>]]></textarea>
+<select><![CDATA[<?php echo $oForm->getSelect('examplecolumn',$this->tJoinexamplemodel);?>]]></select>
+<upload><![CDATA[<?php echo $oForm->getInputUpload('examplecolumn')?>]]></upload>
 </variables>

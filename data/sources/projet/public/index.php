@@ -18,7 +18,7 @@ $autoloader->setFallbackAutoloader(false);
 $iMicrotime=microtime();
 
 //on parse le fichier ini pour trouver l'adresse de la librairie
-$tIni=parse_ini_file('../conf/site.ini.php',true);
+$tIni=parse_ini_file('../conf/path.ini.php',true);
 //enregistrement de l'auto loader du framework
 include($tIni['path']['lib'].'/class_root.php');
 spl_autoload_register(array('_root','autoload'));
@@ -34,6 +34,7 @@ function exception_error_handler($errno, $errstr, $errfile, $errline ) {
 set_error_handler("exception_error_handler");
 
 $oRoot=new _root();
+$oRoot->addConf('../conf/path.ini.php');
 $oRoot->addConf('../conf/mode.ini.php');
 $oRoot->addConf('../conf/connexion.ini.php');
 $oRoot->addConf('../conf/site.ini.php');

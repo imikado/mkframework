@@ -98,6 +98,18 @@ class plugin_form{
 		return $sHtml;
 	}
 	/** 
+	* retourne un champ upload
+	* @access public
+	* @param string $sName nom du champ
+	* @param array $tOption options du champ upload
+	*/
+	public function getInputUpload($sName,$tOption=null){
+		$sHtml=null;
+		$sHtml.='<input type="file" name="'.$sName.'" '.$this->getOption($tOption).'/>';
+		$sHtml.=$this->getMessage($sName);
+		return $sHtml;
+	}
+	/** 
 	* retourne un champ menu deroulant
 	* @access public
 	* @param string $sName nom du champ

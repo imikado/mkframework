@@ -39,5 +39,12 @@ abstract class abstract_module{
 		}
 		return $this->_tVar[$sVar];
 	}
+	
+	public function before(){
+		
+	}
+	public function after(){
+		
+	}
 
 }

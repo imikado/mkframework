@@ -13,6 +13,9 @@ Class module_menu extends abstract_module{
 			'Graphiques' => 'chart::examples',
 			'Graphiques SVG' => 'chart::examplesSVG',
 			'Google Map' => 'default::googleMap',
+			
+			'Auteurs xml' => 'auteurxml::list',
+			
 			'Prive' => 'prive::list',
 		);
 

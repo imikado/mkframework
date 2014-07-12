@@ -6,6 +6,7 @@
 <script src="js/main.js" type="text/javascript"></script>
 <script src="js/jquery-1.4.4.min.js" type="text/javascript"></script>
 <link rel="alternate" type="application/rss+xml" title="RSS" href="<?php echo _root::getLink('article::newsrss') ?>"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 <body>
 

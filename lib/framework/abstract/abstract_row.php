@@ -141,6 +141,19 @@ abstract class abstract_row{
 		}
 		return null;
 	}
+	/** 
+	* isset
+	*/
+	public function __isset($sVar){
+        return isset($this->_tProperty[$sVar]);
+    }
+    
+    /** 
+	* unset
+	*/
+    public function __unset($sVar){
+        unset($this->_tProperty[$sVar]);
+    }
 	/**
 	* force l'id de l'enregistrement
 	* @param undefined $uId

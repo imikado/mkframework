@@ -24,24 +24,6 @@ class module_examplemodule extends abstract_module{
 	//iciMethodDelete
 	
 	
-	private function fillRow($oExamplemodel){
-		if(!_root::getRequest()->isPost() ){ //si ce n'est pas une requete POST on ne soumet pas
-			return $oExamplemodel;
-		}
-		
-		$tId=model_examplemodel::getInstance()->getIdTab();
-		$tColumn=model_examplemodel::getInstance()->getListColumn();
-		foreach($tColumn as $sColumn){
-			if( _root::getParam($sColumn,null) === null ){ 
-				continue;
-			}else if( in_array($sColumn,$tId)){
-				 continue;
-			}
-			
-			$oExamplemodel->$sColumn=_root::getParam($sColumn,null) ;
-		}
-		return $oExamplemodel;
-	}
 
 	private function processSave(){
 		if(!_root::getRequest()->isPost() ){ //si ce n'est pas une requete POST on ne soumet pas

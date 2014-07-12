@@ -1,12 +1,13 @@
 ;<?php die();?>
 [cache]
 enabled=0
-lifetime= 0
+;temps de validite du cache exprime en secondes 
+lifetime=0
 autoload.enabled=0
 
 [encodage]
 ;indique l'encodage des fichiers de code, utilise pour la protection des tableaux de contexte ($_GET,$_POST)
-charset=ISO-8859-1
+charset=UTF-8
 ;indique si le framework encode en html le code deja en html
 double_encode=0
 
@@ -73,23 +74,12 @@ class=plugin_check
 redirection.default=header
 timezone=Europe/Paris
 
-[path]
-lib=../../../../lib/framework/
-
-data=../data/
-upload=../data/upload/
-log=../data/log/
-img=../data/img/
-i18n=../data/i18n/
-cache=../data/cache/
-
-conf=../conf/
-module=../module/
-plugin=../plugin/
-model=../model/
-layout=../layout/
-
-view=view/
-
 [model]
 ini.var=db
+
+[pdo]
+;Plus d'informations ici: http://www.php.net//manual/fr/pdo.setattribute.php
+;SILENT,WARNING,EXCEPTION
+ATTR_ERRMODE=WARNING 
+;LOWER,NATURAL,UPPER
+ATTR_CASE=NATURAL

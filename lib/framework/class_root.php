@@ -31,7 +31,7 @@ class _root{
 
 	static protected $_tConfigFilename;
 	static protected $_tRequestTab;
-	static protected $_tAutoload;
+	static public $tAutoload;
 	
 	static protected $_tConfigVar;
 	static protected $_tGlobalVar;
@@ -143,7 +143,7 @@ class _root{
 	
 	/** 
 	* lance le framework (dispatch...)
-	* @access public static	
+	* @access public	
 	*/
 	public function run(){
 		
@@ -196,10 +196,10 @@ class _root{
 			$oModule=new $sClassModule;	
 			
 			if( method_exists($oModule,'_'.$sModuleActionToLoad) ){
-				if( method_exists($oModule,'before') ){
-					/*LOG*/self::getLog()->info('appel module ['.$sModuleToLoad.'::before]');
-					$oModule->before();
-				}
+				
+				/*LOG*/self::getLog()->info('appel module ['.$sModuleToLoad.'::before]');
+				$oModule->before();
+				
 				//pre action
 				if( method_exists($oModule,'before_'.$sModuleActionToLoad) ){
 					/*LOG*/self::getLog()->info('appel module ['.$sModuleToLoad.'::before_'.$sModuleActionToLoad.']');
@@ -207,15 +207,16 @@ class _root{
 					$oModule->$sActionBefore();
 				}
 			
-			
 				//debut cache
 				if( (int)self::getConfigVar('cache.enabled') == 1 ){
 				
 					$sNomPageCache='cache_'.str_replace('::','_',implode('_',self::getRequest()->getParams())).'.html';
 					$oFichierCache=new _file(self::getConfigVar('path.cache').$sNomPageCache);
 				
-					if($oFichierCache->exist() 
-						and time()-$oFichierCache->filemtime() > (int)self::getConfigVar('cache.lifetime')
+					if(
+						( $oFichierCache->exist() and (int)self::getConfigVar('cache.lifetime') == 0 )
+						or
+						( $oFichierCache->exist() and time()-$oFichierCache->filemtime() < (int)self::getConfigVar('cache.lifetime') )
 					){
 						/*LOG*/self::getLog()->info('utilisation page en cache ['.$sNomPageCache.']');
 						echo $oFichierCache->getContent();
@@ -238,11 +239,8 @@ class _root{
 				}
 				
 				//post module
-				if( method_exists($oModule,'after') ){
-					/*LOG*/self::getLog()->info('appel module ['.$sModuleToLoad.'::after]');
-					$oModule->after();
-				}
-				
+				/*LOG*/self::getLog()->info('appel module ['.$sModuleToLoad.'::after]');
+				$oModule->after();				
 			
 				//fin cache
 				if( (int)self::getConfigVar('cache.enabled')== 1 ){
@@ -379,7 +377,7 @@ class _root{
 
 				$sCodeCache='<?php _root::$tAutoload='.var_export($tAutoload,true).';';
 				file_put_contents($sCacheFilename,$sCodeCache);
-				self::$_tAutoload=$tAutoload;
+				self::$tAutoload=$tAutoload;
 			}
 		}
 	}
@@ -391,10 +389,10 @@ class _root{
 	*/
 	public static function autoload($sClass){
 		try{
-			if(isset(self::$_tAutoload['_root'])){
+			if(isset(self::$tAutoload['_root'])){
 
-				if(isset(self::$_tAutoload[$sClass])){
-					include self::$_tAutoload[$sClass];
+				if(isset(self::$tAutoload[$sClass])){
+					include self::$tAutoload[$sClass];
 				}else{
 					return false;
 				}
