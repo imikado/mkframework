@@ -24,6 +24,14 @@ class _cacheVar{
 	
 	protected $_oFile=null;
 	
+	private function load($sId){
+		if($this->_oFile){
+			return;
+		}
+		$oFile=new _file(_root::getConfigVar('path.cache').$sId.'.cachevar');
+		$this->_oFile=$oFile;
+	}
+	
 	/** 
 	* retourne vrai ou faux selon que le cache est rescent
 	* @access public
@@ -32,12 +40,11 @@ class _cacheVar{
 	* @return bool
 	*/
 	public function isCached($sId,$iMinute=null){
-		$oFile=new _file(_root::getConfigVar('path.cache').$sId.'.cachevar');
-		$this->_oFile=$oFile;
-		if($oFile->exist()){
+		$this->load($sId);
+		if($this->_oFile->exist()){
 			if($iMinute==null){
 				return true;
-			}else if( (time()-$oFile->filemtime()) < ($iMinute*60)){
+			}else if( (time()-$this->_oFile->filemtime()) < ($iMinute*60)){
 				return true;
 			}
 			return false;
@@ -47,10 +54,10 @@ class _cacheVar{
 	/** 
 	* retourne l'objet php $sId en cache
 	* @access public
-	* @param string $sId
 	* @return mixed uData
 	*/
 	public function getCached($sId){
+		$this->load($sId);
 		$uData=unserialize($this->_oFile->getContent());
 		return $uData;
 	}
@@ -60,6 +67,7 @@ class _cacheVar{
 	* @param mixed $uData
 	*/
 	public function setCache($sId,$uData){
+		$this->load($sId);
 		$sData=serialize($uData);
 		
 		$this->_oFile->setContent($sData );
@@ -70,7 +78,8 @@ class _cacheVar{
 	* @access public
 	* @param string $sId
 	*/
-	public function clearCache($sId){		
+	public function clearCache($sId){
+		$this->load($sId);
 		$this->_oFile->delete();
 	}
 

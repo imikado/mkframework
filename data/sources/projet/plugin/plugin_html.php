@@ -73,10 +73,10 @@ class plugin_html{
 	*/
 	public function getInputRadio($sName,$sValue=null,$bChecked=false,$tOption=null){
 		if(!isset($tOption['class'])){ $tOption['class']='input'; }
-		$sChecked='';
-		if($bChecked){ $sChecked='checked="checked"';}
-		$sOptions=$this->getOptionFromTab($tOption);
-		return '<input type="radio" name="'.$sName.'" value="'.$sValue.'" '.$sChecked.' '.$sOptions.'/>';
+		$sOptions='';
+		if($bChecked){ $sOptions.='checked="checked" ';}
+		$sOptions.=$this->getOptionFromTab($tOption);
+		return '<input type="radio" name="'.$sName.'" value="'.$sValue.'" '.$sOptions.'/>';
 	}
 	/** 
 	* retourne le code html d'un input checkbox
@@ -90,10 +90,10 @@ class plugin_html{
 	*/
 	public function getInputCheckbox($sName,$sValue=null,$bChecked=false,$tOption=null){
 		if(!isset($tOption['class'])){ $tOption['class']='input'; }
-		$sChecked='';
-		if($bChecked){ $sChecked='checked="checked"';}
-		$sOptions=$this->getOptionFromTab($tOption);
-		return '<input type="checkbox" name="'.$sName.'" value="'.$sValue.'" '.$sChecked.' '.$sOptions.'/>';
+		$sOptions='';
+		if($bChecked){ $sOptions.='checked="checked" ';}
+		$sOptions.=$this->getOptionFromTab($tOption);
+		return '<input type="checkbox" name="'.$sName.'" value="'.$sValue.'" '.$sOptions.'/>';
 	}
 	/** 
 	* retourne le code html d'un select

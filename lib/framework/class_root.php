@@ -33,7 +33,7 @@ class _root{
 	static protected $_tRequestTab;
 	static public $tAutoload;
 	
-	static protected $_tConfigVar;
+	static public $tConfigVar;
 	static protected $_tGlobalVar;
 	static protected $_tObject;
 	
@@ -47,9 +47,9 @@ class _root{
 	*/
 	public function __construct(){	
 				
-		self::$_tConfigVar=array();
+		self::$tConfigVar=array();
 		
-		self::$_tConfigVar['path']=array(
+		self::$tConfigVar['path']=array(
 			
 				'lib' => 'lib/framework/',
 			
@@ -70,31 +70,51 @@ class _root{
 	
 	/** 
 	* ajoute un fichier de config ini
-	* @access public static	
+	* @access public static
 	* @param string $sConfig adresse du fichier de config a charger
 	* @param string $sCat nom de la section a charger (si on ne veut charger qu'une section du fichier ini) 
 	*/
 	public static function addConf($sConfig,$sCat=null){
 		self::$_tConfigFilename[]=array($sConfig,$sCat);
 	}
+	/** 
+	* charge la configuration de l'application
+	* @access public static
+	*/
 	public static function loadConf(){
 		try{
+			$bConfCacheEnabled=(int)self::getConfigVar('cache.conf.enabled');
+			$sCacheFilename=self::getConfigVar('path.cache').'conf.php';
+			if($bConfCacheEnabled==1 and file_exists($sCacheFilename) ){
+				include $sCacheFilename;
+				return;
+			}
+			
+			$tConfigVar=self::$tConfigVar;
+			
 			foreach(self::$_tConfigFilename as $tConfig){
 				$sConfig=$tConfig[0];
 				$sCatFilter=$tConfig[1];
-				$tIni=parse_ini_file($sConfig,true);
-			
-				foreach($tIni as $sCat => $tVal){
-					if($sCatFilter!=null and $sCat!=$sCatFilter){ continue; }
 				
-					if(is_array($tVal)){
-					foreach($tVal as $sKey => $uVal){
-						self::$_tConfigVar[$sCat][$sKey]=$uVal;
-					}
-				  	}
+				$tIni=array();
+				$tIniBrut=parse_ini_file($sConfig,true);
+				
+				if($sCatFilter!=null){
+					$tIni[$sCatFilter]=$tIniBrut[$sCatFilter];
+				}else{
+					$tIni=$tIniBrut;
 				}
+				$tConfigVar=array_merge($tConfigVar,$tIni);
 			}
-
+			
+			self::$tConfigVar=$tConfigVar;
+			
+			
+			if($bConfCacheEnabled==1){
+				$sCodeCache='<?php _root::$tConfigVar='.var_export(self::$tConfigVar,true).';';
+				file_put_contents($sCacheFilename,$sCodeCache);
+			}
+				
 		}catch(Exception $e){
 		      self::erreurLog($e->getMessage()."\n".$e->getTraceAsString());
 		}	
@@ -388,47 +408,27 @@ class _root{
 	* @param string $sClass nom de la classe appellee
 	*/
 	public static function autoload($sClass){
-		try{
-			if(isset(self::$tAutoload['_root'])){
-
-				if(isset(self::$tAutoload[$sClass])){
+		
+			$tab=preg_split('/_/',$sClass);
+			if(isset(self::$tAutoload[$sClass])){
 					include self::$tAutoload[$sClass];
-				}else{
-					return false;
-				}
+			}else if($sClass[0]=='_'){
+				include self::getConfigVar('path.lib').'class'.$sClass.'.php';
+			}else if(in_array($tab[0],array('plugin','model','abstract'))){
+				include self::getConfigVar('path.'.$tab[0]).$sClass.'.php';
+			}else if($tab[0]=='module'){
+				include self::getConfigVar('path.module').substr($sClass,7).'/main.php';
+			}else if($tab[0]=='row'){
+				include self::getConfigVar('path.model').'model_'.substr($sClass,4).'.php';
+			}else if($tab[0]=='sgbd' and in_array($tab[1],array('syntax','pdo'))){
+				include self::getConfigVar('path.lib').'sgbd/'.$tab[1].'/'.$sClass.'.php';
+			}else if($tab[0]=='sgbd'){
+				include self::getConfigVar('path.lib').'sgbd/'.$sClass.'.php';
 			}else{
-
-				$tab=preg_split('/_/',$sClass);
-			
-				if($sClass[0]=='_'){
-					include self::getConfigVar('path.lib').'class'.$sClass.'.php';
-				}else if(in_array($tab[0],array('plugin','model','abstract'))){
-					include self::getConfigVar('path.'.$tab[0]).$sClass.'.php';
-				}else if($tab[0]=='module'){
-					include self::getConfigVar('path.module').substr($sClass,7).'/main.php';
-				}else if($tab[0]=='row'){
-					include self::getConfigVar('path.model').'model_'.substr($sClass,4).'.php';
-				}else if($tab[0]=='sgbd' and in_array($tab[1],array('syntax','pdo'))){
-					include self::getConfigVar('path.lib').'sgbd/'.$tab[1].'/'.$sClass.'.php';
-				}else if($tab[0]=='sgbd'){
-					include self::getConfigVar('path.lib').'sgbd/'.$sClass.'.php';
-				}else{
-					return false;
-				}
-
+				return false;
 			}
 			
-		}catch(Exception $e){
-			$sError="Erreur chargement de classe '$sClass'  \n
-			Les fichiers de type 'lib' sont dans des fichiers lib/framework/class_CLASS.php
-			Les fichiers de type 'module' sont dans des fichiers module/CLASS/main.php
-			Les fichiers de type 'plugin' sont dans des fichiers plugin/plugin_CLASS.php
-			Les fichiers de type 'model' sont dans des ficheirs model/model_CLASS.php
-			Les fichiers de type 'row' sont dans des fichiers model/model_CLASS.php (meme fichier que la classe model)
- 
-			".$e->getMessage();
-			self::erreurLog($sError."\n".$e->getTraceAsString());
-		}
+	
 	}
 	
 	/** 
@@ -625,9 +625,9 @@ class _root{
 	public static function setConfigVar($sCatAndVar,$uValue){
 	      if(preg_match('/\./',$sCatAndVar)){
 			list($sCategory,$sVar)=preg_split('/\./',$sCatAndVar,2);   
-			self::$_tConfigVar[$sCategory][$sVar]=$uValue;
+			self::$tConfigVar[$sCategory][$sVar]=$uValue;
 	      }else{
-			self::$_tConfigVar[$sCatAndVar]=$uValue;
+			self::$tConfigVar[$sCatAndVar]=$uValue;
 	      }
 	}
 	
@@ -648,13 +648,13 @@ class _root{
 				if(preg_match('/_/',$sVar)){
 					$sVar=preg_replace('/_/','/',$sVar);
 				}
-				return self::$_tConfigVar['path']['lib'].$sVar.'/';
+				return self::$tConfigVar['path']['lib'].$sVar.'/';
 			}
-			else if(isset(self::$_tConfigVar[$sCategory][$sVar])){
-				return self::$_tConfigVar[$sCategory][$sVar];
+			else if(isset(self::$tConfigVar[$sCategory][$sVar])){
+				return self::$tConfigVar[$sCategory][$sVar];
 			}
-		}else if(isset(self::$_tConfigVar[$sCatAndVar])){
-			return self::$_tConfigVar[$sCatAndVar];		
+		}else if(isset(self::$tConfigVar[$sCatAndVar])){
+			return self::$tConfigVar[$sCatAndVar];		
 		}
 		return $uDefaut;
 	}
@@ -814,6 +814,10 @@ function stripslashes_deep($value){
 }
 function customHtmlentities($string){
 	if(is_array($string)){ return array_map('customHtmlentities',$string) ;}
-	return _root::nullbyteprotect(htmlentities($string,ENT_QUOTES,_root::getConfigVar('encodage.charset'),_root::getConfigVar('encodage.double_encode',1)));
+	return _root::nullbyteprotect(htmlentities(
+									$string,
+									ENT_QUOTES,
+									_root::getConfigVar('encodage.charset'),
+									_root::getConfigVar('encodage.double_encode',1)));
 }
 			

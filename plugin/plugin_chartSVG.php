@@ -26,12 +26,8 @@ class plugin_chartSVG{
 	public static $HISTO='HISTO';
 	public static $LINES='LINES';
 	public static $BAR='BAR';
-
-	private $sType;
 	
-	private $tData;
 	private $iWidth;
-	private $height;
 	
 	private $oChart;
 
@@ -48,7 +44,7 @@ class plugin_chartSVG{
 		}else if($sType==self::$BAR){
 			$this->oChart=new plugin_chartBarSVG($this->iWidth,$this->iHeight);
 		}else{
-			throw new Exception('sType non reconnu, attendu: (PIE,HISTO,LINES)');
+			throw new Exception('sType non reconnu, attendu: (PIE,HISTO,LINES,BAR)');
 		}
 	}
 	
@@ -243,9 +239,10 @@ class abstract_pluginChartSVG{
 	}
 	
 	protected function rect($x,$y,$iWidth,$iHeight,$sColor,$alt=null){
-		$this->sSvg.='<rect class="chartRect" id="rect'.$x.$y.'" x="'.$x.'" y="'.$y.'" width="'.$iWidth.'" height="'.$iHeight.'" style="fill:'.$sColor.'">
-			<title>'.$alt.'</title>
-		</rect>';
+		$this->sSvg.='<rect class="chartRect" id="rect'.$x.$y.'" x="'.$x.'" y="'.$y.'" ';
+		$this->sSvg.='width="'.$iWidth.'" height="'.$iHeight.'" style="fill:'.$sColor.'">';
+		$this->sSvg.='<title>'.$alt.'</title>';
+		$this->sSvg.='</rect>';
 		
 		 
 		
@@ -260,7 +257,8 @@ class abstract_pluginChartSVG{
 		
 		
 		
-		$this->sSvg.='<path d="M'.$x.','.$y.' L'.$x.','.$y.' A'.$degStart.','.$degEnd.' 1 1,1 '.$diameter.','.$diameter.' z" fill="'.$sColor.'"  />';
+		$this->sSvg.='<path d="M'.$x.','.$y.' L10,10 A'.$x+($diameter/2).','.$y+($diameter/2).' 0 0,1  z" ';
+		$this->sSvg.='fill="'.$sColor.'"  />';
 	}
 	
 	protected function text($x,$y,$sText,$sColor='black',$font='10px arial'){
@@ -273,7 +271,8 @@ class abstract_pluginChartSVG{
 	
 	protected function lineFromTo($x,$y,$x2,$y2,$sColor='black',$opacity=1){
 		
-		$this->sSvg.=' <line x1="'.$x.'" y1="'.$y.'" x2="'.$x2.'" y2="'.$y2.'" style="stroke:'.$sColor.';stroke-width:2" stroke-opacity="'.$opacity.'" />';
+		$this->sSvg.='<line x1="'.$x.'" y1="'.$y.'" x2="'.$x2.'" y2="'.$y2.'" ';
+		$this->sSvg.='style="stroke:'.$sColor.';stroke-width:2" stroke-opacity="'.$opacity.'" />';
 	}
 }
 class plugin_chartPieSVG extends abstract_pluginChartSVG{
@@ -301,7 +300,6 @@ class plugin_chartPieSVG extends abstract_pluginChartSVG{
 		
 		$this->sHtml.='context.beginPath(); '."\n";
 		$this->sHtml.='context.arc('.$x.','.$y.','.$diameter.',0,Math.PI*2);'."\n";
-		//$this->sHtml.='context.stroke();'."\n";
 		
 		$tPct=array();
 		
@@ -335,8 +333,6 @@ class plugin_chartPieSVG extends abstract_pluginChartSVG{
 		
 		return "pas encore disponible";
 		
-		return $this->sSvg;
-		
 		
 	}
 		
@@ -356,9 +352,7 @@ class plugin_chartHistoSVG extends abstract_pluginChartSVG{
 		}
 		$iWidthBar=($this->iWidth-200)/count($this->tData);
 		$iWidthBar=$iWidthBar*0.8;
-		
-		$iWidthSpace=$iWidthBar*0.2;
-		
+				
 		$this->startScript();
 		
 		$j=0;
@@ -410,26 +404,27 @@ class plugin_chartLineSVG extends abstract_pluginChartSVG{
 		$iMinY='';
 		
 		
-		
-		foreach($this->tData as $sGroup => $tDetail){
-			foreach($tDetail['tPoint'] as $tPoint){
-			
-				list($x,$y)=$tPoint;
+		if($this->tData){
+			foreach($this->tData as $sGroup => $tDetail){
+				foreach($tDetail['tPoint'] as $tPoint){
 				
-				if($iMaxX < $x){
-					$iMaxX=$x;
+					list($x,$y)=$tPoint;
+					
+					if($iMaxX < $x){
+						$iMaxX=$x;
+					}
+					if($iMaxY < $y){
+						$iMaxY=$y;
+					}
+					
+					if($iMinX=='' or $iMinX > $x){
+						$iMinX=$x;
+					}
+					if($iMinY=='' or $iMinY > $y){
+						$iMinY=$y;
+					}
+					
 				}
-				if($iMaxY < $y){
-					$iMaxY=$y;
-				}
-				
-				if($iMinX=='' or $iMinX > $x){
-					$iMinX=$x;
-				}
-				if($iMinY=='' or $iMinY > $y){
-					$iMinY=$y;
-				}
-				
 			}
 		}
 		
@@ -461,9 +456,6 @@ class plugin_chartLineSVG extends abstract_pluginChartSVG{
 		$iHeight=$this->iHeight-10;
 		$iWidth=$this->iWidth-200-$this->iMarginLeft;
 		
-		$deltaX=$iMaxX-$iMinX;
-		$deltaY=$iMaxY-$iMinY;
-		
 		if($this->gridY){
 			$step=$this->gridY[0];
 			$color=$this->gridY[1];
@@ -485,52 +477,55 @@ class plugin_chartLineSVG extends abstract_pluginChartSVG{
 				$this->lineFromTo($this->iMarginLeft,$y,$this->iWidth-200,$y,$color,0.5	);
 			}
 		}
-	
-		foreach($this->tData as $sGroup => $tDetail){
-			$lastX=null;
-			$lastY=null;
-			foreach($tDetail['tPoint'] as $j => $tPoint){
-				
-				list($x,$y)=$tPoint;
-				
-				$x2=(($x-$iMinX)/($iMaxX-$iMinX))*$iWidth+$this->iMarginLeft;
-				$y2=(1-($y-$iMinY)/($iMaxY-$iMinY))*$iHeight;
-				
-				$x3=$x2-3;
-				$y3=$y2-3;
-				
-				if($x3<=0){
-					$x3=0;
-				}
-				if($y3<=0){
-					$y3=0;
-				}
-				
-				$this->rect($x3,$y3,6,6,$tDetail['color'],$y);
-				
-				if($j>0){
-					$this->lineFromTo($lastX,$lastY,$x2,$y2,$tDetail['color']);
+		if($this->tData){
+			foreach($this->tData as $sGroup => $tDetail){
+				$lastX=null;
+				$lastY=null;
+				foreach($tDetail['tPoint'] as $j => $tPoint){
+					
+					list($x,$y)=$tPoint;
+					
+					$x2=(($x-$iMinX)/($iMaxX-$iMinX))*$iWidth+$this->iMarginLeft;
+					$y2=(1-($y-$iMinY)/($iMaxY-$iMinY))*$iHeight;
+					
+					$x3=$x2-3;
+					$y3=$y2-3;
+					
+					if($x3<=0){
+						$x3=0;
+					}
+					if($y3<=0){
+						$y3=0;
+					}
+					
+					$this->rect($x3,$y3,6,6,$tDetail['color'],$y);
+					
+					if($j>0){
+						$this->lineFromTo($lastX,$lastY,$x2,$y2,$tDetail['color']);
+						
+					}
+					
+					$lastX=$x2;
+					$lastY=$y2;
 					
 				}
-				
-				$lastX=$x2;
-				$lastY=$y2;
-				
 			}
 		}
 		
 		//legend
 		$i=0;
-		foreach($this->tData as $sGroup => $tDetail){
-			$sLabel=$sGroup;
-			
-			$x=$this->legendX;
-			$y=$i*20+$this->legendY;
-			
-			$this->rect($x,$y-8,10,10,$tDetail['color']);
-			$this->text($x+16,$y,$sLabel,'#000',$this->textsizeLegend);
-			
-			$i++;
+		if($this->tData){
+			foreach($this->tData as $sGroup => $tDetail){
+				$sLabel=$sGroup;
+				
+				$x=$this->legendX;
+				$y=$i*20+$this->legendY;
+				
+				$this->rect($x,$y-8,10,10,$tDetail['color']);
+				$this->text($x+16,$y,$sLabel,'#000',$this->textsizeLegend);
+				
+				$i++;
+			}
 		}
 		
 		$this->lineFromTo($this->iMarginLeft,0,$this->iMarginLeft,$this->iHeight-10);
@@ -599,29 +594,29 @@ class plugin_chartBarSVG extends abstract_pluginChartSVG{
 		$iMinY='';
 		
 		
-		
-		foreach($this->tData as $sGroup => $tDetail){
-			foreach($tDetail['tPoint'] as $tPoint){
-			
-				list($x,$y)=$tPoint;
+		if($this->tData){
+			foreach($this->tData as $sGroup => $tDetail){
+				foreach($tDetail['tPoint'] as $tPoint){
 				
-				if($iMaxX < $x){
-					$iMaxX=$x;
+					list($x,$y)=$tPoint;
+					
+					if($iMaxX < $x){
+						$iMaxX=$x;
+					}
+					if($iMaxY < $y){
+						$iMaxY=$y;
+					}
+					
+					if($iMinX=='' or $iMinX > $x){
+						$iMinX=$x;
+					}
+					if($iMinY=='' or $iMinY > $y){
+						$iMinY=$y;
+					}
+					
 				}
-				if($iMaxY < $y){
-					$iMaxY=$y;
-				}
-				
-				if($iMinX=='' or $iMinX > $x){
-					$iMinX=$x;
-				}
-				if($iMinY=='' or $iMinY > $y){
-					$iMinY=$y;
-				}
-				
 			}
 		}
-		
 		
 		if($this->iMaxX){
 			$iMaxX=$this->iMaxX;
@@ -650,9 +645,6 @@ class plugin_chartBarSVG extends abstract_pluginChartSVG{
 		$iHeight=$this->iHeight-10;
 		$iWidth=$this->iWidth-200-$this->iMarginLeft-(4);
 		
-		$deltaX=$iMaxX-$iMinX;
-		$deltaY=$iMaxY-$iMinY;
-		
 		if($this->gridY){
 			$step=$this->gridY[0];
 			$color=$this->gridY[1];
@@ -676,48 +668,52 @@ class plugin_chartBarSVG extends abstract_pluginChartSVG{
 		}
 	
 		$k=0;
-		foreach($this->tData as $sGroup => $tDetail){
-			$lastX=null;
-			$lastY=null;
-			foreach($tDetail['tPoint'] as $j => $tPoint){
-				
-				list($x,$y)=$tPoint;
-				
-				$x2=(($x-$iMinX)/($iMaxX-$iMinX))*$iWidth+$this->iMarginLeft;
-				$y2=(1-($y-$iMinY)/($iMaxY-$iMinY))*$iHeight;
-				
-				$x3=$x2;
-				$y3=$y2-3;
-				
-				if($x3<=0){
-					$x3=0;
+		if($this->tData){
+			foreach($this->tData as $sGroup => $tDetail){
+				$lastX=null;
+				$lastY=null;
+				foreach($tDetail['tPoint'] as $tPoint){
+					
+					list($x,$y)=$tPoint;
+					
+					$x2=(($x-$iMinX)/($iMaxX-$iMinX))*$iWidth+$this->iMarginLeft;
+					$y2=(1-($y-$iMinY)/($iMaxY-$iMinY))*$iHeight;
+					
+					$x3=$x2;
+					$y3=$y2-3;
+					
+					if($x3<=0){
+						$x3=0;
+					}
+					if($y3<=0){
+						$y3=0;
+					}
+					
+					$this->rect($x3+($k*8),$y3,6,$iHeight-$y3,$tDetail['color'],$y);
+					
+				 
+					$lastX=$x2;
+					$lastY=$y2;
+					
 				}
-				if($y3<=0){
-					$y3=0;
-				}
-				
-				$this->rect($x3+($k*8),$y3,6,$iHeight-$y3,$tDetail['color'],$y);
-				
-			 
-				$lastX=$x2;
-				$lastY=$y2;
-				
+				$k++;
 			}
-			$k++;
 		}
 		
 		//legend
 		$i=0;
-		foreach($this->tData as $sGroup => $tDetail){
-			$sLabel=$sGroup;
-			
-			$x=$this->legendX;
-			$y=$i*20+$this->legendY;
-			
-			$this->rect($x,$y-8,10,10,$tDetail['color']);
-			$this->text($x+16,$y,$sLabel,'#000',$this->textsizeLegend);
-			
-			$i++;
+		if($this->tData){
+			foreach($this->tData as $sGroup => $tDetail){
+				$sLabel=$sGroup;
+				
+				$x=$this->legendX;
+				$y=$i*20+$this->legendY;
+				
+				$this->rect($x,$y-8,10,10,$tDetail['color']);
+				$this->text($x+16,$y,$sLabel,'#000',$this->textsizeLegend);
+				
+				$i++;
+			}
 		}
 		
 		$this->lineFromTo($this->iMarginLeft,0,$this->iMarginLeft,$this->iHeight-10);

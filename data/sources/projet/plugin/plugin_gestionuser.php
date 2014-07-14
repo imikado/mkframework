@@ -94,7 +94,11 @@ class plugin_gestionuser{
 			_root::setConfigVar('tAskCan',$tAskCan);
 		}
 		
-		if($ok){ $sOk ='oui'; }else{ $sOk='non'; }
+		if($ok){ 
+			$sOk ='oui'; 
+		}else{ 
+			$sOk='non'; 
+		}
 		_root::getLog()->info('ACL can "'.$action.'" on "'.$ressource.'" ? : '.$sOk);
 		
 		return $ok;

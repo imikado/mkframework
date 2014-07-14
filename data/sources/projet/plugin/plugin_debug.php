@@ -138,7 +138,8 @@ class plugin_debug{
 				}
 			}
 			</script>';
-		echo '<div id="debugBtn" style="position:fixed;border:2px solid #444;background:#ddd;bottom:0px;left:0px;width:100%">';
+		echo '<div id="debugBtn" ';
+		echo 'style="position:fixed;border:2px solid #444;background:#ddd;bottom:0px;left:0px;width:100%">';
 		echo '<div  style="float:left"><input type="button" value="Masquer" onclick="showHideDebugBar()"/></div>';
 		echo '<div id="debugBar" style="width:100%">';
 		echo $this->sHtml;
@@ -227,8 +228,20 @@ class plugin_debug{
 		if($tab and is_array($tab)):
 		foreach($tab as $tVal):
 		$sHtml.='<tr>
-			<td style="border:1px solid gray;';if($tVal[2]): $sHtml.='color:green;'; else: $sHtml.='color:red'; endif; $sHtml.='">'.$tVal[0].'</td>
-			<td style="border:1px solid gray;';if($tVal[2]): $sHtml.='color:green;'; else: $sHtml.='color:red'; endif; $sHtml.='">'.$tVal[1].'</td>
+			<td style="border:1px solid gray;';
+			if($tVal[2]){
+				$sHtml.='color:green;'; 
+			}else{
+				$sHtml.='color:red'; 
+			} 
+			$sHtml.='">'.$tVal[0].'</td>
+			<td style="border:1px solid gray;';
+			if($tVal[2]){
+				$sHtml.='color:green;'; 
+			}else{
+				$sHtml.='color:red'; 
+			} 
+			$sHtml.='">'.$tVal[1].'</td>
 			 
 		</tr>';
 		endforeach;

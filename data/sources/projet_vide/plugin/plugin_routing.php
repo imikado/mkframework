@@ -29,7 +29,7 @@ class plugin_routing{
 	* @access public
 	*/
 	public function __construct(){
-		include(_root::getConfigVar('urlrewriting.conf'));
+		include _root::getConfigVar('urlrewriting.conf');
 		$this->tRoute=$tab;
 	}
 	

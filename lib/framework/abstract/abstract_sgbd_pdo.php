@@ -230,12 +230,12 @@ abstract class abstract_sgbd_pdo{
 			$tParam=array();
 		}
 		
-		$tATTR_ERRMODE=array(
+		$tATTRERRMODE=array(
 			'SILENT' => PDO::ERRMODE_SILENT,
 			'WARNING' => PDO::ERRMODE_WARNING,
 			'EXCEPTION' => PDO::ERRMODE_EXCEPTION,
 		);
-		$tATTR_CASE=array(
+		$tATTRCASE=array(
 			'LOWER' => PDO::CASE_LOWER,
 			'NATURAL' => PDO::CASE_NATURAL,
 			'UPPER' => PDO::CASE_UPPER,
@@ -244,8 +244,8 @@ abstract class abstract_sgbd_pdo{
 		
 		$this->connect();
 		$this->_sReq=$sReq.' [ '.implode(' | ',$tParam).' ]';
-		$this->_pDb->setAttribute(PDO::ATTR_ERRMODE, $tATTR_ERRMODE[ trim(_root::getConfigVar('pdo.ATTR_ERRMODE','WARNING')) ] ); 
-		$this->_pDb->setAttribute(PDO::ATTR_CASE, $tATTR_CASE[ trim(_root::getConfigVar('pdo.ATTR_CASE','NATURAL')) ] ); 
+		$this->_pDb->setAttribute(PDO::ATTR_ERRMODE, $tATTRERRMODE[ trim(_root::getConfigVar('pdo.ATTR_ERRMODE','WARNING')) ] ); 
+		$this->_pDb->setAttribute(PDO::ATTR_CASE, $tATTRCASE[ trim(_root::getConfigVar('pdo.ATTR_CASE','NATURAL')) ] ); 
 		$sth = $this->_pDb->prepare($sReq);
 		if(is_array($tParam)){
 			$sth->execute($tParam);

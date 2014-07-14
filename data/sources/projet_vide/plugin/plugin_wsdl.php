@@ -48,7 +48,10 @@ class plugin_wsdl{
 	}
 	
 	public function getWsdl(){
-		$sWsdl='<definitions xmlns:tns="'.$this->url.'" targetNamespace="'.$this->url.'" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="'.$this->sName.'">';
+		$sWsdl='<definitions xmlns:tns="'.$this->url.'" targetNamespace="'.$this->url.'" ';
+		$sWsdl.='xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" ';
+		$sWsdl.='xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" ';
+		$sWsdl.='xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="'.$this->sName.'">';
 
 			$sWsdl.='<types>';
 				$sWsdl.='<xsd:schema targetNamespace="'.$this->url.'"/>';

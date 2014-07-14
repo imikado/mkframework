@@ -27,6 +27,7 @@ spl_autoload_register(array('_root','autoload'));
 include($tIni['path']['plugin'].'/plugin_autoload.php');
 spl_autoload_register(array('plugin_autoload','autoload'));
 
+
 //pour gerer toutes les erreurs en exception
 function exception_error_handler($errno, $errstr, $errfile, $errline ) {
   throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
@@ -34,7 +35,11 @@ function exception_error_handler($errno, $errstr, $errfile, $errline ) {
 set_error_handler("exception_error_handler");
 
 $oRoot=new _root();
-$oRoot->addConf('../conf/path.ini.php');
+$oRoot->setConfigVar('path',$tIni['path']);
+
+//decommenter pour activer le cache de fichier de configuration
+//$oRoot->setConfigVar('cache.conf.enabled',1);
+
 $oRoot->addConf('../conf/mode.ini.php');
 $oRoot->addConf('../conf/connexion.ini.php');
 $oRoot->addConf('../conf/site.ini.php');

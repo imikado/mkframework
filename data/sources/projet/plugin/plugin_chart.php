@@ -26,12 +26,8 @@ class plugin_chart{
 	public static $HISTO='HISTO';
 	public static $LINES='LINES';
 	public static $BAR='BAR';
-
-	private $sType;
 	
-	private $tData;
 	private $iWidth;
-	private $height;
 	
 	private $oChart;
 
@@ -312,7 +308,6 @@ class plugin_chartPie extends abstract_pluginChart{
 		
 		$this->sHtml.='context.beginPath(); '."\n";
 		$this->sHtml.='context.arc('.$x.','.$y.','.$diameter.',0,Math.PI*2);'."\n";
-		//$this->sHtml.='context.stroke();'."\n";
 		
 		$tPct=array();
 		
@@ -364,9 +359,7 @@ class plugin_chartHisto extends abstract_pluginChart{
 		}
 		$iWidthBar=($this->iWidth-200)/count($this->tData);
 		$iWidthBar=$iWidthBar*0.8;
-		
-		$iWidthSpace=$iWidthBar*0.2;
-		
+				
 		$this->startScript();
 		
 		
@@ -472,9 +465,6 @@ class plugin_chartLine extends abstract_pluginChart{
 		$iHeight=$this->iHeight-10;
 		$iWidth=$this->iWidth-200-$this->iMarginLeft;
 		
-		$deltaX=$iMaxX-$iMinX;
-		$deltaY=$iMaxY-$iMinY;
-		
 		if($this->gridY){
 			$step=$this->gridY[0];
 			$color=$this->gridY[1];
@@ -532,17 +522,18 @@ class plugin_chartLine extends abstract_pluginChart{
 		
 		//legend
 		$i=0;
-		if($this->tData)
-		foreach($this->tData as $sGroup => $tDetail){
-			$sLabel=$sGroup;
-			
-			$x=$this->legendX;
-			$y=$i*20+$this->legendY;
-			
-			$this->rect($x,$y-8,10,10,$tDetail['color']);
-			$this->text($x+16,$y,$sLabel,'#000',$this->textsizeLegend);
-			
-			$i++;
+		if($this->tData){
+			foreach($this->tData as $sGroup => $tDetail){
+				$sLabel=$sGroup;
+				
+				$x=$this->legendX;
+				$y=$i*20+$this->legendY;
+				
+				$this->rect($x,$y-8,10,10,$tDetail['color']);
+				$this->text($x+16,$y,$sLabel,'#000',$this->textsizeLegend);
+				
+				$i++;
+			}
 		}
 		
 		$this->lineFromTo($this->iMarginLeft,0,$this->iMarginLeft,$this->iHeight-10);
@@ -664,9 +655,6 @@ class plugin_chartBar extends abstract_pluginChart{
 		$iHeight=$this->iHeight-10;
 		$iWidth=$this->iWidth-200-$this->iMarginLeft-(4);
 		
-		$deltaX=$iMaxX-$iMinX;
-		$deltaY=$iMaxY-$iMinY;
-		
 		if($this->gridY){
 			$step=$this->gridY[0];
 			$color=$this->gridY[1];
@@ -690,35 +678,36 @@ class plugin_chartBar extends abstract_pluginChart{
 		}
 	
 		$k=0;
-		if($this->tData)
-		foreach($this->tData as $sGroup => $tDetail){
-			$lastX=null;
-			$lastY=null;
-			foreach($tDetail['tPoint'] as $j => $tPoint){
-				
-				list($x,$y)=$tPoint;
-				
-				$x2=(($x-$iMinX)/($iMaxX-$iMinX))*$iWidth+$this->iMarginLeft;
-				$y2=(1-($y-$iMinY)/($iMaxY-$iMinY))*$iHeight;
-				
-				$x3=$x2;
-				$y3=$y2-3;
-				
-				if($x3<=0){
-					$x3=0;
+		if($this->tData){
+			foreach($this->tData as $sGroup => $tDetail){
+				$lastX=null;
+				$lastY=null;
+				foreach($tDetail['tPoint'] as $tPoint){
+					
+					list($x,$y)=$tPoint;
+					
+					$x2=(($x-$iMinX)/($iMaxX-$iMinX))*$iWidth+$this->iMarginLeft;
+					$y2=(1-($y-$iMinY)/($iMaxY-$iMinY))*$iHeight;
+					
+					$x3=$x2;
+					$y3=$y2-3;
+					
+					if($x3<=0){
+						$x3=0;
+					}
+					if($y3<=0){
+						$y3=0;
+					}
+					
+					$this->rect($x3+($k*8),$y3,6,$iHeight-$y3,$tDetail['color']);
+					
+				 
+					$lastX=$x2;
+					$lastY=$y2;
+					
 				}
-				if($y3<=0){
-					$y3=0;
-				}
-				
-				$this->rect($x3+($k*8),$y3,6,$iHeight-$y3,$tDetail['color']);
-				
-			 
-				$lastX=$x2;
-				$lastY=$y2;
-				
+				$k++;
 			}
-			$k++;
 		}
 		
 		//legend

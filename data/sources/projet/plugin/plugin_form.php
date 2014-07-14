@@ -57,7 +57,7 @@ class plugin_form{
 	*/
 	public function getInputHidden($sName,$tOption=null){
 		$sHtml=null;
-		$sHtml.='<input type="hidden" name="'.$sName.'" value="'.$this->getValue($sName).'"/>';
+		$sHtml.='<input type="hidden" name="'.$sName.'" value="'.$this->getValue($sName).'" '.$this->getOption($tOption).'/>';
 		return $sHtml;
 	}
 	/** 
@@ -93,7 +93,8 @@ class plugin_form{
 	*/
 	public function getInputTextarea($sName,$tOption=null){
 		$sHtml=null;
-		$sHtml.='<textarea type="text" name="'.$sName.'" '.$this->getOption($tOption).'>'.$this->getValue($sName).'</textarea>';
+		$sHtml.='<textarea type="text" name="'.$sName.'" '.$this->getOption($tOption).'>';
+		$sHtml.=$this->getValue($sName).'</textarea>';
 		$sHtml.=$this->getMessage($sName);
 		return $sHtml;
 	}
@@ -123,7 +124,11 @@ class plugin_form{
 		$sHtml=null;
 		$sHtml.='<select name="'.$sName.'" '.$this->getOption($tOption).'>';
 			foreach($tValue as $sValue => $sLabel){
-				$sHtml.='<option '; if($sValue==$sCurrentValue){ $sHtml.=' selected="selected"'; } $sHtml.=' value="'.$sValue.'">'.$sLabel.'</option>';
+				$sHtml.='<option '; 
+				if($sValue==$sCurrentValue){ 
+					$sHtml.=' selected="selected"'; 
+				} 
+				$sHtml.=' value="'.$sValue.'">'.$sLabel.'</option>';
 			}
 		$sHtml.='</select>';
 		$sHtml.=$this->getMessage($sName);
@@ -143,7 +148,11 @@ class plugin_form{
 		$sHtml=null;
 	
 		foreach($tValue as $sValue => $sLabel){
-			$sHtml.='<input type="radio" name="'.$sName.'" '; if($sValue==$sCurrentValue){ $sHtml.=' checked="checked"'; } $sHtml.=' value="'.$sValue.'" '.$this->getOption($tOption).'/>'.$sLabel.' ';
+			$sHtml.='<input type="radio" name="'.$sName.'" '; 
+			if($sValue==$sCurrentValue){ 
+				$sHtml.=' checked="checked"'; 
+			} 
+			$sHtml.=' value="'.$sValue.'" '.$this->getOption($tOption).'/>'.$sLabel.' ';
 		}
 		$sHtml.=$this->getMessage($sName);
 		return $sHtml;
@@ -158,7 +167,11 @@ class plugin_form{
 	public function getInputCheckbox($sName,$sValue,$tOption=null){
 		$sCurrentValue=$this->getValue($sName);
 		
-		$sHtml='<input type="checkbox" '; if($sCurrentValue==$sValue){ $sHtml.='checked="checked" '; } $sHtml.=' name="'.$sName.'" value="'.$sValue.'" '.$this->getOption($tOption).'/>';
+		$sHtml='<input type="checkbox" '; 
+		if($sCurrentValue==$sValue){ 
+			$sHtml.='checked="checked" '; 
+		} 
+		$sHtml.=' name="'.$sName.'" value="'.$sValue.'" '.$this->getOption($tOption).'/>';
 		$sHtml.=$this->getMessage($sName);
 		return $sHtml;
 	}
