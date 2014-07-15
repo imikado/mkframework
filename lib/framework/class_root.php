@@ -104,7 +104,7 @@ class _root{
 				}else{
 					$tIni=$tIniBrut;
 				}
-				$tConfigVar=array_merge($tConfigVar,$tIni);
+				$tConfigVar=self::arrayMergeRecursive($tConfigVar,$tIni);
 			}
 			
 			self::$tConfigVar=$tConfigVar;
@@ -118,6 +118,18 @@ class _root{
 		}catch(Exception $e){
 		      self::erreurLog($e->getMessage()."\n".$e->getTraceAsString());
 		}	
+	}
+	
+	public static function arrayMergeRecursive($tArray,$tNewArray){
+		
+		foreach($tNewArray as $sKey => $tValue){
+			foreach($tValue as $sChildKey => $sChildValue){
+				$tArray[$sKey][$sChildKey]=$sChildValue;
+			}
+		}
+		
+		return $tArray;
+		
 	}
 	
 	/** 
@@ -653,6 +665,7 @@ class _root{
 			else if(isset(self::$tConfigVar[$sCategory][$sVar])){
 				return self::$tConfigVar[$sCategory][$sVar];
 			}
+
 		}else if(isset(self::$tConfigVar[$sCatAndVar])){
 			return self::$tConfigVar[$sCatAndVar];		
 		}
