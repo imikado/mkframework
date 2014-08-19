@@ -24,7 +24,12 @@ abstract class abstract_moduleembedded{
 
 	protected $_tVar;
 	
-	
+	public function before(){
+		
+	}
+	public function after(){
+		
+	}
 	/**
 	* setter
 	*/

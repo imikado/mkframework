@@ -805,11 +805,17 @@ class _root{
 		}else{
 			include self::getConfigVar('navigation.layout.erreur');
 			try{
-			$open=fopen(self::getConfigVar('path.log','data/log').date('Y-m-d').'.txt','a+');
-			fputs($open,$sText);
-			fclose($open);
+				if(self::getConfigVar('log.apache.enabled',1)==1){
+					error_log('[quiet error]:'.$sText);
+				}
+				if(self::getConfigVar('log.file.enabled',1)==1){
+					$open=fopen(self::getConfigVar('path.log','data/log').date('Y-m-d').'.txt','a+');
+					fputs($open,$sText);
+					fclose($open);
+				}
+				
 			}catch(Exception $e){
-				//en mode production, on est muet sur 
+				//en mode production, on est muet 
 			}
 		}
 	}
