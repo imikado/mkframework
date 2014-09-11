@@ -47,7 +47,12 @@ class module_moduleAuthWithInscriptionBootstrap{
 				$sClassAccount=$sClassFoo;
 			}
 		}
+		
+		$tColumnAccount=null;
 		if($tRowMethodes){
+			$tColumnAccount=module_builder::getTools()->getListColumnFromClass($sClassAccount);
+		}else if(_root::getParam('model')){
+			$sClassAccount=substr(_root::getParam('model'),0,-4);
 			$tColumnAccount=module_builder::getTools()->getListColumnFromClass($sClassAccount);
 		}
 		
@@ -79,18 +84,19 @@ class module_moduleAuthWithInscriptionBootstrap{
 		
 		
 		
-		$oTpl= new _Tpl('moduleAuthWithInscription::index');
+		$oTpl= new _Tpl('moduleAuth::index');
 		$oTpl->tRowMethodes=$tRowMethodes;
 		$oTpl->tModuleAndMethod=$tModuleAndMethod;
 		$oTpl->tMessage=$tMessage;
 		$oTpl->msg=$msg;
 		$oTpl->detail=$detail;
 		$oTpl->tColumnAccount=$tColumnAccount;
+		$oTpl->tFile=$tFile;
 		
 		return $oTpl;
 	}
 	private function generate(){
-		if(!_root::getRequest()->isPost()){
+		if(!_root::getRequest()->isPost() or _root::getParam('formu')!='generate'){
 			return null;
 		}
 		

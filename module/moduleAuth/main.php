@@ -4,6 +4,7 @@ class module_moduleAuth{
 	
 	public function _index(){
 		$tMessage=$this->generate();
+		module_builder::getTools()->rootAddConf('conf/connexion.ini.php');
 		
 		$msg=null;
 		$detail=null;
@@ -68,6 +69,12 @@ class module_moduleAuth{
 			$tModuleAndMethod[$sModuleName]=$tMethods;
 		}
 		
+		$tColumnAccount=null;
+		$sClassAccount=_root::getParam('model');
+		if($sClassAccount){
+			$sClassAccount=substr($sClassAccount,0,-4);
+			$tColumnAccount=module_builder::getTools()->getListColumnFromClass($sClassAccount);
+		}
 		
 		$oTpl= new _Tpl('moduleAuth::index');
 		$oTpl->tRowMethodes=$tRowMethodes;
@@ -75,11 +82,13 @@ class module_moduleAuth{
 		$oTpl->tMessage=$tMessage;
 		$oTpl->msg=$msg;
 		$oTpl->detail=$detail;
+		$oTpl->tFile=$tFile;
+		$oTpl->tColumnAccount=$tColumnAccount;
 		
 		return $oTpl;
 	}
 	private function generate(){
-		if(!_root::getRequest()->isPost()){
+		if(!_root::getRequest()->isPost() or _root::getParam('formu')!='generate'){
 			return null;
 		}
 		

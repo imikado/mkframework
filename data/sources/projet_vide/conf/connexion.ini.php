@@ -20,6 +20,11 @@ pdoSqliteExple.sgbd=pdo_sqlite
 pdoSqliteExple.username=root
 pdoSqliteExple.password=root
 
+firebirdExple.dsn="firebird:host=localhost;dbname=/var/www/firebirdDb"
+firebirdExple.sgbd=pdo_firebird
+firebirdExple.username=root
+firebirdExple.password=root
+
 xmlExple.dsn=
 xmlExple.sgbd=xml
 xmlExple.database=../data/xml/base/

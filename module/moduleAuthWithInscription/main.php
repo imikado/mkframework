@@ -2,8 +2,8 @@
 class module_moduleAuthWithInscription{
 	
 	public function _index(){
-		module_builder::getTools()->rootAddConf('conf/connexion.ini.php');
 		$tMessage=$this->generate();
+		module_builder::getTools()->rootAddConf('conf/connexion.ini.php');
 		
 		$msg=null;
 		$detail=null;
@@ -47,9 +47,6 @@ class module_moduleAuthWithInscription{
 				$sClassAccount=$sClassFoo;
 			}
 		}
-		if($tRowMethodes){
-			$tColumnAccount=module_builder::getTools()->getListColumnFromClass($sClassAccount);
-		}
 		
 		$tModule=module_builder::getTools()->getListModule();
 		$tModuleAndMethod=array();
@@ -76,21 +73,27 @@ class module_moduleAuthWithInscription{
 			$tModuleAndMethod[$sModuleName]=$tMethods;
 		}
 		
+		$tColumnAccount=null;
+		if($tRowMethodes){
+			$tColumnAccount=module_builder::getTools()->getListColumnFromClass($sClassAccount);
+		}else if(_root::getParam('model')){
+			$sClassAccount=substr(_root::getParam('model'),0,-4);
+			$tColumnAccount=module_builder::getTools()->getListColumnFromClass($sClassAccount);
+		}
 		
-		
-		
-		$oTpl= new _Tpl('moduleAuthWithInscription::index');
+		$oTpl= new _Tpl('moduleAuth::index');
 		$oTpl->tRowMethodes=$tRowMethodes;
 		$oTpl->tModuleAndMethod=$tModuleAndMethod;
 		$oTpl->tMessage=$tMessage;
 		$oTpl->msg=$msg;
 		$oTpl->detail=$detail;
+		$oTpl->tFile=$tFile;
 		$oTpl->tColumnAccount=$tColumnAccount;
 		
 		return $oTpl;
 	}
 	private function generate(){
-		if(!_root::getRequest()->isPost()){
+		if(!_root::getRequest()->isPost() or _root::getParam('formu')!='generate'){
 			return null;
 		}
 		
