@@ -803,7 +803,7 @@ class _root{
 			$sText=nl2br($sText);
 			include self::getConfigVar('path.layout').'erreur.php';
 		}else{
-			include self::getConfigVar('navigation.layout.erreur');
+			include self::getConfigVar('navigation.layout.erreur','../layout/erreurprod.php');
 			try{
 				if(self::getConfigVar('log.apache.enabled',1)==1){
 					error_log('[quiet error]:'.$sText);
