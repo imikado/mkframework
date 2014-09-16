@@ -50,6 +50,34 @@
 				<?php endif;?>
 			</td>
 		</tr>
+		
+		<?php if($this->tColumnAccount):?>
+		<tr>
+			<th>Champ nom d'utilisateur</th>
+			<td>
+				<select name="loginField" >
+					<option></option>
+					<?php foreach($this->tColumnAccount as $sColumn):?>
+					<option <?php if(_root::getParam('loginField')==$sColumn):?>selected="selected"<?php endif;?> value="<?php echo $sColumn?>"><?php echo $sColumn?></option>
+					<?php endforeach;?>
+				
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>Champ mot de passe</th>
+			<td>
+				<select name="passField">
+					<option></option>
+					<?php foreach($this->tColumnAccount as $sColumn):?>
+					<option <?php if(_root::getParam('passField')==$sColumn):?>selected="selected"<?php endif;?> value="<?php echo $sColumn?>"><?php echo $sColumn?></option>
+					<?php endforeach;?>
+				
+				</select>
+			</td>
+		</tr>
+		<?php endif;?>
+		
 	</table>
 	
 	<a id="createon" name="createon"></a>

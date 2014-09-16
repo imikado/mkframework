@@ -11,6 +11,9 @@ charset=UTF-8
 ;indique si le framework encode en html le code deja en html
 double_encode=0
 
+[debug]
+class=plugin_debugError
+
 [language]
 ;fr / en... //sLangue
 default=fr

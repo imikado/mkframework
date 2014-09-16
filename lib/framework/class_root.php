@@ -296,7 +296,7 @@ class _root{
 			}
 
 		}catch(Exception $e){
-			self::erreurLog($e->getMessage()."\n".self::showException($e));
+			self::erreurLog($e->getMessage()."\n".self::showException($e),$e);
 		}
 		
 	}
@@ -798,10 +798,18 @@ class _root{
 		
 	}
 	
-	public static function erreurLog($sText){
+	public static function erreurLog($sText,$e=null){
 		if(self::getConfigVar('site.mode')=='dev'){
-			$sText=nl2br($sText);
-			include self::getConfigVar('path.layout').'erreur.php';
+
+			if(self::getConfigVar('debug.class')){
+				$sClass=self::getConfigVar('debug.class');
+				$oDebug=new $sClass;
+				$oDebug->show($sText,$e);
+			}else{
+				$sText=nl2br($sText);
+				include self::getConfigVar('path.layout').'erreur.php';
+			}
+
 		}else{
 			include self::getConfigVar('navigation.layout.erreur','../layout/erreurprod.php');
 			try{
