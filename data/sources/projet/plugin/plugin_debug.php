@@ -1,4 +1,25 @@
 <?php
+/*
+This file is part of Mkframework.
+
+Mkframework is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License.
+
+Mkframework is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with Mkframework.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
+/**
+* plugin_gestionuser classe de gestion user
+* @author Mika
+* @link http://mkf.mkdevs.com/
+*/
 class plugin_debug{
 	
 	private $iStartMicrotime;
@@ -79,19 +100,38 @@ class plugin_debug{
 		$this->addAcl();
 	}
 	
+	/** ajoute dans la barre de debug l'affichage d'une variable (tableau,objet..)
+	* @access public
+	* @return void
+	* @param string $uLabel nom de la variable a afficher
+	* @param mixte $uVar la variable a afficher dans la barre	
+	*/
 	public static function addSpy($uLabel,$uVar){
 		self::$tSpy[][$uLabel]=$uVar;
 	}
-	
+	/** ajoute un chrono
+	* @access public
+	* @return void
+	* @param string $uLabel nom du chrono
+	*/
 	public static function addChrono($uLabel){
 		$iTime=self::microtime();
 		self::$tTime[]=array($uLabel,$iTime);
 	}
-	
+	/** demarre un chrono (pour chronometre le temps d'un point A a un point B)
+	* @access public
+	* @return void
+	* @param string $uLabel nom du chrono
+	*/
 	public static function startChrono($uLabel){
 		$iTime=self::microtime();
 		self::$tTimeById[$uLabel]['start']=$iTime;
 	}
+	/** arrete le chrono de l'id passe (pour chronometre le temps d'un point A a un point B)
+	* @access public
+	* @return void
+	* @param string $uLabel nom du chrono (qui doit etre le meme que le chrono demarre)
+	*/
 	public static function stopChrono($uLabel){
 		$iTime=self::microtime();
 		self::$tTimeById[$uLabel]['end']=$iTime;

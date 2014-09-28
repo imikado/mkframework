@@ -106,6 +106,23 @@ class plugin_check{
 		$this->sErrorMsg=$sErrorMsg;
 		return false;
 	}
+	
+	/**
+	* verifie si $uValueA est plus longue que $uValueB
+	* @access public
+	* @param undefined $uValueA valeur A
+	* @param undefined $uValueB valeur B
+	* @param string $sErrorMsg message d'erreur a afficher
+	* @return bool retourne true/false selon
+	*/
+	public function isLongerOrEqualThan($uValueA,$uValueB,$sErrorMsg='KO isLongerThan'){
+		if(strlen($uValueA) >= $uValueB){
+			return true;
+		}
+		$this->sErrorMsg=$sErrorMsg;
+		return false;
+	}
+	
 	/**
 	* verifie si $uValueA est inferieur a $uValueB
 	* @access public

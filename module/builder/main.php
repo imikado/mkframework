@@ -262,8 +262,11 @@ class module_builder extends abstract_module{
 			$this->oLayout->addModule('main','moduleViewTable::complexWithOrderAndClic');//OK
 		}elseif(_root::getParam('action')=='addviewform'){//OK
 			$this->oLayout->addModule('main','moduleViewForm::simple');//OK
-		}
-		
+			
+		//code
+		}elseif(_root::getParam('action')=='addrightsmanager'){//OK
+			$this->oLayout->addModule('main','moduleCoderightsmanager::index');//OK
+		}		
 		
 		
 	}

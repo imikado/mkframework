@@ -65,7 +65,6 @@ Class module_menu extends abstract_module{
 					//'Cr&eacute;er un module int&eacute;grable'.$supB => 'moduleembeddedWithBootstrap',
 					//'Cr&eacute;er un module CRUD int&eacute;grable'.$supB => 'crudembeddedWithBootstrap',
 					//'Cr&eacute;er un module Lecture seule int&eacute;grable'.$supB => 'crudembeddedreadonlyWithBootstrap',
-					
 				
 				'Base de donn&eacute;es embarqu&eacute;es' => 'title',
 				
@@ -91,6 +90,8 @@ Class module_menu extends abstract_module{
 					
 					'Cr&eacute;er un module d\'authentification' => 'authmodule',
 					'Cr&eacute;er un module d\'authentification avec inscription' => 'authwithinscriptionmodule',
+					
+					'Ajouter une gestion de droits &agrave; votre application <sup>Beta</sup>' => 'addrightsmanager',
 				
 				'Modules int&eacute;grable' => 'title',
 					'Cr&eacute;er un module menu ' => 'addmodulemenu',
@@ -103,7 +104,6 @@ Class module_menu extends abstract_module{
 					//'Cr&eacute;er un tableau avec tri (avec le module table)' => 'addviewtablemoduletablewithorder',
 					//'Cr&eacute;er un tableau avec tri + ligne cliquable (avec le module table)' => 'addviewtablemoduletablewithorderclic',
 					'C&eacuteer un formulaire' => 'addviewform',
-					
 				
 				'Base de donn&eacute;es embarqu&eacute;es' => 'title',
 				
