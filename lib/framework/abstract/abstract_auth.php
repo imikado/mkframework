@@ -49,7 +49,8 @@ abstract class abstract_auth{
 	*/
 	public function _isConnected(){
 	
-		if( !isset($_SESSION['ip']) or $_SESSION['ip']!=sha1($_SERVER['REMOTE_ADDR']) ){ 
+		if( !isset($_SESSION['ip']) or $_SESSION['ip']!=sha1($_SERVER['REMOTE_ADDR']) 
+			or !isset($_SESSION['userAgent']) or $_SESSION['userAgent']!=sha1($_SERVER['HTTP_USER_AGENT']) ){ 
 			return false;
 		}else if(
 			(int)_root::getConfigVar('auth.session.timeout.enabled')==1 
@@ -91,9 +92,15 @@ abstract class abstract_auth{
 		$this->_bConnected=true;
 		
 		$_SESSION['ip']=sha1($_SERVER['REMOTE_ADDR']);
+		if(isset($_SERVER['HTTP_USER_AGENT'])){
+			$_SESSION['userAgent']=sha1($_SERVER['HTTP_USER_AGENT']);
+		}else {
+			$_SESSION['userAgent']=sha1('noUserAgent');
+		}
 		 if((int)_root::getConfigVar('auth.session.timeout.enabled')==1){
 			$_SESSION['timeout']=(time()+(int)_root::getConfigVar('auth.session.timeout.lifetime') );
 		}
+		
 	}
 	/**
 	* @access public
