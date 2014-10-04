@@ -7,6 +7,7 @@
 		</tr>
 	</thead>
 	<tbody>
+	<?php if($this->tLine):?>
 		<?php foreach($this->tLine as $tDetail):?>
 		<tr <?php echo $tDetail['options']?>>
 			<?php foreach($tDetail['cell'] as $i => $value):?>
@@ -14,5 +15,10 @@
 			<?php endforeach;?>
 		</tr>
 		<?php endforeach;?>
+	<?php else:?>
+		<tr>
+			<td colspan="<?php echo count($this->tHeader);?>">Aucune ligne</td>
+		</tr>
+	<?php endif;?>
 	</tbody>
 </table>

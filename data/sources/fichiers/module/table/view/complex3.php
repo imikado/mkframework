@@ -40,13 +40,19 @@ if($this->tStyleColumn):?>
 		</tr>
 	</thead>
 	<tbody class="tbody">
-	<?php foreach($this->tLine as $i => $tDetail):?>
-	<tr <?php echo $tDetail['options']?>>
-		<?php foreach($tDetail['cell'] as $i => $value):?>
-		<td class="tableWidth_<?php echo $i?>"><a href="<?php echo $tDetail['link']?>"><?php echo $value?></a></td>
+	<?php if($this->tLine):?>
+		<?php foreach($this->tLine as $i => $tDetail):?>
+		<tr <?php echo $tDetail['options']?>>
+			<?php foreach($tDetail['cell'] as $i => $value):?>
+			<td class="tableWidth_<?php echo $i?>"><a href="<?php echo $tDetail['link']?>"><?php echo $value?></a></td>
+			<?php endforeach;?>
+		</tr>
 		<?php endforeach;?>
-	</tr>
-	<?php endforeach;?>
+	<?php else:?>
+		<tr>
+			<td colspan="<?php echo count($this->tHeader);?>">Aucune ligne</td>
+		</tr>
+	<?php endif;?>
 	</tbody>
 </table>
 

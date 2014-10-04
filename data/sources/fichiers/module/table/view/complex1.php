@@ -15,12 +15,18 @@ $sParamSide=module_table::getParam('side');
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach($this->tLine as $tDetail):?>
-		<tr <?php echo $tDetail['options']?>>
-			<?php foreach($tDetail['cell'] as $value):?>
-			<td><?php echo $value?></td>
+		<?php if($this->tLine):?>
+			<?php foreach($this->tLine as $tDetail):?>
+			<tr <?php echo $tDetail['options']?>>
+				<?php foreach($tDetail['cell'] as $value):?>
+				<td><?php echo $value?></td>
+				<?php endforeach;?>
+			</tr>
 			<?php endforeach;?>
-		</tr>
-		<?php endforeach;?>
+		<?php else:?>
+			<tr>
+				<td colspan="<?php echo count($this->tHeader);?>">Aucune ligne</td>
+			</tr>
+		<?php endif;?>
 	</tbody>
 </table>

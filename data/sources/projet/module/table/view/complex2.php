@@ -15,13 +15,19 @@ $sParamSide=module_table::getParam('side');
 		</tr>
 	</thead>
 	<tbody>
-	<?php foreach($this->tLine as $tDetail):?>
-	<tr <?php echo $tDetail['options']?>>
-		<?php foreach($tDetail['cell'] as $i => $value):?>
-		<td <?php if($this->tClassColumn and isset($this->tClassColumn[$i])):?>class="<?php echo $this->tClassColumn[$i]?>"<?php endif;?>><a href="<?php echo $tDetail['link']?>"><?php echo $value?></a></td>
-		<?php endforeach;?>
-	</tr>
-	<?php endforeach;?>
+		<?php if($this->tLine):?>
+			<?php foreach($this->tLine as $tDetail):?>
+			<tr <?php echo $tDetail['options']?>>
+				<?php foreach($tDetail['cell'] as $i => $value):?>
+				<td <?php if($this->tClassColumn and isset($this->tClassColumn[$i])):?>class="<?php echo $this->tClassColumn[$i]?>"<?php endif;?>><a href="<?php echo $tDetail['link']?>"><?php echo $value?></a></td>
+				<?php endforeach;?>
+			</tr>
+			<?php endforeach;?>
+		<?php else:?>
+			<tr>
+				<td colspan="<?php echo count($this->tHeader);?>">Aucune ligne</td>
+			</tr>
+		<?php endif;?>
 	</tbody>
 </table>
 

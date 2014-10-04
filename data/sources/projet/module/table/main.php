@@ -53,6 +53,13 @@ class module_table extends abstract_moduleembedded{
 	public static function redirect($sModuleAction,$tModuleParam=null){
 		return parent::_redirect(self::$sRootModule,self::$tRootParams,self::$sModuleName,$sModuleAction,$tModuleParam);
 	}
+	
+	/** retourne l'offset de la requete LIMIT offset,limit
+	 * @param int $iLimit limite (nb de lignes affichees par page)
+	 * */
+	public static function getOffset($iLimit){
+		return ((int)self::getParam('page',1)-1)*$iLimit;
+	}
  
 	public function setClass($sClass){
 		$this->sClass=$sClass;

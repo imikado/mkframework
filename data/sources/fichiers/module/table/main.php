@@ -31,6 +31,10 @@ class module_table extends abstract_moduleembedded{
 	protected $iPaginationMax;
 	protected $sPaginationParam='page';
 	
+	protected $bPaginationServerEnabled=0;
+	
+	protected $ajaxLink=null;
+	
 	public function __construct($sView='simple'){
 		self::setRootLink(_root::getParamNav(),null);
 		
@@ -48,6 +52,13 @@ class module_table extends abstract_moduleembedded{
 	}
 	public static function redirect($sModuleAction,$tModuleParam=null){
 		return parent::_redirect(self::$sRootModule,self::$tRootParams,self::$sModuleName,$sModuleAction,$tModuleParam);
+	}
+	
+	/** retourne l'offset de la requete LIMIT offset,limit
+	 * @param int $iLimit limite (nb de lignes affichees par page)
+	 * */
+	public static function getOffset($iLimit){
+		return ((int)self::getParam('page',1)-1)*$iLimit;
 	}
  
 	public function setClass($sClass){
@@ -164,6 +175,17 @@ class module_table extends abstract_moduleembedded{
 	public function setPaginationParam($sVar){
 		$this->sPaginationParam=$sVar;
 	}
+	//pagination server
+	public function enablePaginationServer(){
+		$this->bPaginationServerEnabled=1;
+	}
+	public function setPaginationMax($iMax){
+		$this->iPaginationMax=$iMax;
+	}
+	
+	public function setAjaxLink($sNav){
+		$this->ajaxLink=$sNav;
+	}
 	
 	/*
 	Pour integrer au sein d'un autre module:
@@ -183,7 +205,6 @@ class module_table extends abstract_moduleembedded{
 	
 	public function build(){
 		
-		
 		$oView=new _view('table::'.$this->sView);
 		$oView->sClass=$this->sClass;
 		$oView->tLine=$this->tLine;
@@ -196,15 +217,29 @@ class module_table extends abstract_moduleembedded{
 		
 		$oView->tableWidth=$this->tableWidth;
 		
-		if($this->bPaginationEnabled){
-	
+		if($this->bPaginationServerEnabled){
 			$this->selectPaginationPage( self::getParam($this->sPaginationParam) );
-			$oView->tLine=$this->getPaginationPage();
+			$oView->ajaxLink=$this->ajaxLink;
 			
 			$oViewPagination=new _view('table::pagination');
 			$oViewPagination->iPage=$this->iPaginationPage;
 			$oViewPagination->iMax=ceil( ($this->iPaginationMax/$this->iPaginationLimit) );
 			$oViewPagination->sParamPage=$this->sPaginationParam;
+			$oViewPagination->ajaxLink=$this->ajaxLink;
+
+			$oView->oModulePagination=$oViewPagination;
+			
+		}else if($this->bPaginationEnabled){
+	
+			$this->selectPaginationPage( self::getParam($this->sPaginationParam) );
+			$oView->tLine=$this->getPaginationPage();
+			$oView->ajaxLink=$this->ajaxLink;
+			
+			$oViewPagination=new _view('table::pagination');
+			$oViewPagination->iPage=$this->iPaginationPage;
+			$oViewPagination->iMax=ceil( ($this->iPaginationMax/$this->iPaginationLimit) );
+			$oViewPagination->sParamPage=$this->sPaginationParam;
+			$oViewPagination->ajaxLink=$this->ajaxLink;
 
 			$oView->oModulePagination=$oViewPagination;
 			
