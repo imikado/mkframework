@@ -3,7 +3,7 @@ $sParamOrder=module_table::getParam('order');
 $sParamSide=module_table::getParam('side');
 
 $sVarPage='page';
-$sValuePage=_root::getParam($sVarPage);
+$sValuePage=module_table::getParam($sVarPage,1);
 ?>
 <table class="<?php echo $this->sClass?>">
 	<thead>
