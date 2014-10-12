@@ -35,6 +35,8 @@ class row_exampletb extends abstract_row{
 	/*exemple test validation*/
 	private function getCheck(){
 		$oPluginValid=new plugin_valid($this->getTab());
+		//checkContraint
+		
 		/* renseigner vos check ici
 		$oPluginValid->isEqual('champ','valeurB','Le champ n\est pas &eacute;gal &agrave; '.$valeurB);
 		$oPluginValid->isNotEqual('champ','valeurB','Le champ est &eacute;gal &agrave; '.$valeurB);

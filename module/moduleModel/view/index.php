@@ -1,4 +1,26 @@
-<script>
+<form action="" method="POST" id="formu">
+<?php
+$tCheck=array(
+'isNotEmpty' => array('N&apos;est pas vide','Le champ ne doit pas &ecirc;tre vide'),
+'isEqual' => array('Est &eacute;gal &agrave;','Le champ ne doit pas &ecirc;tre &eacute;gal &agrave;'),
+'isNotEqual' => array('N&apos;est pas &eacute;gal &agrave;','Le champ ne doit pas &eacute;gal &agrave;'),
+'isUpperThan' => array('Est sup&eacute;rieur &agrave;','Le champ n&apos;est pas sup&eacute;rieur &agrave;'),
+'isLowerThan' => array('Est inf&eacute;rieur a','Le champ n&apos;est pas inf&eacute;rieur &agrave;'),
+'isEmpty' => array('Est vide','Le champ n&apos;est pas vide'),
+'isEmailValid' => array('Est un email valide','Le champ n&apos;est pas un email valide'),
+'matchExpression' => array('Respecte le pattern','Le champ ne respecte pas le pattern'),
+'notMatchExpression' => array('Ne respecte pas le pattern','Le champ ne doit pas respecter le pattern'),
+);
+
+?><script>
+var tRuleName=new Array();
+var tRuleMsg=new Array();
+<?php foreach($tCheck as $sRule => $tLabel):?>
+tRuleName['<?php echo $sRule?>']='<?php echo $tLabel[0]?>';
+tRuleMsg['<?php echo $sRule?>']='<?php echo $tLabel[1]?>';
+
+<?php endforeach;?>
+	
 var bCheckedAll=0;
 function deselectAll(){
 	var i=0;
@@ -12,7 +34,133 @@ function deselectAll(){
 		bCheckedAll=0;
 	}
 }
+<?php foreach($this->tTableColumn as $sTable => $tColumn):?>
+function resetCheck<?php echo $sTable?>(){
+	
+	if(!confirm('Confirmez-vous vouloir effacer les contraintes de cette classe ?')){
+		return;
+	}
+	
+	getById('<?php echo $sTable?>_check_content').innerHTML='';
+}
+function addCheck<?php echo $sTable?>(){
+	
+	var a=getById('<?php echo $sTable?>_check');
+	if(a){
+		a.style.display='block';
+	}
+	
+	var sRule=null;
+	var b=getById('ruleAdd');
+	if(b){
+		sRule=b.value;
+	}
+	
+	var sFieldLine='';
+	sFieldLine+='<table class="rule">';
+		sFieldLine+='<tr>';
+			sFieldLine+='<td>';
+			
+				sFieldLine+='Le champ ';
+				
+			sFieldLine+='</td>';
+			sFieldLine+='<td>';
+			
+				sFieldLine+='<select name="tRuleColumn<?php echo $sTable?>[]">';
+					sFieldLine+='<option value=""></option>';
+					<?php foreach($tColumn as $sColumn):?>
+					sFieldLine+='<option value="<?php echo $sColumn?>"><?php echo $sColumn?></option>';
+					<?php endforeach;?>
+				sFieldLine+='</select>';
+			sFieldLine+='</td>';
+			
+			sFieldLine+='<td>';
+			
+				sFieldLine+='<input name="tRuleName<?php echo $sTable?>[]" type="hidden" value="'+sRule+'" />';
+				sFieldLine+=tRuleName[sRule];
+			
+			sFieldLine+='</td>';
+			
+			sFieldLine+='<td>';
+			if(sRule!='isNotEmpty' && sRule!='isEmpty' && sRule!='isEmailValid'){
+				sFieldLine+='<input size="3" name="tRuleParam<?php echo $sTable?>[]" type="text" />';
+			}else{
+				sFieldLine+='<input name="tRuleParam<?php echo $sTable?>[]" type="hidden" />';
+			}
+			sFieldLine+='</td>';	
+			
+			sFieldLine+='<td>Message:</td>';
+				
+			sFieldLine+='<td>';
+			
+				sFieldLine+='<input name="tRuleMsg<?php echo $sTable?>[]" type="text" value="'+tRuleMsg[sRule]+'" />';
+			
+			sFieldLine+='</td>';
+			
+			
+		sFieldLine+='<tr>';
+	sFieldLine+='</table>';
+	
+	var tmpDiv=document.createElement('div');
+	tmpDiv.innerHTML=sFieldLine;
+
+	getById('<?php echo $sTable?>_check_content').appendChild(tmpDiv);
+}
+function hideCheck<?php echo $sTable?>(){
+	
+	var a=getById('<?php echo $sTable?>_check');
+	if(a){
+		a.style.display='none';
+	}
+	
+}
+function showCheck<?php echo $sTable?>(){
+	
+	var a=getById('<?php echo $sTable?>_check');
+	if(a){
+		a.style.display='block';
+	}
+	
+}
+<?php endforeach;?>
 </script>
+<style>
+.popup{
+	 display:none;
+	 position:absolute;
+	 border:3px solid #333;
+	 background:white;
+}
+.popup .content{
+	padding:10px;
+}
+.popup hr{
+	border:1px solid #333;
+}
+.rule td{
+	border:0px;
+}
+.effacer{
+	text-align:right;
+	margin:0px;
+	padding:0px;
+}
+.effacer input{
+	margin-top:10px;
+	background:darkred;
+	color:white;
+	border:1px solid #333;
+}
+.fermer{
+	background:#333;
+	margin:0px;
+	text-align:right;
+}
+.fermer a{
+	color:white;
+	text-decoration:none;
+}
+</style>
 <?php $tEnable=_root::getParam('tEnable');
 $tSelectEnable=_root::getParam('tSelectEnable');
 $tSelectKey=_root::getParam('tSelectKey');
@@ -20,7 +168,7 @@ $tSelectVal=_root::getParam('tSelectVal');
 ?>
 <div class="smenu">
 <h1>Cr&eacute;er la couche mod&egrave;le</h1>
-<form action="" method="POST" id="formu">
+
 <p>S&eacute;lectionner le profil &agrave; utiliser</p>
 <ul>
 <?php foreach($this->tConnexion as $sKey=>$tConfig):?>
@@ -59,6 +207,10 @@ $tSelectVal=_root::getParam('tSelectVal');
 		<th style="border-top:0px;background:white";></th>
 
 		<th style="text-align:left;">Ajouter une m&eacute;thode getSelect()*</th>
+		
+		<th style="border-top:0px;background:white";></th>
+		
+		<th>Contraintes</th>
 	</tr>
 <?php $i=0?>
 <?php foreach($this->tTableColumn as $sTable => $tColumn):?>
@@ -103,6 +255,35 @@ $tSelectVal=_root::getParam('tSelectVal');
 			</li>
 			</ul>
 		</td>
+		
+		<td></td>
+			
+		<td>
+			<div class="popup" id="<?php echo $sTable?>_check">
+				<p class="fermer"><a href="#" onclick="hideCheck<?php echo $sTable?>();return false;">Masquer</a></p>
+				<div class="content">
+					<div  id="<?php echo $sTable?>_check_content"></div>
+					
+					<hr/>
+					<input onclick="addCheck<?php echo $sTable?>()" type="button" value="Ajouter"/>
+					r&egrave;gle
+					<select id="ruleAdd">
+					<?php foreach($tCheck as $sCheck => $tLabel):?>
+						<?php $sLabel=$tLabel[0];?>
+						<option value="<?php echo $sCheck?>"><?php echo $sLabel?></option>
+					<?php endforeach;?>
+					</select>
+					
+					
+					<p class="effacer">
+					<input onclick="resetCheck<?php echo $sTable?>()" type="button" value="Effacer"/></p>
+				</div>
+			</div>
+			<input onclick="showCheck<?php echo $sTable?>()" type="button" value="Afficher"/>
+			
+		</td>
+		
+		
 	</tr>
 	<?php $i++;?>
 <?php endforeach;?>

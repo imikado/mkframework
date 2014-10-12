@@ -54,6 +54,8 @@ class module_moduleModel{
 	}
 	
 	private function genModelAndRowByTableConfigAndId($sTable,$sConfig,$sId,$tSelect=null){
+		$r="\n";
+		$t="\t";
 		$sTable=trim($sTable);
 		
 		$sContentGetSelect=null;
@@ -101,7 +103,47 @@ class module_moduleModel{
 			
 			$sSave='model_'.$sTable.'::getInstance()->save($this);';
 		}
+		
+		$sRules=null;
+		
+		if(_root::getParam('tRuleColumn'.$sTable) ){
+			$tRuleColumn=_root::getParam('tRuleColumn'.$sTable);
+			$tRuleName=_root::getParam('tRuleName'.$sTable);
+			$tRuleParam=_root::getParam('tRuleParam'.$sTable);
+			$tRuleMsg=_root::getParam('tRuleMsg'.$sTable);
+			
+			if($tRuleColumn){
+				
+				$sRules=$r;
+				
+				foreach($tRuleColumn as $key => $sRuleColumn){
+					
+					
+					if($sRuleColumn==''){
+						continue;
+					}
+					
+					$sRuleName=$tRuleName[$key];
+					$sRuleParam=$tRuleParam[$key];
+					$sRuleMsg=$tRuleMsg[$key];
+					
+					$sRules.=$t.$t;
+					
+					//$oPluginValid->isEqual('champ','valeurB','Le champ n\est pas &eacute;gal &agrave; '.$valeurB);
+					$sRules.='$oPluginValid->'.$sRuleName.'('."'$sRuleColumn'";
+					if(!in_array($sRuleName,array('isEmpty','isNotEmpty','isEmailValid'))){
+						$sRules.=",'$sRuleParam'";
+					}
+					$sRules.=",'$sRuleMsg'";
+					$sRules.=');'.$r;
 
+					
+					
+					
+				}
+			}
+		}
+		
 		$sContent=module_builder::getTools()->stringReplaceIn(array(
 											'exampletb' => $sTable,
 											'exampleid' => $sId,
@@ -109,6 +151,7 @@ class module_moduleModel{
 											'\/\/ICI' => $sContentGetSelect,
 											'\/\/sSaveDuplicateKey' => $sSaveDuplicateKey,
 											'\/\/save' => $sSave,
+											'\/\/checkContraint' =>$sRules
 										),
 										'data/sources/projet/model/model_example.sample.php'
 		);
