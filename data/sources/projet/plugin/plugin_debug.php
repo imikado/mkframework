@@ -109,6 +109,11 @@ class plugin_debug{
 	public static function addSpy($uLabel,$uVar){
 		self::$tSpy[][$uLabel]=$uVar;
 	}
+	
+	public static function getListSpy(){
+		return self::$tSpy;
+	}
+	
 	/** ajoute un chrono
 	* @access public
 	* @return void

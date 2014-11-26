@@ -67,6 +67,13 @@ class plugin_debugError{
 			$sText.='<hr/>'.$sCode;
 			
 			$sText.='<hr/>';
+			$sText.='<h2>Navigation</h2>';
+			$oRequest=_root::getRequest();
+			$sText.='<strong>Module:</strong>'.$oRequest->getModule();
+			$sText.=' ';
+			$sText.='<strong>Action:</strong>'.$oRequest->getAction();
+			
+			
 			$sText.='<h2>$_GET</h2>';
 			$sText.=nl2br(print_r($_GET,true));
 			$sText.='<h2>$_POST</h2>';
@@ -75,11 +82,30 @@ class plugin_debugError{
 				$sText.='<h2>$_SESSION</h2>';
 				$sText.=nl2br(print_r($_SESSION,true));
 			}
+			if(isset($_SERVER)){
+				$sText.='<h2>$_SERVER</h2>';
+				$sText.=nl2br(print_r($_SERVER,true));
+			}
+			
+			$tSpy=plugin_debug::getListSpy();
+			if($tSpy){
+				$sText.='<h2>Spy variables</h2>';
+				foreach($tSpy as $tDetail){
+					foreach($tDetail as $ref => $value){
+						$sText.='<h3 style="margin-left:20px;border-bottom:1px solid black">'.$ref.'</h3>';
+						$sText.='<div style="padding-left:20px"><pre>'.customHtmlentities(print_r($value,1)).'</pre></div>';
+					}
+				}
+				 
+			}
 			
 		}
 		
 		echo '<html><head><style>*{ font-family:arial;font-size:12px;}</style></head></html>';
-		echo $sText;exit;
+		echo $sText;
+		
+		
+		exit;
 		
 	}
 	 

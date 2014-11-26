@@ -22,14 +22,14 @@ along with Mkframework.  If not, see <http://www.gnu.org/licenses/>.
 */
 class _cacheVar{
 	
-	protected $_oFile=null;
+	protected $_toFile=null;
 	
 	private function load($sId){
-		if($this->_oFile){
+		if($this->_toFile and isset($this->_toFile[$sId]) ){
 			return;
 		}
 		$oFile=new _file(_root::getConfigVar('path.cache').$sId.'.cachevar');
-		$this->_oFile=$oFile;
+		$this->_toFile[$sId]=$oFile;
 	}
 	
 	/** 
@@ -41,10 +41,10 @@ class _cacheVar{
 	*/
 	public function isCached($sId,$iMinute=null){
 		$this->load($sId);
-		if($this->_oFile->exist()){
+		if($this->_toFile[$sId]->exist()){
 			if($iMinute==null){
 				return true;
-			}else if( (time()-$this->_oFile->filemtime()) < ($iMinute*60)){
+			}else if( (time()-$this->_toFile[$sId]->filemtime()) < ($iMinute*60)){
 				return true;
 			}
 			return false;
@@ -58,7 +58,7 @@ class _cacheVar{
 	*/
 	public function getCached($sId){
 		$this->load($sId);
-		$uData=unserialize($this->_oFile->getContent());
+		$uData=unserialize($this->_toFile[$sId]->getContent());
 		return $uData;
 	}
 	/** 
@@ -70,8 +70,8 @@ class _cacheVar{
 		$this->load($sId);
 		$sData=serialize($uData);
 		
-		$this->_oFile->setContent($sData );
-		$this->_oFile->save();
+		$this->_toFile[$sId]->setContent($sData );
+		$this->_toFile[$sId]->save();
 	}
 	/** 
 	* supprime l'objet _view $sId en cache
@@ -80,7 +80,7 @@ class _cacheVar{
 	*/
 	public function clearCache($sId){
 		$this->load($sId);
-		$this->_oFile->delete();
+		$this->_toFile[$sId]->delete();
 	}
 
 

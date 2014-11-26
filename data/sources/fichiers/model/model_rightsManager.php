@@ -81,7 +81,7 @@ class model_rightsManager extends abstract_model{
 		return $this->findOneSimple('SELECT exampleUser_id,exampleUser_login,exampleUser_groupsId FROM exampleUserTable WHERE exampleUser_id=?',$user_id);
 	}
 	public function updateUserGroup($user_id,$group_id){
-		$this->execute('UPDATE exampleUserTable SET exampleUser_groupsId=? WHERE exampleUser_id=?',$user_id,$group_id);
+		$this->execute('UPDATE exampleUserTable SET exampleUser_groupsId=? WHERE exampleUser_id=?',$group_id,$user_id);
 	}
 	
 	public function loadForUser($oUser){
