@@ -21,9 +21,8 @@ $iMicrotime=microtime();
 $tIni=parse_ini_file('../conf/path.ini.php',true);
 //enregistrement de l'auto loader du framework
 include($tIni['path']['lib'].'/class_root.php');
-spl_autoload_register(array('_root','autoload'));
 
-//enregistrement de votre autoloader personnel
+//enregistrement de l'autoloader
 include($tIni['path']['plugin'].'/plugin_autoload.php');
 spl_autoload_register(array('plugin_autoload','autoload'));
 

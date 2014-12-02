@@ -9,6 +9,7 @@ Class module_menu extends abstract_module{
 			'Articles via module table' => 'article::listModuleTable',
 			
 			'Utiliser des classes metiers' => 'article::myclass',
+			'Appeler des sous module' => 'private_article::list',
 			
 			'Graphiques' => 'chart::examples',
 			'Graphiques SVG' => 'chart::examplesSVG',
