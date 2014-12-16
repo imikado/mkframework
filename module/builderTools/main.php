@@ -244,7 +244,22 @@
 	}
 	public function getListModule(){
 	    $oDir=new _dir(_root::getConfigVar('path.generation')._root::getParam('id').'/module/');
-	    return $oDir->getListDir();
+	    $tDir= $oDir->getListDir();
+	    $tNewDir=array();
+	    foreach($tDir as $oModule){
+			$sModuleName=$oModule->getName();
+			if(in_array($sModuleName,array('menu','builder','example','exampleembedded'))){
+				continue;
+			}
+			if(!file_exists(module_builder::getTools()->getRootWebsite().'module/'.$sModuleName.'/main.php')){			
+				continue;
+			}
+			
+			$tNewDir[]=$oModule;
+			
+		}
+		return $tNewDir;
+	    
 	}
 	public function getRootWebsite(){
 	    return _root::getConfigVar('path.generation')._root::getParam('id').'/';
