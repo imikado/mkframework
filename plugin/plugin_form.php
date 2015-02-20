@@ -175,6 +175,24 @@ class plugin_form{
 		$sHtml.=$this->getMessage($sName);
 		return $sHtml;
 	}
+	/** 
+	* retourne un champ input radio
+	* @access public
+	* @param string $sName nom du champ
+	* @param string $sValue valeur du champ radio
+	* @param array $tOption options du champ 
+	*/
+	public function getInputRadio($sName,$sValue,$tOption=null){
+		$sCurrentValue=$this->getValue($sName);
+		
+		$sHtml='<input type="radio" '; 
+		if($sCurrentValue==$sValue){ 
+			$sHtml.='checked="checked" '; 
+		} 
+		$sHtml.=' name="'.$sName.'" value="'.$sValue.'" '.$this->getOption($tOption).'/>';
+		$sHtml.=$this->getMessage($sName);
+		return $sHtml;
+	}
 	
 	private function getValue($sName){
 		if($this->isPost){

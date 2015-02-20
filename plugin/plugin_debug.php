@@ -149,43 +149,58 @@ class plugin_debug{
 		echo '<script>
 		var activePopup=\'\';
 		function openPopupDebug(id){
+			if(id!=activePopup){
 				closePopup();
-				var a=getById(id);
-				if(a){
-					a.style.display="block";
-					activePopup=id;
+			}
+
+			var a=getById(id);
+			if(!a){
+			}else if(a.style.display=="none"){
+				a.style.display="block";
+				activePopup=id;
+			}else if(a.style.display=="block"){
+				a.style.display="none";
+				activePopup=id;
+			}
+		}
+		function closePopup(){
+			if(activePopup){
+				var b=getById(activePopup);
+				if(b){
+					b.style.display="none";
 				}
 			}
-			function closePopup(){
-				if(activePopup){
-					var b=getById(activePopup);
+		}
+		function showHideDebugBar(){
+			var a=getById(\'debugBar\');
+			if(a){
+				btnName="Masquer";
+
+				if(a.style.display==\'none\'){
+					a.style.display=\'block\';
+					var b=getById(\'debugBtn\');
 					if(b){
-						b.style.display="none";
+						b.style.width=\'100%\';
 					}
+				}else{
+					a.style.display=\'none\';
+					var b=getById(\'debugBtn\');
+					if(b){
+						b.style.width=\'auto\';
+					}
+					btnName=">>";
+				}
+				
+				var c=getById(\'btnHidebar\');
+				if(c){
+					c.value=btnName;
 				}
 			}
-			function showHideDebugBar(){
-				var a=getById(\'debugBar\');
-				if(a){
-					if(a.style.display==\'none\'){
-						a.style.display=\'block\';
-						var b=getById(\'debugBtn\');
-						if(b){
-							b.style.width=\'100%\';
-						}
-					}else{
-						a.style.display=\'none\';
-						var b=getById(\'debugBtn\');
-						if(b){
-							b.style.width=\'80px\';
-						}
-					}
-				}
-			}
-			</script>';
+		}
+		</script>';
 		echo '<div id="debugBtn" ';
 		echo 'style="position:fixed;border:2px solid #444;background:#ddd;bottom:0px;left:0px;width:100%">';
-		echo '<div  style="float:left"><input type="button" value="Masquer" onclick="showHideDebugBar()"/></div>';
+		echo '<div  style="float:left"><input id="btnHidebar" type="button" value="Masquer" onclick="showHideDebugBar()"/></div>';
 		echo '<div id="debugBar" style="width:100%">';
 		echo $this->sHtml;
 		echo '</div>';
@@ -240,7 +255,7 @@ class plugin_debug{
 	private function addPopupPrintr($key,$value){
 		$this->addHtml(
 		'<div id="popupDebug'.$key.'" 
-			style="display:none;position:absolute;left:0px;bottom:0px;border:2px solid gray;background:white">
+			style="display:none;position:absolute;left:0px;bottom:20px;border:2px solid gray;background:white">
 			<p style="text-align:right;background:#ccc;margin:0px;"><a href="#" onclick="closePopup()">Fermer</a></p>
 			<div style="height:350px;width:400px;overflow:auto;padding:10px;">
 				<pre>'.customHtmlentities(print_r($value,1)).'</pre>
@@ -251,7 +266,7 @@ class plugin_debug{
 	private function addPopup($key,$value,$width=800){
 		$this->addHtml(
 		'<div id="popupDebug'.$key.'" 
-			style="display:none;position:absolute;left:0px;bottom:0px;border:2px solid gray;background:white">
+			style="display:none;position:absolute;left:0px;bottom:20px;border:2px solid gray;background:white">
 			<p style="text-align:right;background:#ccc;margin:0px;"><a href="#" onclick="closePopup()">Fermer</a></p>
 			<div style="height:350px;width:'.$width.'px;overflow:auto;padding:10px;">
 			'.$value.'
