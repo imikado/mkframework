@@ -4,7 +4,9 @@ class plugin_debugError{
 	
 	public function show($sText,$e=null){
 		
-		 ob_end_clean();
+		if(ob_get_length()){
+			ob_end_clean();
+		}
 		
 		$sText=nl2br($sText);
 		

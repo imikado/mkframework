@@ -26,6 +26,8 @@ class plugin_form{
 	protected $tMessage;
 	protected $isPost;
 	
+	const NOVALUE='pluginFormNoValue';
+	
 	/** 
 	* constructeur
 	* @access public
@@ -195,7 +197,7 @@ class plugin_form{
 	}
 	
 	private function getValue($sName){
-		if($this->isPost){
+		if($this->isPost and _root::getParam($sName,self::NOVALUE)!=self::NOVALUE){
 			return _root::getParam($sName);
 		}else if($this->oObject){
 			if($this->oObject->$sName){

@@ -206,6 +206,9 @@ class module_builder extends abstract_module{
 			$this->oLayout->addModule('main','moduleCrudReadonlyBootstrap::index');//OK
 		}elseif(_root::getParam('action')=='crudembedded'){//OK
 			$this->oLayout->addModule('main','moduleCrudEmbedded::index');//OK
+		/*Bootstrap*/}elseif(_root::getParam('action')=='crudembeddedWithBootstrap'){//OK
+			$this->oLayout->addModule('main','moduleCrudEmbeddedWithBootstrap::index');//OK	
+			
 		}elseif(_root::getParam('action')=='crudembeddedreadonly'){//OK
 			$this->oLayout->addModule('main','moduleCrudEmbeddedReadonly::index');//OK
 		
@@ -227,6 +230,9 @@ class module_builder extends abstract_module{
 			$this->oLayout->addModule('main','moduleModuleWithBootstrap::index');//OK
 		}elseif(_root::getParam('action')=='moduleembedded'){//OK
 			$this->oLayout->addModule('main','moduleModuleEmbedded::index');//OK
+		/*Bootstrap*/}elseif(_root::getParam('action')=='moduleembeddedWithBootstrap'){//OK
+			$this->oLayout->addModule('main','moduleModuleEmbeddedWithBootstrap::index');//OK
+		
 		
 		//model
 		}elseif(_root::getParam('action')=='model'){//OK

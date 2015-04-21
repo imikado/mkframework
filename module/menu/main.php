@@ -62,8 +62,8 @@ Class module_menu extends abstract_module{
 				
 				'Modules int&eacute;grable' => 'title',
 					'Cr&eacute;er un module menu '.$supB => 'addmodulemenuWithBootstrap',
-					//'Cr&eacute;er un module int&eacute;grable'.$supB => 'moduleembeddedWithBootstrap',
-					//'Cr&eacute;er un module CRUD int&eacute;grable'.$supB => 'crudembeddedWithBootstrap',
+					'Cr&eacute;er un module int&eacute;grable'.$supB => 'moduleembeddedWithBootstrap',
+					'Cr&eacute;er un module CRUD int&eacute;grable'.$supB => 'crudembeddedWithBootstrap',
 					//'Cr&eacute;er un module Lecture seule int&eacute;grable'.$supB => 'crudembeddedreadonlyWithBootstrap',
 				
 				'Base de donn&eacute;es embarqu&eacute;es' => 'title',

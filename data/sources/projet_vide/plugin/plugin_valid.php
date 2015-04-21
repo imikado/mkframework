@@ -105,7 +105,7 @@ class plugin_valid{
 		return $this->tCheck;
 	}
 	
-	private function ko($sCheck,$sField=null){
+	public function ko($sCheck,$sField=null){
 		$this->bCheck=false;
 		$this->tCheck[ $sField ][]= $sCheck;
 		return false;
