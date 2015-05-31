@@ -1,5 +1,4 @@
-<h1>Cr&eacute;er un module d'authentification</h1>
-
+<h1><?php echo tr('menuProject_link_createModuleAuth')?></h1>
 <a id="formu" name="formu"></a>
 
 	
@@ -12,7 +11,7 @@
 
 	<table>
 		<tr>
-			<th>Choisissez la classe mod&egrave;le des utilisateurs &agrave; utiliser</th>
+			<th><?php echo tr('Builder::edit_authmodule_choisissezLaClasseAutiliser')?></th>
 			<td>
 				<select name="classmodel">
 					
@@ -92,7 +91,7 @@
 	<table>
 			
 		<tr>
-			<th>S&eacute;lectionnez la classe mod&egrave;le des utilisateurs </th>
+			<th><?php echo tr('Builder::edit_authmodule_choisissezLaClasseAutiliser')?></th>
 			<td>
 			
 				<select name="model" onchange="submit()" >
@@ -108,7 +107,7 @@
 		
 		<?php if($this->tColumnAccount):?>
 		<tr>
-			<th>Champ nom d'utilisateur</th>
+			<th><?php echo tr('Builder::edit_authmodule_champUtilisateur')?></th>
 			<td>
 				<select name="loginField" onchange="submit()">
 					<option></option>
@@ -120,7 +119,7 @@
 			</td>
 		</tr>
 		<tr>
-			<th>Champ mot de passe</th>
+			<th><?php echo tr('Builder::edit_authmodule_champMdp')?></th>
 			<td>
 				<select name="passField" onchange="submit()">
 					<option></option>
@@ -140,14 +139,14 @@
 		<table>
 			<tr>
 				<td colspan="2" style="padding:10px">
-				<h2 style="border:2px solid red;padding:4px">Il vous faut modifier la classe : "model/<?php echo _root::getParam('model')?>" </h2>
+				<h2 style="border:2px solid red;padding:4px"><?php echo sprintf(tr('Builder::edit_authmodule_ilVousFautModifierLaClasse'),_root::getParam('model'))?></h2>
 					
-				<strong>Il vous faut ajoutez ces deux m&eacute;thodes à votre classe mod&egrave;le "<a target="_blank" href="<?php echo _root::getLink('code::index',array(
+				<strong><?php echo tr('Builder::edit_authmodule_ilVousFautAjouterCesMethodes')?> "<a target="_blank" href="<?php echo _root::getLink('code::index',array(
 				'project'=>_root::getParam('id'),
 				'file'=>'model/'._root::getParam('model')
-				))?>"><?php echo substr(_root::getParam('model'),0,-4)?>"</a> de vos comptes de connexion</strong><br/>
-				Une m&eacute;thode "getListAccount()"<br />
-				<i>Qui retournera un tableau index&eacute; de vos comptes de connexion</i><br/>
+				))?>"><?php echo substr(_root::getParam('model'),0,-4)?>"</a> <?php echo tr('Builder::edit_authmodule_deVosComptesDeConnexion')?></strong><br/>
+				<?php echo tr('Builder::edit_authmodule_uneMethode')?> "getListAccount()"<br />
+				<i><?php echo tr('Builder::edit_authmodule_quiRetourneraUntableauIndexe')?>s</i><br/>
 				<div style="margin-top:4px;border:1px dotted gray;background:#eee;padding:4px">
 					&nbsp;&nbsp;&nbsp;<span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">getListAccount</span><span style="color: #007700">(){</span><br />
 					&nbsp;&nbsp;<br />
@@ -167,9 +166,9 @@
 					&nbsp;&nbsp;&nbsp;<span style="color: #007700">}</span><br />
 					
 				</div>
-				Et une m&eacute;thode "hashPassword()"<br/>
-				<i>Qui retournera le hashage(empreinte) du mot de passe (ne pas stoquer les mots de passe en clair)</i></p>
-				<i>Pensez &agrave; modifier le sel <span style="color: #770000">'2votreSelAchanger2'</span> pour rendre l'empreinte tr&egrave;s s&eacute;curis&eacute;.</i><br/>
+				<?php echo tr('Builder::edit_authmodule_etUneMethode')?> "hashPassword()"<br/>
+				<i><?php echo tr('Builder::edit_authmodule_quiRetourneraLeHashageDuMdp')?></i></p>
+				<i><?php echo tr('Builder::edit_authmodule_pensezAmodifierLeSel')?> <span style="color: #770000">'2votreSelAchanger2'</span> <?php echo tr('Builder::edit_authmodule_pourRendreEmpreintSecurise')?>.</i><br/>
 				<div style="margin-top:4px;border:1px dotted gray;background:#eee;padding:4px">
 					&nbsp;&nbsp;&nbsp;<span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">hashPassword</span><span style="color: #007700">(</span><span style="color: #0000BB">$sPassword</span><span style="color: #007700">){</span><br />
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #FF8000">//utiliser ici la methode de votre choix pour hasher votre mot de passe</span><br/>
@@ -177,7 +176,7 @@
 					&nbsp;&nbsp;&nbsp;<span style="color: #007700">}</span><br />
 				</div>
 			
-				<p style="padding-left:0px">Ajoutez ces deux m&eacute;thodes dans la classe mod&egrave;le concern&eacute;e puis <input type="submit" value="r&eacute;actualiser la page"/></p>
+				<p style="padding-left:0px"><?php echo tr('Builder::edit_authmodule_ajoutezCesMethodesDansLaClasse')?> <input type="submit" value="<?php echo tr('Builder::edit_authmodule_reactualisezLaPage')?>"/></p>
 				
 				</td>
 			</tr>

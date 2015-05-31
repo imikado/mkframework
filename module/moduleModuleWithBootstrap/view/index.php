@@ -1,4 +1,4 @@
-<h1>Cr&eacute;er un module avec Bootstrap</h1>
+<h1><?php echo tr('menuProject_link_createModule')?></h1>
 <div class="table">
 <form action="" method="POST">
 	<table>

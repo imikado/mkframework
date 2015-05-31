@@ -167,9 +167,9 @@ $tSelectKey=_root::getParam('tSelectKey');
 $tSelectVal=_root::getParam('tSelectVal');
 ?>
 <div class="smenu">
-<h1>Cr&eacute;er la couche mod&egrave;le</h1>
+<h1><?php echo tr('menuProject_link_createCoucheModel') ?></h1>
 
-<p>S&eacute;lectionner le profil &agrave; utiliser</p>
+<p><?php echo tr('builder::edit_model_selectionnerLeProfilAutiliser')?></p>
 <ul>
 <?php foreach($this->tConnexion as $sKey=>$tConfig):?>
 	<?php if(substr($sKey,-4)=='.dsn') :?>
@@ -201,16 +201,16 @@ $tSelectVal=_root::getParam('tSelectVal');
 <table>
 	<tr>
 		<th></th>
-		<th>Table</th>
-		<th>Cl&eacute; primaire</th>
+		<th><?php echo tr('builder::edit_model_table')?></th>
+		<th><?php echo tr('builder::edit_model_clePrimaire')?></th>
 
 		<th style="border-top:0px;background:white";></th>
 
-		<th style="text-align:left;">Ajouter une m&eacute;thode getSelect()*</th>
+		<th style="text-align:left;"><?php echo tr('builder::edit_model_ajouterUneMethodeGetselect')?></th>
 		
 		<th style="border-top:0px;background:white";></th>
 		
-		<th>Contraintes</th>
+		<th><?php echo tr('builder::edit_model_contraintes')?>Contraintes</th>
 	</tr>
 <?php $i=0?>
 <?php foreach($this->tTableColumn as $sTable => $tColumn):?>
@@ -223,7 +223,7 @@ $tSelectVal=_root::getParam('tSelectVal');
 		<td><input type="checkbox" id="tIdEnable[<?php echo $i?>]" name="tEnable[<?php echo $i?>]" value="<?php echo $sTable?>" <?php if($bExist):?><?php elseif(!is_array($tEnable) ):?>checked="checked"<?php elseif(in_array($sTable,$tEnable)):?>checked="checked"<?php endif;?> /></td>
 		<td><?php echo $sTable?>
 			<?php if($bExist):?>
-				<p class="error">La classe "model_<?php echo $sTable?>.php" existe d&eacute;j&agrave;*</p>
+				<p class="error"><?php echo sprintf(tr('builder::edit_model_laClasseModelExisteDeja'),$sTable)?></p>
 			<?php endif;?>
 			<input type="hidden" name="tTable[<?php echo $i?>]" value="<?php echo $sTable?>"/></td>
 		<td><select name="tPrimary[<?php echo $i?>]">
@@ -237,21 +237,21 @@ $tSelectVal=_root::getParam('tSelectVal');
 
 		<td>
 			<input type="checkbox" name="tSelectEnable[<?php echo $i?>]" value="<?php echo $sTable?>" <?php if(is_array($tSelectEnable) and in_array($sTable,$tSelectEnable)):?>checked="checked"<?php endif;?>/>
-			Retourne un tableau avec 
+			<?php echo tr('builder::edit_model_retourneUnTableauAvec')?> 
 			<ul class="getSelect">
 				<li><select name="tSelectKey[<?php echo $i?>]">
 				<?php foreach($tColumn as $sColumn):?>
 					<option value="<?php echo $sColumn?>" <?php if(is_array($tSelectKey) and isset($tSelectKey[$i]) and $tSelectKey[$i]==$sColumn):?>selected="selected"<?php endif;?> ><?php echo $sColumn?></option>
 				<?php endforeach;?>
 				</select>
-			comme cl&eacute;<li>
-			<li> et</li>
+			<?php echo tr('builder::edit_model_commeCle')?><li>
+			<li> <?php echo tr('builder::edit_model_et')?></li>
 			<li> 
 			<select name="tSelectVal[<?php echo $i?>]">
 				<?php foreach($tColumn as $sColumn):?>
 					<option value="<?php echo $sColumn?>" <?php if(is_array($tSelectKey) and isset($tSelectVal[$i]) and $tSelectVal[$i]==$sColumn):?>selected="selected"<?php endif;?> ><?php echo $sColumn?></option>
 				<?php endforeach;?>
-			</select> comme valeur
+			</select><?php echo tr('builder::edit_model_commeValeur')?>
 			</li>
 			</ul>
 		</td>
@@ -266,7 +266,7 @@ $tSelectVal=_root::getParam('tSelectVal');
 					
 					<hr/>
 					<input onclick="addCheck<?php echo $sTable?>()" type="button" value="Ajouter"/>
-					r&egrave;gle
+					<?php echo tr('builder::edit_model_regle')?>
 					<select id="ruleAdd">
 					<?php foreach($tCheck as $sCheck => $tLabel):?>
 						<?php $sLabel=$tLabel[0];?>
@@ -276,10 +276,10 @@ $tSelectVal=_root::getParam('tSelectVal');
 					
 					
 					<p class="effacer">
-					<input onclick="resetCheck<?php echo $sTable?>()" type="button" value="Effacer"/></p>
+					<input onclick="resetCheck<?php echo $sTable?>()" type="button" value="<?php echo tr('builder::edit_model_effacer')?>Effacer"/></p>
 				</div>
 			</div>
-			<input onclick="showCheck<?php echo $sTable?>()" type="button" value="Afficher"/>
+			<input onclick="showCheck<?php echo $sTable?>()" type="button" value="<?php echo tr('builder::edit_model_afficher')?>"/>
 			
 		</td>
 		
@@ -293,10 +293,10 @@ $tSelectVal=_root::getParam('tSelectVal');
 </div>
 <?php endif;?>
 
-<p> (disponible dans le fichier conf/connexion.ini.php de votre projet)</p>	
-<p>* La m&eacute;thode getSelect() permet de retourner un tableau index&eacute; utilis&eacute; pour les menus d&eacute;roulant et les tableaux de liste.</p>
+<p><?php echo tr('builder::edit_model_disponibleDansFichierConnexion')?></p>	
+<p><?php echo tr('builder::edit_model_laMethodeGetselectPermetDe')?></p>
 <?php if($bErrorExist):?>
-<p class="error">* Si une classe mod&egrave;le existe d&eacute;j&agrave;, il vous faut la supprimer pour pouvoir la reg&eacute;n&eacute;rer</p>
+<p class="error"><?php echo tr('builder::edit_model_siUneClasseModeleExiste')?></p>
 <?php endif;?>
 
 </form>

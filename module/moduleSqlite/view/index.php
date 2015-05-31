@@ -1,3 +1,4 @@
+<h1><?php echo tr('menuProject_link_createDatabaseSqlite')?></h1>
 <style>
 .dbtb td{
 border-top:0px;

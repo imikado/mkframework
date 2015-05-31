@@ -67,15 +67,20 @@ class module_moduleViewTable{
 			}
 			
 			$tColumn=array();
-			foreach($tData as $oRow){
-				if(is_subclass_of($oRow,'abstract_row')){
-					$tColumn0=$oRow->getTab();
-					
-				}else{
-					$tColumn0=get_object_vars($oRow);
+			if($tData){
+				foreach($tData as $oRow){
+					if(is_subclass_of($oRow,'abstract_row')){
+						$tColumn0=$oRow->getTab();
+
+					}else{
+						$tColumn0=get_object_vars($oRow);
+					}
+					$tColumn=array_keys($tColumn0);
+					break;
 				}
-				$tColumn=array_keys($tColumn0);
-				break;
+			}
+			else{
+				
 			}
 			 
 

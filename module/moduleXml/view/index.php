@@ -1,3 +1,4 @@
+<h1><?php echo tr('menuProject_link_createDatabaseXml')?></h1>
 <div class="table">
 <form action="" method="POST">
 <table>

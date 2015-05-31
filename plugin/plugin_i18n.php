@@ -24,6 +24,10 @@ class plugin_i18n{
 	
 	private static $tLangue;
 	
+	public static function start(){
+		self::load(_root::getConfigVar('language.default'));
+	}
+	
 	/** 
 	* charge le fichier de langue situe dans la section [path], valeur de i18n
 	* @access public static
@@ -53,4 +57,7 @@ class plugin_i18n{
 	 
 
 
+}
+function tr($sText){
+	return plugin_i18n::get($sText);
 }

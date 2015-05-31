@@ -1,3 +1,5 @@
+<h1><?php echo tr('menuProject_link_createDatabaseCsv')?></h1>
+
 <form action="" method="POST">
 <table>
 	<tr>

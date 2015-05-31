@@ -16,12 +16,16 @@ along with Mkframework.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 Class module_menu extends abstract_module{
-		
+	
+	public function __construct(){
+		plugin_i18n::start();
+	}
+	
 	public function _index(){
 		
 		$tLink=array(
-			'Cr&eacute;er un projet' => 'builder::new',
-			'Administrer les projets' => 'builder::list',
+			tr('menuTop_createProject') => 'builder::new',
+			tr('menuTop_editProjects') => 'builder::list',
 			
 		);
 		
@@ -48,71 +52,73 @@ Class module_menu extends abstract_module{
 			
 			$tLink=array(
 				//'Ajouter un module' => 'addmodule',
-				'Couche modele'=>'title',
-					'Cr&eacute;er la couche mod&egrave;le' => 'model',
+				tr('menuProject_title_couchemodel')=>'title',
+					tr('menuProject_link_createCoucheModel') => 'model',
 				
-				'Modules' => 'title',
-					'Cr&eacute;er un module'.$supB => 'moduleWithBootstrap',
+				tr('menuProject_title_modules') => 'title',
+					tr('menuProject_link_createModule') => 'moduleWithBootstrap',
 					
-					'Cr&eacute;er un module CRUD'.$supB => 'crudWithBootstrap',
-					'Cr&eacute;er un module Lecture seule'.$supB => 'crudreadonlyWithBootstrap',
+					tr('menuProject_link_createModuleCRUD') => 'crudWithBootstrap',
+					tr('menuProject_link_createModuleCRUDreadonly') => 'crudreadonlyWithBootstrap',
 					
-					'Cr&eacute;er un module d\'authentification'.$supB => 'authmoduleWithBootstrap',
-					'Cr&eacute;er un module d\'authentification avec inscription'.$supB => 'authwithinscriptionmoduleWithBootstrap',
+					tr('menuProject_link_createModuleAuth') => 'authmoduleWithBootstrap',
+					tr('menuProject_link_createModuleAuthWithInscription') => 'authwithinscriptionmoduleWithBootstrap',
 				
-				'Modules int&eacute;grable' => 'title',
-					'Cr&eacute;er un module menu '.$supB => 'addmodulemenuWithBootstrap',
-					'Cr&eacute;er un module int&eacute;grable'.$supB => 'moduleembeddedWithBootstrap',
-					'Cr&eacute;er un module CRUD int&eacute;grable'.$supB => 'crudembeddedWithBootstrap',
+					//tr('menuProject_link_createAcl') => 'addrightsmanager',
+
+				tr('menuProject_title_moduleEmbedded') => 'title',
+					tr('menuProject_link_createModuleMenuEmbedded') => 'addmodulemenuWithBootstrap',
+					tr('menuProject_link_createModuleEmbedded') => 'moduleembeddedWithBootstrap',
+					tr('menuProject_link_createModuleCRUDEmbedded') => 'crudembeddedWithBootstrap',
 					//'Cr&eacute;er un module Lecture seule int&eacute;grable'.$supB => 'crudembeddedreadonlyWithBootstrap',
 				
-				'Base de donn&eacute;es embarqu&eacute;es' => 'title',
+				tr('menuProject_title_databasesEmbedded') => 'title',
 				
-					'Cr&eacute;er une base xml' => 'xml',
-					'Cr&eacute;er un index sur une base xml' => 'xmlindex',
-					'Cr&eacute;er une base csv' => 'csv',
-					'Cr&eacute;er une base sqlite' => 'sqlite',
-					'Cr&eacute;er une base json' => 'json',
-					'Cr&eacute;er un index sur une base json' => 'jsonindex',
+					tr('menuProject_link_createDatabaseXml') => 'xml',
+					tr('menuProject_link_createDatabaseXmlIndex') => 'xmlindex',
+					tr('menuProject_link_createDatabaseCsv') => 'csv',
+					tr('menuProject_link_createDatabaseSqlite') => 'sqlite',
+					tr('menuProject_link_createDatabaseJson') => 'json',
+					tr('menuProject_link_createDatabaseJsonIndex') => 'jsonindex',
 			);
 		}else{
 			
 			$tLink=array(
 				//'Ajouter un module' => 'addmodule',
-				'Couche modele'=>'title',
-					'Cr&eacute;er la couche mod&egrave;le' => 'model',
+				tr('menuProject_title_couchemodel')=>'title',
+					tr('menuProject_link_createCoucheModel') => 'model',
 				
-				'Modules' => 'title',
-					'Cr&eacute;er un module' => 'module',
+				tr('menuProject_title_modules') => 'title',
+					tr('menuProject_link_createModule') => 'module',
 					
-					'Cr&eacute;er un module CRUD' => 'crud',
-					'Cr&eacute;er un module Lecture seule' => 'crudreadonly',
+					tr('menuProject_link_createModuleCRUD') => 'crud',
+					tr('menuProject_link_createModuleCRUDreadonly') => 'crudreadonly',
 					
-					'Cr&eacute;er un module d\'authentification' => 'authmodule',
-					'Cr&eacute;er un module d\'authentification avec inscription' => 'authwithinscriptionmodule',
+					tr('menuProject_link_createModuleAuth') => 'authmodule',
+					tr('menuProject_link_createModuleAuthWithInscription') => 'authwithinscriptionmodule',
 					
-					'Ajouter une gestion de droits &agrave; votre application <sup>Beta</sup>' => 'addrightsmanager',
+					tr('menuProject_link_createAcl') => 'addrightsmanager',
 				
-				'Modules int&eacute;grable' => 'title',
-					'Cr&eacute;er un module menu ' => 'addmodulemenu',
-					'Cr&eacute;er un module int&eacute;grable' => 'moduleembedded',
-					'Cr&eacute;er un module CRUD int&eacute;grable' => 'crudembedded',
-					'Cr&eacute;er un module Lecture seule int&eacute;grable' => 'crudembeddedreadonly',
+				tr('menuProject_title_moduleEmbedded') => 'title',
+					tr('menuProject_link_createModuleMenuEmbedded') => 'addmodulemenu',
+					tr('menuProject_link_createModuleEmbedded') => 'moduleembedded',
+					tr('menuProject_link_createModuleCRUDEmbedded') => 'crudembedded',
+					tr('menuProject_link_createModuleCRUDreadonlyEmbedded') => 'crudembeddedreadonly',
 					
-				'Vues' => 'title',
-					'Cr&eacute;er un tableau simple (avec le module table)' => 'addviewtablemoduletablesimple',
+				tr('menuProject_title_views') => 'title',
+					tr('menuProject_link_addViewTablesimple') => 'addviewtablemoduletablesimple',
 					//'Cr&eacute;er un tableau avec tri (avec le module table)' => 'addviewtablemoduletablewithorder',
 					//'Cr&eacute;er un tableau avec tri + ligne cliquable (avec le module table)' => 'addviewtablemoduletablewithorderclic',
-					'C&eacuteer un formulaire' => 'addviewform',
+					tr('menuProject_link_addForm') => 'addviewform',
 				
-				'Base de donn&eacute;es embarqu&eacute;es' => 'title',
+				tr('menuProject_title_databasesEmbedded') => 'title',
 				
-					'Cr&eacute;er une base xml' => 'xml',
-					'Cr&eacute;er un index sur une base xml' => 'xmlindex',
-					'Cr&eacute;er une base csv' => 'csv',
-					'Cr&eacute;er une base sqlite' => 'sqlite',
-					'Cr&eacute;er une base json' => 'json',
-					'Cr&eacute;er un index sur une base json' => 'jsonindex',
+					tr('menuProject_link_createDatabaseXml') => 'xml',
+					tr('menuProject_link_createDatabaseXmlIndex') => 'xmlindex',
+					tr('menuProject_link_createDatabaseCsv') => 'csv',
+					tr('menuProject_link_createDatabaseSqlite') => 'sqlite',
+					tr('menuProject_link_createDatabaseJson') => 'json',
+					tr('menuProject_link_createDatabaseJsonIndex') => 'jsonindex',
 			);
 			
 		}

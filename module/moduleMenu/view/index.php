@@ -12,7 +12,7 @@ table td{
 	border-bottom:1px dotted #ccc;
 }
 </style>
-<h1>Ajouter un module menu</h1>
+<h1><?php echo tr('menuProject_link_createModuleMenuEmbedded')?></h1>
 <?php if(!_root::getRequest()->isPost()):?>
 	<form action="#createon" method="POST">
 	<p>Pour c&eacute;er le menu: cochez les actions/pages des modules &agrave; cr&eacute;er et indiquez en face le libell&eacute; du lien</p>

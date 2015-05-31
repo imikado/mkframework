@@ -7,15 +7,15 @@
 								<a href="<?php echo _root::getLink(
 								'builder::edit',
 								array('id'=>$sProjet)
-								)?>#createon">Editer le projet</a>
+								)?>#createon"><?php echo tr('menuNavProject_link_edit')?></a>
 								
 								<a href="<?php echo _root::getLink(
 								'code::index',
 								array('project'=>$sProjet)
-								)?>">Explorer le projet <sup>BETA</sup></a>
+								)?>"><?php echo tr('menuNavProject_link_explore')?></a>
 								
 								
-								<a target="_blank" href="<?php echo _root::getConfigVar('path.generation')?><?php echo $sProjet?>">Voir le site</a>					
+								<a target="_blank" href="<?php echo _root::getConfigVar('path.generation')?><?php echo $sProjet?>"><?php echo tr('menuNavProject_link_gotoSite')?></a>					
 								</li>
 	<?php endforeach;?>
 <?php endif;?>

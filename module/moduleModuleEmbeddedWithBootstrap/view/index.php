@@ -1,3 +1,5 @@
+<h1><?php echo tr('menuProject_link_createModuleEmbedded')?></h1>
+
 <div class="table">
 <form action="" method="POST">
 	<table>

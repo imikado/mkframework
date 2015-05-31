@@ -1,5 +1,5 @@
 <?php $tEnable=_root::getParam('tEnable')?>
-<h1>Cr&eacute;er une vue avec un formulaire</h1>
+<h1><?php echo tr('menuProject_link_addForm')?></h1>
 <p>Choisissez une classe mod&egrave;le</p>
 <div class="smenu">
 <ul>

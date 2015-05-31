@@ -1,5 +1,5 @@
 <?php $tEnable=_root::getParam('tEnable')?>
-<h1>Cr&eacute;er CRUD Bootstrap</h1>
+<h1><?php echo tr('menuProject_link_createModuleCRUD')?></h1>
 <p>Choisissez une classe mod&egrave;le</p>
 <div class="smenu">
 <ul>

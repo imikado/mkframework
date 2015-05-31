@@ -49,9 +49,9 @@ function generate(){
 	}
 }
 </script>
-<h1>Ajouter une gestion de droits</h1>
-<h2>Pr&eacute;sentation</h2>
-<p>Pour g&eacute;rer les droits de votre application, nous allons cr&eacute;er d'abord notre base de donn&eacute;es.</p>
+<h1><?php echo tr('menuProject_link_createAcl')?></h1>
+<h2><?php echo tr('Builder::edit_addrightsmanager_presentation')?></h2>
+<p><?php echo tr('Builder::edit_addrightsmanager_pourGererLesDroitsNousAllons')?>.</p>
 <p class="center"><img src="site/css/images/rightsManagerMcd0.png"/></p>
 
 <div>
@@ -89,8 +89,8 @@ CREATE TABLE `Actions` (
 PRIMARY KEY  (`id`)
 );</textarea></div>
 <a id="formulaire" name="formulaire"></a>
-<h2>Mise en place</h2>
-<p>Vous n'&ecirc;tes pas oblig&eacute; d'utiliser les m&ecirc;me noms de champs et de tables, vous allez ci-dessous indiquer pour chaque table le nom de votre classe mod&egrave;le puis s&eacute;lectionnez la correspondance des champs</p>
+<h2><?php echo tr('Builder::edit_addrightsmanager_miseEnPlace')?></h2>
+<p><?php echo tr('Builder::edit_addrightsmanager_vousNetesPasObligerDutiliserLesmemes')?></p>
 <p class="center"><img src="site/css/images/rightsManagerMcd.png"/></p>
 
 
@@ -103,13 +103,13 @@ PRIMARY KEY  (`id`)
 <input type="hidden" name="actioncode" id="actioncode"/>
 <table class="tb_list">
 	<tr>
-		<th>Utilisateur</th>
+		<th><?php echo tr('Builder::edit_addrightsmanager_utilisateur')?></th>
 		
-		<th>Groupes</th>
+		<th><?php echo tr('Builder::edit_addrightsmanager_groupes')?></th>
 		
-		<th>Permissions</th>
+		<th><?php echo tr('Builder::edit_addrightsmanager_permissions')?></th>
 		
-		<th>Elements</th>
+		<th><?php echo tr('Builder::edit_addrightsmanager_elements')?></th>
 		
 		
 	</tr>
@@ -150,7 +150,7 @@ PRIMARY KEY  (`id`)
 	<tr>
 		<th colspan="3" class="empty"></th>
 		 
-		<th>Actions </th>
+		<th><?php echo tr('Builder::edit_addrightsmanager_actions')?></th>
 	</tr>
 	
 	<tr>
@@ -186,11 +186,11 @@ PRIMARY KEY  (`id`)
 	
 </table>
 <p>
-	Nom du module &agrave; g&eacute;n&eacute;rer : module_<?php echo $oForm->getInputText('moduleToGenerate')?>
+	<?php echo tr('Builder::edit_addrightsmanager_nomDuModuleAgenerer')?> : module_<?php echo $oForm->getInputText('moduleToGenerate')?>
 
-	nom de la classe model &agrave; g&eacute;n&eacute;rer : model_<?php echo $oForm->getInputText('modelToGenerate')?>
+	<?php echo tr('Builder::edit_addrightsmanager_nomDeLaClasseAgenerer')?> : model_<?php echo $oForm->getInputText('modelToGenerate')?>
 </p>
-<p style="background:#ddd;text-align:right"><input onclick="generate()" type="button" value="G&eacute;nerer"/></p>
+<p style="background:#ddd;text-align:right"><input onclick="generate()" type="button" value="<?php echo tr('Builder::edit_addrightsmanager_generer')?>"/></p>
 </form>
 <?php if($this->tMessage and isset($this->tMessage['msg'])):?>
 <p class="msg"><?php echo $this->tMessage['msg']?></p>
@@ -200,7 +200,7 @@ PRIMARY KEY  (`id`)
 <?php endif;?>
 
 <?php if($this->tMessage and isset($this->tMessage['code'])):?>
-<h1>Ajouter le chargement des droits sur votre module d'authentification</h1>
-<p>Editez votre fichier module/<?php echo $this->tMessage['auth']?>/main.php et editer la m&eacute;thode d'authentification</p>
+<h1><?php echo tr('Builder::edit_addrightsmanager_ajouterLeChargementDesDroits')?></h1>
+<p><?php echo sprintf(tr('Builder::edit_addrightsmanager_editezVotreFichier'),$this->tMessage['auth'])?></p>
 <?php echo $this->tMessage['code'];?>
 <?php endif;?>

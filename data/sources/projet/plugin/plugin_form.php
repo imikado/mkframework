@@ -199,11 +199,10 @@ class plugin_form{
 	private function getValue($sName){
 		if($this->isPost and _root::getParam($sName,self::NOVALUE)!=self::NOVALUE){
 			return _root::getParam($sName);
-		}else if($this->oObject){
-			if($this->oObject->$sName){
-				return $this->oObject->$sName;
-			} 
+		}else if($this->oObject and isset($this->oObject->$sName)){
+			return $this->oObject->$sName; 
 		}
+		return null;
 	}
 	
 	private function getMessage($sName){

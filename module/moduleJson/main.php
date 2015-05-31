@@ -20,7 +20,7 @@ class module_moduleJson{
 			
 		}
 	
-		$oTpl= new _Tpl('moduleXml::index');
+		$oTpl= new _Tpl('moduleJson::index');
 		$oTpl->msg=$msg;
 		$oTpl->detail=$detail;
 		return $oTpl;

@@ -1,5 +1,5 @@
 <?php $tEnable=_root::getParam('tEnable')?>
-<h1>Cr&eacute;er un tableau simple (avec le module table)</h1>
+<h1><?php echo tr('menuProject_link_addViewTablesimple')?></h1>
 <p>Choisissez une classe mod&egrave;le</p>
 <div class="smenu">
 <ul>
