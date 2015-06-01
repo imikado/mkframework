@@ -1,6 +1,6 @@
 <h1><?php echo tr('menuProject_link_createDatabaseXmlIndex')?></h1>
 
-<h2>Choisissez le profil xml &agrave; utiliser</h2>
+<h2><?php echo tr('label_choisissezLeProfilAutiliser')?></h2>
 <div class="smenu">
 <ul><?php foreach($this->tConnexion as $sKey => $sgbd):?>
 	<?php if(substr($sKey,-5)=='.sgbd' and $sgbd=='xml') :?>

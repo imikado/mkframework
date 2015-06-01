@@ -1,6 +1,7 @@
+<h1><?php echo tr('menuProject_link_createDatabaseXmlIndex')?></h1>
 <h2>Configuration: <?php echo _root::getParam('config')?></h2>
 <?php $sTableSelected=_root::getParam('sTable')?>
-<p>Choisir la table o&ugrave; cr&eacute;er l'index</p>
+<p><?php echo tr('builder::edit_xmlindex_choisirLaTable')?></p>
 <div class="smenu">
 <ul>
 <?php foreach($this->tTables as $sTable):?>

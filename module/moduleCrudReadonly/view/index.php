@@ -51,7 +51,7 @@
 	<?php endforeach;?>
 	</table>
 	
-	<input type="submit" value="cr&eacute;er" />
+	<input type="submit" value="<?php echo tr('builder::edit_crud_creer')?>" />
 	
 	</form>
 </div>

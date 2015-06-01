@@ -1,6 +1,6 @@
 <?php $tEnable=_root::getParam('tEnable')?>
 <h1><?php echo tr('menuProject_link_createModuleCRUDEmbedded')?></h1>
-<p>Choisissez une classe mod&egrave;le</p>
+<p><?php echo tr('builder::edit_crud_choisissezUneClassModele')?></p>
 <div class="smenu">
 <ul>
 <?php if($this->tFile)?>
@@ -25,27 +25,27 @@
 	<?php if($this->tColumn)?>
 	<form action="" method="POST">
 	<?php if(!_root::getParam('moduleToCreate') and file_exists(_root::getConfigVar('path.generation')._root::getParam('id').'/module/'.$this->sModuleToCreate)):?>
-		<p class="error">Le module module/<?php echo $this->sModuleToCreate?> existe d&eacute;j&agrave;, veuillez indiquer un autre nom </p>
+		<p class="error"><?php echo sprintf(tr('builder::edit_crud_leModuleExisteDeja'),$this->sModuleToCreate)?></p>
 	<?php endif;?>
 
 	<input type="hidden" name="sClass" value="<?php echo $this->sClass?>" />
 	
 	<table>
 		<tr>
-			<th>Nom du module &agrave cr&eacute;er</th>
+			<th><?php echo tr('builder::edit_crud_nomDuModuleAcreer')?></th>
 			<td><input type="text" name="moduleToCreate" value="<?php echo _root::getParam('moduleToCreate',$this->sModuleToCreate)?>"/></td>
 			
 			<td style="border:0px">&nbsp;</td>
 			
 			<th>
-				Actions CRUD
+				<?php echo tr('builder::edit_crud_actionsCrud')?>
 			</th>
 			
 			<td>
-				<input type="checkbox" name="crud[]" value="crudNew" checked="checked" /> Formulaire d'ajout<br/>
-				<input type="checkbox" name="crud[]" value="crudEdit" checked="checked" /> Formulaire de modification<br/>
-				<input type="checkbox" name="crud[]" value="crudDelete" checked="checked" /> Formulaire de suppression<br/>
-				<input type="checkbox" name="crud[]" value="crudShow" checked="checked" /> Page d'affichage du d&eacute;tail<br/>
+				<input type="checkbox" name="crud[]" value="crudNew" checked="checked" />  <?php echo tr('builder::edit_crud_formulaireAjout')?><br/>
+				<input type="checkbox" name="crud[]" value="crudEdit" checked="checked" /> <?php echo tr('builder::edit_crud_formulaireDeModification')?><br/>
+				<input type="checkbox" name="crud[]" value="crudDelete" checked="checked" /> <?php echo tr('builder::edit_crud_formulaireDeSuppression')?><br/>
+				<input type="checkbox" name="crud[]" value="crudShow" checked="checked" /> <?php echo tr('builder::edit_crud_formulaireDaffichageDetail')?><br/>
 				
 				
 			</td>
@@ -57,9 +57,9 @@
 	<table>
 		<tr>
 			<th></th>
-			<th>Champ</th>
-			<th>Libell&eacute;</th>
-			<th>Type</th>
+			<th><?php echo tr('builder::edit_crud_champ')?></th>
+			<th><?php echo tr('builder::edit_crud_libelle')?></th>
+			<th><?php echo tr('builder::edit_crud_type')?></th>
 		</tr>
 	<?php foreach($this->tColumn as $sColumn):?>
 		<tr>
@@ -73,7 +73,7 @@
 				<option value="upload">upload</option>
 				
 				<?php foreach($this->tRowMethodes as $sRowMethod => $sLabel):?>
-					<option value="select;<?php echo $sRowMethod?>">Select en utilisant <?php echo $sLabel?></option>
+					<option value="select;<?php echo $sRowMethod?>"><?php echo tr('builder::edit_crud_selectEnUtilisant')?> <?php echo $sLabel?></option>
 				<?php endforeach;?>
 				
 				<?php foreach($this->tRowMethodes as $sRowMethod => $sLabel):?>
@@ -84,7 +84,7 @@
 	<?php endforeach;?>
 	</table>
 	
-	<input type="submit" value="cr&eacute;er" />
+	<input type="submit" value="<?php echo tr('builder::edit_crud_creer')?>" />
 	
 	</form>
 </div>

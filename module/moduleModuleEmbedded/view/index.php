@@ -3,16 +3,16 @@
 <form action="" method="POST">
 	<table>
 		<tr>
-			<th>Module</th>
+			<th><?php echo tr('Builder::edit_addmodulemenu_module')?></th>
 			<td><input name="module"  style="width:200px;"/></td>
 		</tr>
 		<tr>
-			<th>Actions</th>
+			<th><?php echo tr('Builder::edit_addmodulemenu_actions')?></th>
 			<td><textarea name="actions" style="width:200px;height:100px"></textarea></td>
 		</tr>
 	</table>
-	Entrez les actions suivi d'un retour chariot
-	<input type="submit" value="G&eacute;n&eacute;rer"/>
+	<?php echo tr('Builder::edit_addmodulemenu_entrezLesActions')?>
+	<input type="submit" value="<?php echo tr('Builder::edit_addmodulemenu_generer')?>"/>
 </form>
 </div>
 <p class="msg"><?php echo $this->msg?></p>

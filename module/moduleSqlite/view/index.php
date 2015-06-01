@@ -58,7 +58,7 @@ function addField(){
 <form action="" method="POST">
 <table >
 	<tr>
-		<th>S&eacute;lectionnez une config sqlite</th>
+		<th><?php echo tr('label_SelectionnnezUneConfig')?></th>
 		<td>
 			<select name="sDbFilename">
 
@@ -70,25 +70,25 @@ function addField(){
 		</td>
 	</tr>
 	<tr>
-		<th>Nom de table</th>
+		<th><?php echo tr('label_NomDeLaTable')?></th>
 		<td><input type="text" name="sTable"  style="width:200px;"/></td>
 	</tr>
 	
 	<tr>
-		<th>Cl&eacute; primaire</th>
+		<th><?php echo tr('label_ClePrimaire')?></th>
 		<td><input type="text" name="sId" value="id" style="width:200px;"/> </td>
 	</tr>
 	
 	<tr>
-		<th>Champs<br /><br/><input type="button" onclick="addField()" value="Ajouter un champ"/></th>
+		<th><?php echo tr('label_Champs')?><br /><br/><input type="button" onclick="addField()" value="<?php echo tr('label_AjouterUnChamp')?>"/></th>
 		<td>
 		
 			<table class="dbtb">
 		
 				<tr>
-					<th class="field">Nom</th>
-					<th class="type">Type</th>
-					<th class="size">Longueur</th>
+					<th class="field"><?php echo tr('label_Champ')?></th>
+					<th class="type"><?php echo tr('label_Type')?></th>
+					<th class="size"><?php echo tr('label_Longueur')?></th>
 					
 					
 				</tr>
@@ -100,7 +100,7 @@ function addField(){
 		</td>
 	</tr>
 </table>
-<input type="submit" value="G&eacute;n&eacute;rer" />
+<input type="submit" value="<?php echo tr('label_Generer')?>" />
 </form>
 
 

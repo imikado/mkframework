@@ -1,6 +1,6 @@
 <?php $tEnable=_root::getParam('tEnable')?>
 <h1><?php echo tr('menuProject_link_addViewTablesimple')?></h1>
-<p>Choisissez une classe mod&egrave;le</p>
+<p><?php echo tr('builder::edit_addviewtablemoduletablesimple_choisissezUneClasseModele')?></p>
 <div class="smenu">
 <ul>
 <?php if($this->tFile)?>
@@ -19,7 +19,7 @@
 </div>
 <?php if(_root::getParam('model') !=''):?>
 <a id="editcrud" name="editcrud"></a>
-<p>Choisissez la m&eacute;thode &agrave; appeler qui remplira le tableau</p>
+<p><?php echo tr('builder::edit_addviewtablemoduletablesimple_choisissezLaMethodeQuiRemplira')?></p>
 <div class="smenu">
 <ul>
 <?php if($this->tMethod)?>
@@ -49,7 +49,7 @@
 	<table>
 		<tr>
 			
-			<th>Cr&eacute;er la vue</th>
+			<th><?php echo tr('builder::edit_addviewtablemoduletablesimple_creerLaVue')?></th>
 			<td>module/</td>
 			<td>
 				<select name="module">
@@ -75,14 +75,14 @@
 	
 	<table>
 		<tr>
-			<th>Activer l'alternance</th>
+			<th><?php echo tr('builder::edit_addviewtablemoduletablesimple_activerLalternance')?></th>
 			<td><input type="checkbox" name="enableAlt"/></td>
 		 
 		
 			<td style="border:0px">&nbsp;</td>
 		
 	 
-			<th>Classes a alterner</th>
+			<th><?php echo tr('builder::edit_addviewtablemoduletablesimple_classesAalterner')?></th>
 			<td>
 				<input style="width:50px" type="text" name="arrayAlt[]" value=""/> ,
 				<input style="width:50px" type="text" name="arrayAlt[]" value="alt"/>
@@ -98,7 +98,7 @@
 
 	<table>
 		<tr>
-			<th>Classe du tableau</th>
+			<th><?php echo tr('builder::edit_addviewtablemoduletablesimple_classeDuTableau')?></th>
 			<td><input type="text" name="tableClass" value="tb_list"/></td>
 		</tr>
 	</table>
@@ -107,8 +107,8 @@
 	<table>
 		<tr>
 			<th></th>
-			<th>Champ</th>
-			<th>Libell&eacute;</th>
+			<th><?php echo tr('builder::edit_addviewtablemoduletablesimple_champ')?></th>
+			<th><?php echo tr('builder::edit_addviewtablemoduletablesimple_libelle')?></th>
 		</tr>
 	<?php foreach($this->tColumn as $sColumn):?>
 		<tr>
@@ -120,7 +120,7 @@
 	<?php endforeach;?>
 	</table>
 	
-	<input type="submit" value="cr&eacute;er" />
+	<input type="submit" value="<?php echo tr('builder::edit_addviewtablemoduletablesimple_creer')?>" />
 	
 	</form>
 </div>

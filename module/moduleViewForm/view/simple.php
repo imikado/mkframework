@@ -1,6 +1,6 @@
 <?php $tEnable=_root::getParam('tEnable')?>
 <h1><?php echo tr('menuProject_link_addForm')?></h1>
-<p>Choisissez une classe mod&egrave;le</p>
+<p><?php echo tr('builder::edit_addviewtablemoduletablesimple_choisissezUneClasseModele')?></p>
 <div class="smenu">
 <ul>
 <?php if($this->tFile)?>
@@ -28,7 +28,7 @@
 	
  	<table>
 		<tr>
-			<th>Cr&eacute;er la vue</th>
+			<th><?php echo tr('builder::edit_addviewtablemoduletablesimple_creerLaVue')?></th>
 			<td>module/</td>
 			<td>
 				<select name="module">
@@ -56,9 +56,9 @@
 	<table>
 		<tr>
 			<th></th>
-			<th>Champ</th>
-			<th>Libell&eacute;</th>
-			<th>Type</th>
+			<th><?php echo tr('builder::edit_addviewtablemoduletablesimple_champ')?></th>
+			<th><?php echo tr('builder::edit_addviewtablemoduletablesimple_libelle')?></th>
+			<th><?php echo tr('builder::edit_addviewtablemoduletablesimple_type')?></th>
 		</tr>
 		
 	<?php foreach($this->tColumn as $sColumn):?>
@@ -73,14 +73,14 @@
 				<option value="upload">upload</option>
 				
 				<?php foreach($this->tRowMethodes as $sRowMethod => $sLabel):?>
-					<option value="select;<?php echo $sRowMethod?>">Select en utilisant <?php echo $sLabel?></option>
+					<option value="select;<?php echo $sRowMethod?>"><?php echo tr('builder::edit_crud_selectEnUtilisant')?> <?php echo $sLabel?></option>
 				<?php endforeach;?>
 			</select></td>
 		</tr>
 	<?php endforeach;?>
 	</table>
 	
-	<input type="submit" value="cr&eacute;er" />
+	<input type="submit" value="<?php echo tr('builder::edit_addviewtablemoduletablesimple_creer')?>" />
 	
 	</form>
 </div>
