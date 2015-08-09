@@ -1,9 +1,23 @@
 <?php
 class module_moduleModel{
 	
+	private function mongodbAddCollection(){
+		$oModelMongo=new model_mkfbuilderfactory();
+		$oModelMongo->setConfig(_root::getParam('sConfig'));
+		
+		$oModelMongo->getSgbd()->getDb()->createCollection(_root::getParam('collection'));
+		
+		_root::redirect('builder::edit',array('id'=>_root::getParam('id'),'action'=>_root::getParam('action'),'sConfig'=>_root::getParam('sConfig')));
+	}
 	
 	public function _index(){
+		
 		module_builder::getTools()->rootAddConf('conf/connexion.ini.php');
+		
+		if(_root::getParam('sAction')=='mongodbAddCollection'){
+			$this->mongodbAddCollection();
+		}
+		
 		$msg='';
 		$detail='';
 		$tTables=array();
@@ -144,6 +158,11 @@ class module_moduleModel{
 			}
 		}
 		
+		$sFileModel='data/sources/projet/model/model_example.sample.php';
+		if(_root::getConfigVar('db.'._root::getParam('sConfig').'.sgbd')=='mongodb'){
+			$sFileModel='data/sources/fichiers/model/model_exampleMongodb.php';
+		}
+		
 		$sContent=module_builder::getTools()->stringReplaceIn(array(
 											'exampletb' => $sTable,
 											'exampleid' => $sId,
@@ -153,7 +172,7 @@ class module_moduleModel{
 											'\/\/save' => $sSave,
 											'\/\/checkContraint' =>$sRules
 										),
-										'data/sources/projet/model/model_example.sample.php'
+										$sFileModel
 		);
 		
 		$oFile=new _file( _root::getConfigVar('path.generation')._root::getParam('id').'/model/model_'.$sTable.'.php' );

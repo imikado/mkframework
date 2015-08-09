@@ -1,6 +1,6 @@
 <?php $tEnable=_root::getParam('tEnable')?>
 <h1><?php echo tr('menuProject_link_createModuleCRUDreadonly')?></h1>
-<p>Choisissez une classe mod&egrave;le</p>
+<p><?php echo tr('builder::edit_crudreadonly_choisissezUneClasseModele')?></p>
 <div class="smenu">
 <ul>
 <?php if($this->tFile)?>
@@ -24,17 +24,17 @@
 <div class="table">
 	<?php if($this->tColumn)?>
 	<form action="" method="POST">
-	<p>Nom du module &agrave cr&eacute;er <input type="text" name="moduleToCreate" value="<?php echo _root::getParam('moduleToCreate',$this->sModuleToCreate)?>"/></>
+	<p><?php echo tr('builder::edit_crudreadonly_nomDuModuleAcreer')?> <input type="text" name="moduleToCreate" value="<?php echo _root::getParam('moduleToCreate',$this->sModuleToCreate)?>"/></>
 	<?php if(!_root::getParam('moduleToCreate') and file_exists(_root::getConfigVar('path.generation')._root::getParam('id').'/module/'.$this->sModuleToCreate)):?>
-		<p class="error">Le module module/<?php echo $this->sModuleToCreate?> existe d&eacute;j&agrave;, veuillez indiquer un autre nom </p>
+		<p class="error"><?php echo sprintf(tr('builder::edit_crudreadonly_leModuleExisteDeja'),$this->sModuleToCreate)?> </p>
 	<?php endif;?>
 
 	<input type="hidden" name="sClass" value="<?php echo $this->sClass?>" />
 	<table>
 		<tr>
 			<th></th>
-			<th>Champ</th>
-			<th>Type</th>
+			<th><?php echo tr('builder::edit_crudreadonly_champ')?></th>
+			<th><?php echo tr('builder::edit_crudreadonly_type')?></th>
 		</tr>
 	<?php foreach($this->tColumn as $sColumn):?>
 		<tr>
@@ -44,14 +44,14 @@
 				<option value="text">text</option>
 				
 				<?php foreach($this->tRowMethodes as $sRowMethod => $sLabel):?>
-					<option value="select;<?php echo $sRowMethod?>">Select en utilisant <?php echo $sLabel?></option>
+					<option value="select;<?php echo $sRowMethod?>"><?php echo tr('builder::edit_crud_selectEnUtilisant')?> <?php echo $sLabel?></option>
 				<?php endforeach;?>
 			</select></td>
 		</tr>
 	<?php endforeach;?>
 	</table>
 	
-	<input type="submit" value="cr&eacute;er" />
+	<input type="submit" value="<?php echo tr('builder::edit_crud_creer')?>" />
 	
 	</form>
 </div>

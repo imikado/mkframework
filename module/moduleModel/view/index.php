@@ -291,6 +291,8 @@ $tSelectVal=_root::getParam('tSelectVal');
 <input type="button" value="Tout (d&eacute;)s&eacute;l&eacute;ctionner" onclick="deselectAll()"/>
 <input type="submit" value="G&eacute;n&eacute;rer" />
 </div>
+<?php elseif (_root::getParam('config') ):?>
+	<p style="color:red">Aucune table/collection </p>
 <?php endif;?>
 
 <p><?php echo tr('builder::edit_model_disponibleDansFichierConnexion')?></p>	
@@ -300,5 +302,16 @@ $tSelectVal=_root::getParam('tSelectVal');
 <?php endif;?>
 
 </form>
+
+
+<?php if(_root::getConfigVar('db.'._root::getParam('sConfig').'.sgbd')=='mongodb'):?>
+	<h1>Ajouter une collection dans Mongo</h1>
+	<form action="" method="POST">
+		<input type="hidden" name="sAction" value="mongodbAddCollection" />
+		<p>Nom de la collection <input type="text" name="collection" /><input type="submit" value="Ajouter"/></p>
+		
+		<p>&nbsp;</p>
+<?php endif;?>
+
 <p class="msg"><?php echo $this->msg?></p>
 <p class="detail"><?php echo $this->detail?></p>

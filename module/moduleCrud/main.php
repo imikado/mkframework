@@ -44,6 +44,7 @@ class module_moduleCrud{
 
 			$oModel=new $sClass;
 			$oTpl->sModuleToCreate=$oModel->getTable();
+			$oTpl->sgbd= _root::getConfigVar('db.'.$oModel->getConfig().'.sgbd');
 		}
 		
 		if(_root::getRequest()->isPost() ){

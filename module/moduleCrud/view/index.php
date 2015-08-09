@@ -66,6 +66,52 @@
 	<br/>
 
 	<input type="hidden" name="sClass" value="<?php echo $this->sClass?>" />
+	
+	
+	<?php if($this->sgbd=='mongodb'):?>
+	<script>
+	function addColonne(){
+		
+		var colonne=getById('mongoAddLineColumn').value;
+		
+		var a=getById('blocColumns');
+		if(a){
+			
+			var sHtml='<tr>';
+			sHtml+='<td><input type="checkbox" name="tEnable[]" checked="checked" value="'+colonne+'" /></td>';
+			sHtml+='<td>'+colonne+'<input type="hidden" name="tColumn[]" value="'+colonne+'" /></td>';
+			sHtml+='<td><input type="text" name="tLabel[]" value="'+colonne+'"/></td>';
+			sHtml+='<td><select name="tType[]">';
+			
+				sHtml+='<option value="text">text</option>';
+				sHtml+='<option value="textarea">textarea</option>';
+				sHtml+='<option value="date">date</option>';
+				sHtml+='<option value="upload">upload</option>';
+				
+				<?php foreach($this->tRowMethodes as $sRowMethod => $sLabel):?>
+					sHtml+='<option value="select;<?php echo $sRowMethod?>"><?php echo tr('builder::edit_crud_selectEnUtilisant')?> <?php echo $sLabel?></option>';
+				<?php endforeach;?>
+			
+			sHtml+='</select></td>';
+			sHtml+='</tr>';
+			
+			a.innerHTML+=sHtml;
+		}
+	}
+	</script>
+	
+	<p>&nbsp;</p>
+	<div style="border:1px dotted #444;padding:10px;margin-right:20px">
+		<h3>Ajouter &agrave; votre collection Mongodb</h3>
+		
+		<p>Ajouter le champ <input type="text" id="mongoAddLineColumn"/><input type="button" onclick="addColonne()" value="Ajouter" /></p>
+		<p style="color:red">Attention: il vous faut ajouter des colonnes (une base noSQL n'a pas de structure fixe)</p>
+	</div>
+	
+	<p>&nbsp;</p>
+	<?php endif;?>
+	
+	
 	<table>
 		<tr>
 			<th></th>
@@ -73,24 +119,29 @@
 			<th><?php echo tr('builder::edit_crud_libelle')?></th>
 			<th><?php echo tr('builder::edit_crud_type')?></th>
 		</tr>
-	<?php foreach($this->tColumn as $sColumn):?>
-		<tr>
-			<td><input type="checkbox" name="tEnable[]" value="<?php echo $sColumn?>" <?php if(!is_array($tEnable)):?>checked="checked"<?php elseif(in_array($sColumn,$tEnable)):?>checked="checked"<?php endif;?> /></td>
-			<td><?php echo $sColumn?><input type="hidden" name="tColumn[]" value="<?php echo $sColumn?>" /></td>
-			<td><input type="text" name="tLabel[]" value="<?php echo $sColumn?>"/></td>
-			<td><select name="tType[]">
-				<option value="text">text</option>
-				<option value="textarea">textarea</option>
-				<option value="date">date</option>
-				<option value="upload">upload</option>
-				
-				<?php foreach($this->tRowMethodes as $sRowMethod => $sLabel):?>
-					<option value="select;<?php echo $sRowMethod?>"><?php echo tr('builder::edit_crud_selectEnUtilisant')?> <?php echo $sLabel?></option>
-				<?php endforeach;?>
-			</select></td>
-		</tr>
-	<?php endforeach;?>
+		<tbody id="blocColumns">
+		<?php foreach($this->tColumn as $sColumn):?>
+			<tr>
+				<td><input type="checkbox" name="tEnable[]" value="<?php echo $sColumn?>" <?php if(!is_array($tEnable)):?>checked="checked"<?php elseif(in_array($sColumn,$tEnable)):?>checked="checked"<?php endif;?> /></td>
+				<td><?php echo $sColumn?><input type="hidden" name="tColumn[]" value="<?php echo $sColumn?>" /></td>
+				<td><input type="text" name="tLabel[]" value="<?php echo $sColumn?>"/></td>
+				<td><select name="tType[]">
+					<option value="text">text</option>
+					<option value="textarea">textarea</option>
+					<option value="date">date</option>
+					<option value="upload">upload</option>
+					
+					<?php foreach($this->tRowMethodes as $sRowMethod => $sLabel):?>
+						<option value="select;<?php echo $sRowMethod?>"><?php echo tr('builder::edit_crud_selectEnUtilisant')?> <?php echo $sLabel?></option>
+					<?php endforeach;?>
+				</select></td>
+			</tr>
+		<?php endforeach;?>
+		</tbody>
 	</table>
+	
+	
+	
 	
 	<input type="submit" value="<?php echo tr('builder::edit_crud_creer')?>" />
 	
