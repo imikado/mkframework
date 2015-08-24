@@ -198,6 +198,8 @@ class module_builder extends abstract_module{
 		//CRUD
 		if(_root::getParam('action')=='crud'){//OK
 			$this->oLayout->addModule('main','moduleCrud::index');//OK
+		/*CRUD Guriddo*/}else if(_root::getParam('action')=='crudguriddo'){//OK
+			$this->oLayout->addModule('main','moduleCrudGuriddo::index');//OK
 		/*Bootstrap*/}else if(_root::getParam('action')=='crudWithBootstrap'){//OK
 			$this->oLayout->addModule('main','moduleCrudBootstrap::index');//OK
 		}elseif(_root::getParam('action')=='crudreadonly'){//OK

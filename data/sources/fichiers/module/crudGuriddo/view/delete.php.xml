@@ -1,0 +1,13 @@
+<variables>
+<lignetd><![CDATA[
+	<tr>
+		<th>examplecolumn</th>
+		<td>exampletd</td>
+	</tr>
+]]></lignetd>
+
+<input><![CDATA[<?php echo $this->oExamplemodel->examplecolumn ?>]]></input>
+<textarea><![CDATA[<?php echo $this->oExamplemodel->examplecolumn ?>]]></textarea>
+<select><![CDATA[<?php echo $this->tJoinexamplemodel[$this->oExamplemodel->examplecolumn]?>]]></select>
+<upload><![CDATA[<?php echo $this->oExamplemodel->examplecolumn ?>]]></upload>
+</variables>

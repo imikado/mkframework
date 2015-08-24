@@ -93,6 +93,8 @@ Class module_menu extends abstract_module{
 					
 					tr('menuProject_link_createModuleCRUD') => 'crud',
 					tr('menuProject_link_createModuleCRUDreadonly') => 'crudreadonly',
+				
+					tr('menuProject_link_createModuleCRUDguriddo') => 'crudguriddo',
 					
 					tr('menuProject_link_createModuleAuth') => 'authmodule',
 					tr('menuProject_link_createModuleAuthWithInscription') => 'authwithinscriptionmodule',
