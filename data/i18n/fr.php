@@ -17,7 +17,8 @@ _root::setConfigVar('tLangue',array(
 	
 	'menuProject_link_createAcl'=>'Ajouter une gestion de droits &agrave; votre application <sup>Beta</sup>',
 	
-	
+	'menuProject_link_createModuleCRUDguriddo'=>'Cr&eacute;er un module CRUD Guriddo',
+
 'menuProject_title_moduleEmbedded'=>'Modules int&eacute;grable',
 	'menuProject_link_createModuleMenuEmbedded'=>'Cr&eacute;er un module menu ',
 	'menuProject_link_createModuleEmbedded'=>'Cr&eacute;er un module int&eacute;grable',
@@ -96,7 +97,15 @@ au moment de la g&eacute;n&eacute;ration de votre nouvelle application, un layou
 'builder::edit_crud_champ'=>'Champ',
 'builder::edit_crud_libelle'=>'Libell&eacute;',
 'builder::edit_crud_type'=>'Type',
+'builder::edit_crud_tripardefaut'=>'Tri par d&eacute;faut',
 
+	
+'builder::edit_crud_limit'=>'Limite',
+
+'builder::edit_crud_dimensions'=>'Dimensions',
+'builder::edit_crud_width'=>'Largeur',
+'builder::edit_crud_height'=>'Hauteur',
+	
 'builder::edit_crud_selectEnUtilisant'=>'Select en utilisant',
 
 'builder::edit_crud_creer'=>'cr&eacute;er',
