@@ -15,6 +15,8 @@ _root::setConfigVar('tLangue',array(
 	'menuProject_link_createModuleAuth'=>'Create an authentification module',
 	'menuProject_link_createModuleAuthWithInscription'=>'Create an authentification module with inscription',
 	
+	'menuProject_link_createModuleCRUDguriddo'=>'Create a CRUD Guriddo module',
+	
 	'menuProject_link_createAcl'=>'Add acl on your project <sup>Beta</sup>',
 	
 	
@@ -96,7 +98,14 @@ during the generation a new specific layout for bootstrap will be created, and t
 'builder::edit_crud_champ'=>'Field',
 'builder::edit_crud_libelle'=>'Label',
 'builder::edit_crud_type'=>'Type',
+'builder::edit_crud_tripardefaut'=>'Default sort',
 
+'builder::edit_crud_limit'=>'Limit',
+
+'builder::edit_crud_dimensions'=>'Dimensions',
+'builder::edit_crud_width'=>'Width',
+'builder::edit_crud_height'=>'Height',
+	
 'builder::edit_crud_selectEnUtilisant'=>'dropdown list with',
 
 'builder::edit_crud_creer'=>'create',
