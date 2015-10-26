@@ -17,6 +17,8 @@ Class module_menu extends abstract_module{
 			
 			'Auteurs xml' => 'auteurxml::list',
 			
+			'Products "virtuel"'=>'virtualProducts::list',
+			
 			'Prive' => 'prive::list',
 		);
 

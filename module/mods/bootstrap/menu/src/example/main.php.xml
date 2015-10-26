@@ -1,0 +1,9 @@
+<main>
+	<patterns>
+		<pattern>#MODULE#</pattern>
+		
+		<pattern>#TABLEAUICI#</pattern>
+	</patterns>
+	
+	<target>module/#MODULE#/main.php</target>
+</main>

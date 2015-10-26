@@ -9,9 +9,25 @@ border:none;
 a{
 color:darkblue;
 }
+.main .menu .top{
+	padding-top:6px;
+	padding-bottom:0px
+}
+
+.main .menu .top a,.main .menu .top{
+	color:#444;
+}
+.main .menu .top a.default{
+	font-weight: bold;
+	color:#630505;
+}
 body{
 background:#630505 url('images/background.png') center top repeat-y;
 margin:0px;
+}
+.top{
+	margin-top:0px;
+	text-align: right;
 }
 .main{
 margin:0px auto;
@@ -21,7 +37,7 @@ background:white;
 .main .menu{
 margin:0px;
 padding:0px;
-padding-top:12px;
+padding-top:2px;
 background:#ddd;
 }
 	.main .menu ul{
@@ -30,11 +46,11 @@ background:#ddd;
 	
 	}
 		.main .menu li{
-		background:#bbb;
+		background:#630505;
 		list-style:none;
 		display:inline;
-		padding:0px 10px;
-		padding-top:4px;
+		padding:0px 12px;
+		padding-top:6px;
 		margin:6px;
 		-webkit-border-top-left-radius: 4px;
 		-webkit-border-top-right-radius: 4px;
@@ -42,14 +58,16 @@ background:#ddd;
 		-moz-border-radius-topright: 4px;
 		border-top-left-radius: 4px;
 		border-top-right-radius: 4px;
- 
 		}
 		.main .menu .selectionne{
 		background:#fff;
 		}
+		.main .menu .selectionne a{
+		color:#000;
+		}
 			.main .menu a{
 			text-decoration:none;
-			color:black;
+			color:#fff;
 			}
 .main .content{padding-top:20px;
 }

@@ -67,7 +67,7 @@ class module_builder extends abstract_module{
 		        model_mkfbuilderprojet::getInstance()->createEmpty( $sProject );
 		        
 		        //copy bootstrap
-		        model_mkfbuilderprojet::getInstance()->copyFromTo('data/sources/fichiers/layout/bootstrap.php','data/genere/'.$sProject.'/layout/bootstrap.php');
+		        model_mkfbuilderprojet::getInstance()->copyFromTo('data/sources/fichiers/layout/bootstrap.php',_root::getConfigVar('path.generation').$sProject.'/layout/bootstrap.php');
 		        
 		        //update title
 		        self::getTools()->updateFile( _root::getParam('projet'), array('examplesite'=>$sProject), 'layout/bootstrap.php' );
@@ -88,6 +88,11 @@ class module_builder extends abstract_module{
 		$this->oLayout->add('main',$oTpl);
 
 		
+	}
+
+	public function _marketBuilder(){
+		$this->oLayout->addModule('main','mods_builder_market::menu');
+		$this->oLayout->addModule('main','mods_builder_market::index');
 	}
 	
 	public function _export(){
@@ -115,7 +120,7 @@ class module_builder extends abstract_module{
 		}
 
 
-		$sFrom='data/genere/'._root::getParam('from').'/';
+		$sFrom=_root::getConfigVar('path.generation')._root::getParam('from').'/';
 		$sTo=_root::getParam('to').'/'._root::getParam('from');
 
 		$oDir=new _dir($sTo);
@@ -189,92 +194,20 @@ class module_builder extends abstract_module{
 		$oTplList=$this->getList();
 		
 		$this->oLayout->add('list',$oTplList);
-		
-		$this->oLayout->addModule('nav','menu::projet');
+
+		$this->oLayout->addModule('nav','mods_builder_menu::project');
 		
 		$oTpl=new _tpl('builder::edit');
 		$this->oLayout->add('main',$oTpl);
 		
-		//CRUD
-		if(_root::getParam('action')=='crud'){//OK
-			$this->oLayout->addModule('main','moduleCrud::index');//OK
-		/*CRUD Guriddo*/}else if(_root::getParam('action')=='crudguriddo'){//OK
-			$this->oLayout->addModule('main','moduleCrudGuriddo::index');//OK
-		/*Bootstrap*/}else if(_root::getParam('action')=='crudWithBootstrap'){//OK
-			$this->oLayout->addModule('main','moduleCrudBootstrap::index');//OK
-		}elseif(_root::getParam('action')=='crudreadonly'){//OK
-			$this->oLayout->addModule('main','moduleCrudReadonly::index');//OK
-		/*Bootstrap*/}elseif(_root::getParam('action')=='crudreadonlyWithBootstrap'){//OK
-			$this->oLayout->addModule('main','moduleCrudReadonlyBootstrap::index');//OK
-		}elseif(_root::getParam('action')=='crudembedded'){//OK
-			$this->oLayout->addModule('main','moduleCrudEmbedded::index');//OK
-		/*Bootstrap*/}elseif(_root::getParam('action')=='crudembeddedWithBootstrap'){//OK
-			$this->oLayout->addModule('main','moduleCrudEmbeddedWithBootstrap::index');//OK	
-			
-		}elseif(_root::getParam('action')=='crudembeddedreadonly'){//OK
-			$this->oLayout->addModule('main','moduleCrudEmbeddedReadonly::index');//OK
-		
-		//auth
-		}elseif(_root::getParam('action')=='authmodule'){//OK
-			$this->oLayout->addModule('main','moduleAuth::index');//OK	
-		/*Bootstrap*/}elseif(_root::getParam('action')=='authmoduleWithBootstrap'){//OK
-			$this->oLayout->addModule('main','moduleAuthBootstrap::index');//OK		
-			
-		}elseif(_root::getParam('action')=='authwithinscriptionmodule'){//OK
-			$this->oLayout->addModule('main','moduleAuthWithInscription::index');//OK	
-		/*Bootstrap*/}elseif(_root::getParam('action')=='authwithinscriptionmoduleWithBootstrap'){//OK
-			$this->oLayout->addModule('main','moduleAuthWithInscriptionBootstrap::index');//OK	
 	
-		//module
-		}elseif(_root::getParam('action')=='module'){//OK
-			$this->oLayout->addModule('main','moduleModule::index');//OK
-		/*bootstrap*/}elseif(_root::getParam('action')=='moduleWithBootstrap'){//OK
-			$this->oLayout->addModule('main','moduleModuleWithBootstrap::index');//OK
-		}elseif(_root::getParam('action')=='moduleembedded'){//OK
-			$this->oLayout->addModule('main','moduleModuleEmbedded::index');//OK
-		/*Bootstrap*/}elseif(_root::getParam('action')=='moduleembeddedWithBootstrap'){//OK
-			$this->oLayout->addModule('main','moduleModuleEmbeddedWithBootstrap::index');//OK
+		if(_root::getParam('action')){
+			$this->oLayout->addModule('main',_root::getParam('action'));
+		}
+
 		
-		
-		//model
-		}elseif(_root::getParam('action')=='model'){//OK
-			$this->oLayout->addModule('main','moduleModel::index');//OK
-		
-		//sgbd
-		}elseif(_root::getParam('action')=='xml'){//OK
-			$this->oLayout->addModule('main','moduleXml::index');//OK
-		}elseif(_root::getParam('action')=='xmlindex'){//OK
-			$this->oLayout->addModule('main','moduleXmlIndex::index');//OK
-		}elseif(_root::getParam('action')=='csv'){
-			$this->oLayout->addModule('main','moduleCsv::index');//OK
-		}elseif(_root::getParam('action')=='sqlite'){
-			$this->oLayout->addModule('main','moduleSqlite::index');
-		}elseif(_root::getParam('action')=='json'){
-			$this->oLayout->addModule('main','moduleJson::index');
-		}elseif(_root::getParam('action')=='jsonindex'){
-			$this->oLayout->addModule('main','moduleJsonIndex::index');
-			
-		//menu
-		}elseif(_root::getParam('action')=='addmodulemenu'){//OK
-			$this->oLayout->addModule('main','moduleMenu::index');//OK
-		/*bootstrap*/}elseif(_root::getParam('action')=='addmodulemenuWithBootstrap'){//OK
-			$this->oLayout->addModule('main','moduleMenuBootstrap::index');//OK
-		
-		//vues
-		}elseif(_root::getParam('action')=='addviewtablemoduletablesimple'){//OK
-			$this->oLayout->addModule('main','moduleViewTable::simple');//OK
-		//vues
-		}elseif(_root::getParam('action')=='addviewtablemoduletablewithorder'){//OK
-			$this->oLayout->addModule('main','moduleViewTable::complexWithOrder');//OK
-		}elseif(_root::getParam('action')=='addviewtablemoduletablewithorderclic'){//OK
-			$this->oLayout->addModule('main','moduleViewTable::complexWithOrderAndClic');//OK
-		}elseif(_root::getParam('action')=='addviewform'){//OK
-			$this->oLayout->addModule('main','moduleViewForm::simple');//OK
-			
-		//code
-		}elseif(_root::getParam('action')=='addrightsmanager'){//OK
-			$this->oLayout->addModule('main','moduleCoderightsmanager::index');//OK
-		}		
+
+
 		
 		
 	}
@@ -287,44 +220,53 @@ class module_builder extends abstract_module{
 		$oTpl=new _tpl('builder::edit');
 		$this->oLayout->add('main',$oTpl);
 		
-		//CRUD
-		if(_root::getParam('action')=='crud'){//OK
-			$this->oLayout->addModule('main','moduleCrud::index');//OK
-		}elseif(_root::getParam('action')=='crudreadonly'){//OK
-			$this->oLayout->addModule('main','moduleCrudReadonly::index');//OK
-		}elseif(_root::getParam('action')=='crudembedded'){//OK
-			$this->oLayout->addModule('main','moduleCrudEmbedded::index');//OK
-		}elseif(_root::getParam('action')=='crudembeddedreadonly'){//OK
-			$this->oLayout->addModule('main','moduleCrudEmbeddedReadonly::index');//OK
-		
-		//auth
-		}elseif(_root::getParam('action')=='authmodule'){//OK
-			$this->oLayout->addModule('main','moduleAuth::index');//OK	
-	
-		//module
-		}elseif(_root::getParam('action')=='module'){//OK
-			$this->oLayout->addModule('main','moduleModule::index');//OK
-		}elseif(_root::getParam('action')=='moduleembedded'){//OK
-			$this->oLayout->addModule('main','moduleModuleEmbedded::index');//OK
-		
-		//model
-		}elseif(_root::getParam('action')=='model'){//OK
-			$this->oLayout->addModule('main','moduleModel::index');//OK
-		
-		//sgbd
-		}elseif(_root::getParam('action')=='xml'){//OK
-			$this->oLayout->addModule('main','moduleXml::index');//OK
-		}elseif(_root::getParam('action')=='xmlindex'){//OK
-			$this->oLayout->addModule('main','builder::xmlindex');//OK
-		}elseif(_root::getParam('action')=='csv'){
-			$this->oLayout->addModule('main','moduleCsv::index');//OK
-		}elseif(_root::getParam('action')=='sqlite'){
-			$this->oLayout->addModule('main','moduleSqlite::index');
-			
-		//menu
-		}elseif(_root::getParam('action')=='addmodulemenu'){//OK
-			$this->oLayout->addModule('main','moduleMenu::index');//OK
+		if(_root::getParam('action')){
+			$this->oLayout->addModule('main',_root::getParam('action'));
 		}
+	}
+
+	public function _lang(){
+		$sLang=_root::getParam('switch');
+
+		$bChange=false;
+		$iswritable=true;
+		$messageOK=null;
+		$messageNOK=null;
+		$message=null;
+
+		if(_root::getConfigVar('language.default')!=$sLang){
+			$bChange=true;
+
+			$ret="\n";
+
+			$sContent=null;
+			$sContent.='[language]'.$ret;
+			$sContent.=';fr / en...'.$ret;
+			$sContent.='default='.$sLang.$ret;
+			$sContent.='allow=fr,en'.$ret;
+
+			//check writable
+			$iswritable=is_writable(_root::getConfigVar('path.conf').'language.ini.php');
+			if($iswritable){
+				file_put_contents(_root::getConfigVar('path.conf').'language.ini.php', $sContent);
+				
+				_root::redirect('builder::new');
+			}else{
+				$messageNOK=sprintf(tr('builder::new_errorVotreRepertoirePasInscriptible'),_root::getConfigVar('path.conf').'language.ini.php');
+
+				$message=sprintf(tr('builder::langVousPouvezEcrire'),$sContent,_root::getConfigVar('path.conf').'language.ini.php');
+			}
+		}else{
+			$message=sprintf(tr('builder::langVotreLangueEstDeja'),$sLang);
+		}
+
+		$oTpl=new _tpl('builder::lang');
+		$oTpl->bChange=$bChange;
+		$oTpl->messageOK=$messageOK;
+		$oTpl->messageNOK=$messageNOK;
+		$oTpl->message=$message;
+
+		$this->oLayout->add('main',$oTpl);
 	}
 	
 	

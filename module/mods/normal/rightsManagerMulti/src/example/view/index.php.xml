@@ -1,0 +1,31 @@
+<main>
+	<patterns>
+		<pattern>#examplemodule#</pattern>
+		
+		<pattern>#examplePermissionId#</pattern>
+
+		<pattern>#exampleUser_login#</pattern>
+		<pattern>#exampleUser_id#</pattern>
+		<pattern>#exampleUser_groupsId#</pattern>
+		
+	</patterns>
+	<snippets>
+		<monSnippet>
+			<patterns>
+				<pattern>#maVar#</pattern>
+		
+			</patterns>
+			<code><![CDATA[
+	public function maFunction(){
+		//#maVar#
+	}
+			]]></code>
+		</monSnippet>
+
+	
+	</snippets>
+	<path>
+		<directory>module/#examplemodule#/view</directory>
+	</path>
+	<target>module/#examplemodule#/view/index.php</target>
+</main>

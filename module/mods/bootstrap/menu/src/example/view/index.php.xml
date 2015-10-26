@@ -1,0 +1,7 @@
+<main>
+	<patterns>
+		<pattern>#MODULE#</pattern>
+	</patterns>
+	
+	<target>module/#MODULE#/view/index.php</target>
+</main>

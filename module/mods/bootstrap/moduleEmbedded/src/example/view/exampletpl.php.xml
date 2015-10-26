@@ -1,0 +1,8 @@
+<main>
+	<patterns>
+		<pattern>#MODULE#</pattern>
+		<pattern>#VIEW#</pattern>
+	</patterns>
+	<snippets></snippets>
+	<target>module/#MODULE#/view/#VIEW#.php</target>
+</main>

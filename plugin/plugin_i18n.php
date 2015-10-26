@@ -54,10 +54,19 @@ class plugin_i18n{
 		}
 		return self::$tLangue[$sTag];
 	}
+
+	public static function add($tLangue){
+		foreach($tLangue as $sKey=>$sVal){
+			self::$tLangue[$sKey]=$sVal;
+		}
+	}
 	 
 
 
 }
 function tr($sText){
 	return plugin_i18n::get($sText);
+}
+function trR($sText,$tReplace){
+	return str_replace(array_keys($tReplace),array_values($tReplace),tr($sText));
 }

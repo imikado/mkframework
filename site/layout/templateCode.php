@@ -69,9 +69,9 @@ function openCrossPopup(sType){
 	var a=getById('popupFrame');
 	if(a){
 		if(sType=='addModule'){
-			a.src='<?php echo _root::getLink('builder::editembedded',array('id'=>_root::getParam('project'),'action'=>'module'),false)?>#createon';
+			a.src='<?php echo _root::getLink('builder::editembedded',array('id'=>_root::getParam('project'),'action'=>'mods_normal_module::index'),false)?>#createon';
 		}else if(sType=='genModel'){
-			a.src='<?php echo _root::getLink('builder::editembedded',array('id'=>_root::getParam('project'),'action'=>'model'),false)?>#createon';
+			a.src='<?php echo _root::getLink('builder::editembedded',array('id'=>_root::getParam('project'),'action'=>'mods_all_model::index'),false)?>#createon';
 		}
 	}
 	var b=getById('popup');

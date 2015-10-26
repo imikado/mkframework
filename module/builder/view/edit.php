@@ -1,0 +1,1 @@
+<h1><?php echo _root::getConfigVar('builder.selected.label')?></h1>

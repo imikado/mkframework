@@ -26,6 +26,8 @@ Class module_menu extends abstract_module{
 		$tLink=array(
 			tr('menuTop_createProject') => 'builder::new',
 			tr('menuTop_editProjects') => 'builder::list',
+
+			tr('menuTop_marketBuilder') => 'builder::marketBuilder',
 			
 		);
 		
@@ -39,99 +41,9 @@ Class module_menu extends abstract_module{
 		
 		return $oTpl;
 	}
-	public function _projet(){
-		
-		$bBootstrap=0;
-		if(file_exists('data/genere/'._root::getParam('id').'/layout/bootstrap.php')){
-			$bBootstrap=1;
-		}
-		
-		if($bBootstrap){
-			
-			$supB=' <sup>Bootstrap</sup>';
-			
-			$tLink=array(
-				//'Ajouter un module' => 'addmodule',
-				tr('menuProject_title_couchemodel')=>'title',
-					tr('menuProject_link_createCoucheModel') => 'model',
-				
-				tr('menuProject_title_modules') => 'title',
-					tr('menuProject_link_createModule') => 'moduleWithBootstrap',
-					
-					tr('menuProject_link_createModuleCRUD') => 'crudWithBootstrap',
-					tr('menuProject_link_createModuleCRUDreadonly') => 'crudreadonlyWithBootstrap',
-					
-					tr('menuProject_link_createModuleAuth') => 'authmoduleWithBootstrap',
-					tr('menuProject_link_createModuleAuthWithInscription') => 'authwithinscriptionmoduleWithBootstrap',
-				
-					//tr('menuProject_link_createAcl') => 'addrightsmanager',
-
-				tr('menuProject_title_moduleEmbedded') => 'title',
-					tr('menuProject_link_createModuleMenuEmbedded') => 'addmodulemenuWithBootstrap',
-					tr('menuProject_link_createModuleEmbedded') => 'moduleembeddedWithBootstrap',
-					tr('menuProject_link_createModuleCRUDEmbedded') => 'crudembeddedWithBootstrap',
-					//'Cr&eacute;er un module Lecture seule int&eacute;grable'.$supB => 'crudembeddedreadonlyWithBootstrap',
-				
-				tr('menuProject_title_databasesEmbedded') => 'title',
-				
-					tr('menuProject_link_createDatabaseXml') => 'xml',
-					tr('menuProject_link_createDatabaseXmlIndex') => 'xmlindex',
-					tr('menuProject_link_createDatabaseCsv') => 'csv',
-					tr('menuProject_link_createDatabaseSqlite') => 'sqlite',
-					tr('menuProject_link_createDatabaseJson') => 'json',
-					tr('menuProject_link_createDatabaseJsonIndex') => 'jsonindex',
-			);
-		}else{
-			
-			$tLink=array(
-				//'Ajouter un module' => 'addmodule',
-				tr('menuProject_title_couchemodel')=>'title',
-					tr('menuProject_link_createCoucheModel') => 'model',
-				
-				tr('menuProject_title_modules') => 'title',
-					tr('menuProject_link_createModule') => 'module',
-					
-					tr('menuProject_link_createModuleCRUD') => 'crud',
-					tr('menuProject_link_createModuleCRUDreadonly') => 'crudreadonly',
-				
-					tr('menuProject_link_createModuleCRUDguriddo') => 'crudguriddo',
-					
-					tr('menuProject_link_createModuleAuth') => 'authmodule',
-					tr('menuProject_link_createModuleAuthWithInscription') => 'authwithinscriptionmodule',
-					
-					tr('menuProject_link_createAcl') => 'addrightsmanager',
-				
-				tr('menuProject_title_moduleEmbedded') => 'title',
-					tr('menuProject_link_createModuleMenuEmbedded') => 'addmodulemenu',
-					tr('menuProject_link_createModuleEmbedded') => 'moduleembedded',
-					tr('menuProject_link_createModuleCRUDEmbedded') => 'crudembedded',
-					tr('menuProject_link_createModuleCRUDreadonlyEmbedded') => 'crudembeddedreadonly',
-					
-				tr('menuProject_title_views') => 'title',
-					tr('menuProject_link_addViewTablesimple') => 'addviewtablemoduletablesimple',
-					//'Cr&eacute;er un tableau avec tri (avec le module table)' => 'addviewtablemoduletablewithorder',
-					//'Cr&eacute;er un tableau avec tri + ligne cliquable (avec le module table)' => 'addviewtablemoduletablewithorderclic',
-					tr('menuProject_link_addForm') => 'addviewform',
-				
-				tr('menuProject_title_databasesEmbedded') => 'title',
-				
-					tr('menuProject_link_createDatabaseXml') => 'xml',
-					tr('menuProject_link_createDatabaseXmlIndex') => 'xmlindex',
-					tr('menuProject_link_createDatabaseCsv') => 'csv',
-					tr('menuProject_link_createDatabaseSqlite') => 'sqlite',
-					tr('menuProject_link_createDatabaseJson') => 'json',
-					tr('menuProject_link_createDatabaseJsonIndex') => 'jsonindex',
-			);
-			
-		}
-		
-		$oTpl=new _tpl('menu::projet');
-		$oTpl->tLink=$tLink;
-		
-		return $oTpl;
-	}
+	
 	public function _projetEmbedded(){
-		
+		/*
 		if(_root::getParam('action')=='model'){
 			$tLink=array(
 				//'Cr&eacute;er la couche mod&egrave;le' => 'model',
@@ -153,7 +65,67 @@ Class module_menu extends abstract_module{
 				'Cr&eacute;er un module CRUD int&eacute;grable' => 'crudembedded',
 				'Cr&eacute;er un module Lecture seule int&eacute;grable' => 'crudembeddedreadonly',
 			);
+		}*/
+
+		$bBootstrap=0;
+		if(file_exists('data/genere/'._root::getParam('id').'/layout/bootstrap.php')){
+			$bBootstrap=1;
 		}
+		
+		if($bBootstrap){
+			$tType=array('all','bootstrap');
+			
+		}else{
+			$tType=array('all','normal');
+			
+		}
+
+			$sLang=_root::getConfigVar('language.default');
+			$tLinkModule=array();
+
+			foreach($tType as $sType){
+				$sPathModule=_root::getConfigVar('path.module').'/mods/'.$sType;
+				
+				$tModulesAll=scandir($sPathModule);
+				foreach($tModulesAll as $sModule){
+					if(file_exists($sPathModule.'/'.$sModule.'/info.ini')){
+						$tIni=parse_ini_file($sPathModule.'/'.$sModule.'/info.ini');
+						$priority=999;
+						if(isset($tIni['priority'])){
+							$priority=$tIni['priority'];
+						}
+						$sPriority=sprintf('%03d',$priority);
+						$tLinkModule[ $tIni['category'] ][ $tIni['title.'.$sLang].' <sup>version '.$tIni['version'].'</sup>' ]=$sPriority.'mods_'.$sType.'_'.$sModule.'::index';
+					}
+				}
+			}
+			
+
+			//$tModules=scandir(_root::getConfigVar('path.module')).'/mods/normal';
+			
+			$tTitle=array(
+				//'coucheModel',
+				'modules',
+				'modulesEmbedded',
+				'views',
+				//'databasesEmbedded',
+				//'unitTest',
+			);
+			$tLink=array();
+			foreach($tTitle as $sTitle){
+				if(isset($tLinkModule[$sTitle])){
+
+					$tLinkModuleCat=$tLinkModule[$sTitle];
+					asort($tLinkModuleCat);
+				
+					$tLink[ tr('menu_'.$sTitle) ]='title';
+
+					foreach($tLinkModuleCat as $sLabel => $sLink){
+						$tLink[ $sLabel ]=substr($sLink,3);
+					}
+				}
+			}
+
 		
 		$oTpl=new _tpl('menu::projetEmbedded');
 		$oTpl->tLink=$tLink;

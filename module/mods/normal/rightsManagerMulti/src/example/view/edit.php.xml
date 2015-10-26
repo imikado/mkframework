@@ -1,0 +1,29 @@
+<main>
+	<patterns>
+		<pattern>#examplemodule#</pattern>
+		
+		<pattern>#exampleGroupId#</pattern>
+		<pattern>#exampleActionId#</pattern>
+		<pattern>#exampleItemId#</pattern>
+		
+	</patterns>
+	<snippets>
+		<monSnippet>
+			<patterns>
+				<pattern>#maVar#</pattern>
+		
+			</patterns>
+			<code><![CDATA[
+	public function maFunction(){
+		//#maVar#
+	}
+			]]></code>
+		</monSnippet>
+
+	
+	</snippets>
+	<path>
+		<directory>module/#examplemodule#/view</directory>
+	</path>
+	<target>module/#examplemodule#/view/edit.php</target>
+</main>

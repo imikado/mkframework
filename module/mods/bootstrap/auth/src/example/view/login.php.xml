@@ -1,0 +1,22 @@
+<main>
+	<patterns>
+		<pattern>#MODULE#</pattern>
+
+	</patterns>
+	<snippets>
+		<monSnippet>
+			<patterns>
+				<pattern>#maVar#</pattern>
+		
+			</patterns>
+			<code><![CDATA[
+	public function maFunction(){
+		//#maVar#
+	}
+			]]></code>
+		</monSnippet>
+
+	
+	</snippets>
+	<target>module/#MODULE#/view/login.php</target>
+</main>

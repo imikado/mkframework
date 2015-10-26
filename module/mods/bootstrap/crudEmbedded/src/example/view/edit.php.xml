@@ -1,0 +1,62 @@
+<main>
+	<patterns>
+		<pattern>#MODULE#</pattern>
+
+		<pattern>#examplemodule#</pattern>
+
+	</patterns>
+	<snippets>
+		<lignetd>
+			<patterns>
+				<pattern>#examplecolumn#</pattern>
+				<pattern>#exampletd#</pattern>
+			</patterns>
+			<code><![CDATA[
+	<div class="form-group">
+		<label class="col-sm-2 control-label">#examplecolumn#</label>
+		<div class="col-sm-10">#exampletd#</div>
+	</div>
+		]]></code>
+		</lignetd>
+
+		<input>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplecolumn#</pattern>
+			</patterns>
+				
+			<code><![CDATA[<?php echo $oForm->getInputText('#examplecolumn#',array('class'=>'form-control')) ?>]]></code>
+		</input>
+
+		<textarea>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplecolumn#</pattern>
+			</patterns>
+				
+			<code><![CDATA[<?php echo $oForm->getInputTextarea('#examplecolumn#',array('class'=>'form-control')) ?>]]></code>
+		</textarea>
+
+		<select>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplecolumn#</pattern>
+				<pattern>#examplemodel#</pattern>
+			</patterns>
+				
+			<code><![CDATA[<?php echo $oForm->getSelect('#examplecolumn#',$this->tJoin#examplemodel#,array('class'=>'form-control')) ?>]]></code>
+		</select>
+
+		<upload>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplecolumn#</pattern>
+			</patterns>
+				
+			<code><![CDATA[<?php echo $oForm->getInputUpload('#examplecolumn#',array('class'=>'form-control')) ?>]]></code>
+		</upload>
+
+
+	</snippets>
+	<target>module/#MODULE#/view/edit.php</target>
+</main>

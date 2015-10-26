@@ -1,0 +1,24 @@
+<main>
+	<patterns>
+		<pattern>#MODULE#</pattern>
+		<pattern>#METHODS#</pattern>
+	</patterns>
+	<snippets>
+		<methodAction>
+			<patterns>
+				<pattern>#ACTION#</pattern>
+				<pattern>#MODULE#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function _#ACTION#(){
+	
+		$oView=new _view('#MODULE#::#ACTION#');
+		
+		return $oView;
+	}
+			]]></code>
+		</methodAction>
+
+	</snippets>
+	<target>module/#MODULE#/main.php</target>
+</main>

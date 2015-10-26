@@ -31,6 +31,8 @@ session.cookie_lifetime=
 enabled=0
 class=plugin_auth
 module=auth::login
+;liste des modules non concerne par l'auth: separe par des virgules
+module.disabled.list=
 ;timeout d'inactivite (entre 2 pages), temps en secondes
 session.timeout.enabled=1
 session.timeout.lifetime=1800

@@ -36,7 +36,10 @@ abstract class abstract_auth{
 			$sAuthModule=_root::getConfigVar('auth.module');
 		}
 
-		if( !_root::getAuth()->isConnected() and $sModuleToLoad != $sAuthModule ){
+		$tExcludeModule=explode(',',_root::getConfigVar('auth.module.disabled.list').',');
+		$tExcludeModule[]=$sAuthModule;
+
+		if( !_root::getAuth()->isConnected() and in_array($sModuleToLoad,$tExcludeModule)==false ){
 			_root::redirect(_root::getConfigVar('auth.module'));
 		}
 

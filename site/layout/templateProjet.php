@@ -9,7 +9,13 @@
 <body>
 
 <div class="main">
-	<div class="menu"><?php echo $this->load('menu') ?></div>
+	<div class="menu">
+		<p class="top">
+		<a <?php if(_root::getConfigVar('language.default')=='fr'):?>class="default"<?php endif;?> href="<?php echo _root::getLink('builder::lang',array('switch'=>'fr'))?>">FR</a> | 
+		<a <?php if(_root::getConfigVar('language.default')=='en'):?>class="default"<?php endif;?> href="<?php echo _root::getLink('builder::lang',array('switch'=>'en'))?>">EN</a>
+		</p>
+		<?php echo $this->load('menu') ?>
+	</div>
 	<div class="content">
 		<?php echo $this->load('list') ?>
 		

@@ -242,6 +242,13 @@
 		}
 		return $sContent;
 	}
+	public function stringReplaceInContent($tMatch,$sContent){
+		
+		foreach($tMatch as $sPattern => $sReplace){
+			$sContent=preg_replace('/'.$sPattern.'/s',$sReplace,$sContent);
+		}
+		return $sContent;
+	}
 	public function getListModule(){
 	    $oDir=new _dir(_root::getConfigVar('path.generation')._root::getParam('id').'/module/');
 	    $tDir= $oDir->getListDir();
@@ -275,5 +282,155 @@
 		}
 		return true;
 	}
+
+	public function getSource($sModulePath,$sProjectPath,$sFilename){
+		return new builderSource($sModulePath,$sProjectPath,$sFilename);
+	}
 	
+}
+class builderSource{
+
+	private $sModulePath;
+	private $sProjectPath;
+	private $sSource;
+	private $sSourceXml;
+	private $oSourceXml;
+	private $tReplace;
+
+	public function __construct($sModulePath,$sProjectPath,$sSource){
+		$this->sModulePath=$sModulePath.'/src';
+		$this->sProjectPath=$sProjectPath;
+		
+		$this->sSource=$sSource;
+		$sSourceXml=$sSource.'.xml';
+		if(file_exists($this->getPath($sSourceXml))){
+			$this->sSourceXml=$sSourceXml;
+			$this->oSourceXml=simplexml_load_file($this->getPath($sSourceXml));
+		}else{
+			throw new Exception("ERREUR Builder, il manque le fichier xml '".$this->getPath($sSourceXml)."'", 1);
+		}
+	}
+	public function setPattern($sPattern,$sValue){
+		$this->tReplace[$sPattern]=$sValue;
+	}
+	public function setListPattern($tPattern){
+		foreach($tPattern as $sPattern=>$sValue){
+			$this->tReplace[$sPattern]=$sValue;
+		}
+	}
+	public function save(){
+		
+		$tReplaceNeed=(array)$this->oSourceXml->patterns;
+		if(!isset($tReplaceNeed['pattern'])){
+			throw new Exception("ERREUR Builder, Il manque le xml pattern (".$this->sSource.")");
+		}
+		$tReplaceNeed=$tReplaceNeed['pattern'];
+		if($tReplaceNeed and is_array($tReplaceNeed)){
+		foreach($tReplaceNeed as $var){
+			$var=(string)$var;
+			if(!array_key_exists($var, $this->tReplace)){
+				throw new Exception("ERREUR Builder, Il manque le pattern '$var' (".$this->sSource."), pattern renseignes:".implode(',',array_keys($this->tReplace)));
+			}
+		}
+		}
+
+		$sContent=$this->stringReplaceIn($this->tReplace,$this->getPath($this->sSource));
+
+		if(isset($this->oSourceXml->target)){
+			if(isset($this->oSourceXml->path)){
+				//mkdir si necessaire
+				$tPath=(array)$this->oSourceXml->path;
+				$tDirectory=$tPath['directory'];
+				if(!is_array($tDirectory)){
+					$tDirectory=array($tDirectory);	
+				}
+				if($tDirectory and is_array($tDirectory)){
+					foreach($tDirectory as $sDirectory){
+						$this->projetmkdir($this->stringReplaceInContent($this->tReplace,$sDirectory));
+					}
+				}else{
+					throw new Exception('Pb xml path/directory');
+
+				}
+			}
+
+			$sTargetFilename=$this->stringReplaceInContent($this->tReplace,(string)$this->oSourceXml->target);
+			
+			$sTargetFilename=$this->getProjectPath($sTargetFilename);
+
+			if(file_exists($sTargetFilename)){
+				return false;
+			}
+
+			file_put_contents($sTargetFilename, $sContent);
+			chmod($sTargetFilename,0666);
+			return true;
+		}
+	}
+	public function exist(){
+		$sTargetFilename=$this->stringReplaceInContent($this->tReplace,(string)$this->oSourceXml->target);
+		$sTargetFilename=$this->getProjectPath($sTargetFilename);
+		return file_exists($sTargetFilename);
+	}
+	private function getPath($sFilename){
+		return $this->sModulePath.'/'.$sFilename;
+	}
+	public function getSnippet($sSnippet,$tReplace=null){
+		
+		if(isset($this->oSourceXml->snippets) and isset($this->oSourceXml->snippets->$sSnippet) and isset($this->oSourceXml->snippets->$sSnippet->code) and isset($this->oSourceXml->snippets->$sSnippet->patterns)){
+			$tReplaceNeed=(array)$this->oSourceXml->snippets->$sSnippet->patterns;
+			$tReplaceNeed=$tReplaceNeed['pattern'];
+			if($tReplaceNeed and is_array($tReplaceNeed)){
+			foreach($tReplaceNeed as $var){
+				$var=(string)$var;
+				if($tReplace and !array_key_exists($var, $tReplace)){
+					throw new Exception("ERREUR Builder, Il manque le pattern '$var' (snippet $sSnippet, source:".$this->sSource."), pattern renseignes:".implode(',',array_keys($tReplace)));
+				}
+
+				if(!$tReplace){
+					throw new Exception("ERREUR Builder, Il manque les patterns  (snippet $sSnippet, source:".$this->sSource."), pattern necessaires:".implode(',',$tReplaceNeed));	
+				}
+			}
+			}
+
+			return $this->stringReplaceInContent($tReplace,(string)$this->oSourceXml->snippets->$sSnippet->code);
+		}
+	}
+	private function stringReplaceInContent($tMatch,$sContent){
+		if($tMatch){
+			foreach($tMatch as $sPattern => $sReplace){
+				$sContent=preg_replace('/'.$sPattern.'/s',$sReplace,$sContent);
+			}
+		}
+		return $sContent;
+	}
+	private function stringReplaceIn($tMatch,$sFile){
+		$oFile=new _file($sFile);
+		$sContent=$oFile->getContent();
+		if($tMatch and is_array($tMatch)){
+			foreach($tMatch as $sPattern => $sReplace){
+				$sContent=preg_replace('/'.$sPattern.'/s',$sReplace,$sContent);
+			}
+		}
+		return $sContent;
+	}
+
+	private function getProjectPath($sFilename){
+		return $this->sProjectPath.'/'.$sFilename;
+	}
+
+	private function projetmkdir($sRep){
+		$oDir=new _dir($this->sProjectPath.'/'.$sRep);
+		try{
+			$oDir->save();
+			$oDir->chmod(0777);
+		}catch(Exception $e){
+			//pas grave si repertoire existe deja, mais on avertir quand meme
+			return false;
+		}
+		return true;
+	}
+
+
+
 }

@@ -9,10 +9,10 @@ charset=ISO-8859-1
 ;indique si le framework encode en html le code deja en html
 double_encode=0
 
-[language]
-;fr / en... //sLangue
-default=fr
-allow=fr,en
+[db]
+
+[debug]
+class=plugin_debugError
 
 [auth]
 ;note : >= php5.2 dans le php.ini 

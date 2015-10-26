@@ -34,8 +34,10 @@ $autoloader->setFallbackAutoloader(false);
 $tIni=parse_ini_file('conf/site.ini.php',true);
 //enregistrement de l'auto loader du framework
 include($tIni['path']['lib'].'/class_root.php');
-spl_autoload_register(array('_root','autoload'));
+//spl_autoload_register(array('_root','autoload'));
 
+include($tIni['path']['plugin'].'/plugin_autoload.php');
+spl_autoload_register(array('plugin_autoload','autoload'));
 
 //pour gerer toutes les erreurs en exception
 function exception_error_handler($errno, $errstr, $errfile, $errline ) {
@@ -45,8 +47,9 @@ set_error_handler("exception_error_handler");
 
 $oRoot=new _root();
 $oRoot->addConf('conf/mode.ini.php');
-$oRoot->addConf('conf/connexion.ini.php');
 $oRoot->addConf('conf/site.ini.php');
+$oRoot->addConf('conf/language.ini.php');
+$oRoot->addConf('conf/market.ini.php');
 $oRoot->addRequest($_GET);
 $oRoot->addRequest($_POST);
 $oRoot->run();

@@ -1,0 +1,105 @@
+<main>
+	<patterns>
+		<pattern>#exampleTable#</pattern>
+		<pattern>#exampleConfig#</pattern>
+
+		<pattern>#examplePermission_id#</pattern>
+
+		<pattern>#exampleGroupTable#</pattern>
+		<pattern>#exampleGroup_name#</pattern>
+		<pattern>#exampleGroup_id#</pattern>
+		
+		<pattern>#exampleActionTable#</pattern>
+		<pattern>#exampleAction_id#</pattern>
+		<pattern>#exampleAction_name#</pattern>
+
+		<pattern>#exampleItemTable#</pattern>
+		<pattern>#exampleItem_id#</pattern>
+		<pattern>#exampleItem_name#</pattern>
+
+
+		<pattern>#exampleUserTable#</pattern>
+		<pattern>#exampleUser_id#</pattern>
+		<pattern>#exampleUser_login#</pattern>
+		<pattern>#exampleUser_groupsId#</pattern>
+
+
+		<pattern>#sClassModelRightsManager#</pattern>
+		
+		<pattern>#exampleRequeteFindListByGroup#</pattern>
+
+	</patterns>
+	<snippets>
+		<requeteFindListByGroup>
+			<patterns>
+				<pattern>#sActionTable#</pattern>
+				<pattern>#sActionId#</pattern>
+				<pattern>#sActionName#</pattern>
+
+				<pattern>#sItemTable#</pattern>
+				<pattern>#sItemId#</pattern>
+				<pattern>#sItemName#</pattern>
+
+				<pattern>#sPermissionTable#</pattern>
+				<pattern>#sPermissionItemId#</pattern>
+				<pattern>#sPermissionActionId#</pattern>
+				<pattern>#sPermissionGroupId#</pattern>
+
+			</patterns>
+			<code><![CDATA[
+		SELECT 
+			#sActionTable#.#sActionName# as actionName, 
+			#sItemTable#.#sItemName# as itemName
+		FROM #sPermissionTable#
+			INNER JOIN #sActionTable#
+				ON #sActionTable#.#sActionId#=#sPermissionTable#.#sPermissionActionId#
+			INNER JOIN #sItemTable#
+				ON #sItemTable#.#sItemId#=#sPermissionTable#.#sPermissionItemId#
+		WHERE #sPermissionTable#.#sPermissionGroupId#=?
+			]]></code>
+		</requeteFindListByGroup>
+
+		<exampleRequeteFindAll>
+			<patterns>
+				<pattern>#sActionTable#</pattern>
+				<pattern>#sActionId#</pattern>
+				<pattern>#sActionName#</pattern>
+
+				<pattern>#sItemTable#</pattern>
+				<pattern>#sItemId#</pattern>
+				<pattern>#sItemName#</pattern>
+
+				<pattern>#sGroupTable#</pattern>
+				<pattern>#sGroupId#</pattern>
+				<pattern>#sGroupName#</pattern>
+
+
+				<pattern>#sPermissionId#</pattern>
+				<pattern>#sPermissionTable#</pattern>
+				<pattern>#sPermissionItemId#</pattern>
+				<pattern>#sPermissionActionId#</pattern>
+				<pattern>#sPermissionGroupId#</pattern>
+
+			</patterns>
+			<code><![CDATA[
+		SELECT 
+			#sActionTable#.#sActionName# as actionName, 
+			#sItemTable#.#sItemName# as itemName,
+			#sGroupTable#.#sGroupName# as groupName,
+			#sPermissionTable#.#sPermissionId# 
+
+		FROM #sPermissionTable#
+			INNER JOIN #sActionTable#
+				ON #sActionTable#.#sActionId#=#sPermissionTable#.#sPermissionActionId#
+			INNER JOIN #sItemTable#
+				ON #sItemTable#.#sItemId#=#sPermissionTable#.#sPermissionItemId#
+			INNER JOIN #sGroupTable#
+				ON #sGroupTable#.#sGroupId#=#sPermissionTable#.#sPermissionGroupId#
+		
+			]]></code>
+		</exampleRequeteFindAll>
+
+	
+	</snippets>
+	<target>model/#sClassModelRightsManager#.php</target>
+</main>

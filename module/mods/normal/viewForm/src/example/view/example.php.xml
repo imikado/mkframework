@@ -1,0 +1,28 @@
+<main>
+	<patterns>
+		<pattern>#colonnestr#</pattern>
+
+	</patterns>
+	<snippets>
+
+		<ligneTrTd>
+			<patterns>
+				<pattern>#th#</pattern>
+				<pattern>#td#</pattern>
+		
+			</patterns>
+			<code><![CDATA[
+	<tr>
+		<th>#th#</th>
+		<td>#td#</td>
+	</tr>
+			]]></code>
+		</ligneTrTd>
+
+	
+	</snippets>
+	<path>
+		<directory>module/#examplemodule#/view</directory>
+	</path>
+	<target>module/#examplemodule#/view/#exampleview#.php</target>
+</main>

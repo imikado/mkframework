@@ -1,0 +1,1 @@
+<p><?php echo tr('prochainement')?></p>

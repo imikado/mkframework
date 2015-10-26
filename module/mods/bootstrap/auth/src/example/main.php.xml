@@ -1,0 +1,26 @@
+<main>
+	<patterns>
+		<pattern>#MODULE#</pattern>
+		
+		<pattern>#privatemodule_action#</pattern>
+		<pattern>#model_example#</pattern>
+		<pattern>#auth_login#</pattern>
+
+	</patterns>
+	<snippets>
+		<monSnippet>
+			<patterns>
+				<pattern>#maVar#</pattern>
+		
+			</patterns>
+			<code><![CDATA[
+	public function maFunction(){
+		//#maVar#
+	}
+			]]></code>
+		</monSnippet>
+
+	
+	</snippets>
+	<target>module/#MODULE#/main.php</target>
+</main>

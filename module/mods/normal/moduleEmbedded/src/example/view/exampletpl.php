@@ -1,0 +1,1 @@
+View module/#MODULE#/view/#VIEW#.php
