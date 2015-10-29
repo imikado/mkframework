@@ -75,10 +75,10 @@ class #model_examplemodel# extends abstract_model{
 	}
 	
 	public function findListUser(){
-		return $this->findManySimple('SELECT #exampleUser_id#,#exampleUser_login#,#exampleUser_groupsId# FROM #exampleUserTable#');
+		return $this->findManySimple('SELECT #exampleUser_id#,#exampleUser_login#  FROM #exampleUserTable#');
 	}
 	public function findUserById($user_id){
-		return $this->findOneSimple('SELECT #exampleUser_id#,#exampleUser_login#,#exampleUser_groupsId# FROM #exampleUserTable# WHERE #exampleUser_id#=?',$user_id);
+		return $this->findOneSimple('SELECT #exampleUser_id#,#exampleUser_login# FROM #exampleUserTable# WHERE #exampleUser_id#=?',$user_id);
 	}
 	public function findListGroupByUser($user_id){
 		$tRow=$this->findManySimple('SELECT #exampleGroupUserGroupId# FROM #exampleGroupUserTable# WHERE #exampleGroupUserUserId#=?',$user_id);
@@ -101,7 +101,7 @@ class #model_examplemodel# extends abstract_model{
 		//on purge
 		_root::getACL()->purge();
 		
-		$tPermission=$this->findListByGroup($oUser->#exampleUserGroups_id#);
+		$tPermission=$this->findListByUser($oUser->#exampleUser_id#);
 		if($tPermission){
 			foreach($tPermission as $oPermission){
 				_root::getACL()->allow($oPermission->actionName,$oPermission->itemName);

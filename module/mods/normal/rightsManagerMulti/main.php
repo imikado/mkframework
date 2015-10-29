@@ -151,9 +151,7 @@ class module_mods_normal_rightsManagerMulti extends abstract_moduleBuilder{
 		
 		$exampleConfig=$oPermission->getConfig();
 		$exampleTable=$oPermission->getTable();
-		
-		$exampleRequeteFindListByGroup=null;
-		
+				
 		$exampleUserGroups_id=_root::getParam('classModelUser_groups_id');
 		$exampleAction_name=_root::getParam('classModelAction_name');
 		$exampleItem_name=_root::getParam('classModelItem_name');
@@ -246,7 +244,7 @@ class module_mods_normal_rightsManagerMulti extends abstract_moduleBuilder{
 		/*SOURCE*/$oSourceModel->setPattern('#exampleTable#',$exampleTable);
 		/*SOURCE*/$oSourceModel->setPattern('#exampleConfig#',$exampleConfig);
 
-		/*SOURCE*/$oSourceModel->setPattern('#exampleRequeteFindListByUser#',$exampleRequeteFindListByUser);
+		/*SOURCE*/$oSourceModel->setPattern('#requeteFindListByUser#',$exampleRequeteFindListByUser);
 		/*SOURCE*/$oSourceModel->setPattern('#exampleRequeteFindAll#',$exampleRequeteFindAll);
 		
 		/*SOURCE*/$oSourceModel->setPattern('#examplePermission_id#',$sPermissionId);
@@ -271,6 +269,11 @@ class module_mods_normal_rightsManagerMulti extends abstract_moduleBuilder{
 		/*SOURCE*/$oSourceModel->setPattern('#exampleUser_id#',$sUserId);
 		/*SOURCE*/$oSourceModel->setPattern('#exampleUser_login#',$sUserLogin);
 		/*SOURCE*/$oSourceModel->setPattern('#exampleUser_groupsId#',$sUserGroupId);
+
+		/*SOURCE*/$oSourceModel->setPattern('#exampleGroupUserTable#',$sGroupUserTable);
+		/*SOURCE*/$oSourceModel->setPattern('#exampleGroupUserGroupId#',$sGroupUserGroupId);
+		/*SOURCE*/$oSourceModel->setPattern('#exampleGroupUserUserId#',$sGroupUserUserId);
+
 
 
 		/*SOURCE*/$oSourceModel->setPattern('#sClassModelRightsManager#',$sClassModelRightsManager);

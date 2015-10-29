@@ -51,7 +51,7 @@
 				<pattern>#examplemodel#</pattern>
 			</patterns>
 				
-			<code><![CDATA[<?php if(isset($this->tJoin#examplemodel#[$#oExamplemodel#->#examplecolumn#])){ echo $$this->tJoin#examplemodel#[$#oExamplemodel#->#examplecolumn#];}else{ echo $#oExamplemodel#->#examplecolumn# ;}]]></code>
+			<code><![CDATA[<?php if(isset($this->tJoin#examplemodel#[$#oExamplemodel#->#examplecolumn#])){ echo $this->tJoin#examplemodel#[$#oExamplemodel#->#examplecolumn#];}else{ echo $#oExamplemodel#->#examplecolumn# ;}?>]]></code>
 		</select>
 
 		<upload>

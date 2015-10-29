@@ -8,6 +8,7 @@
 		<pattern>#exampleGroupTable#</pattern>
 		<pattern>#exampleGroup_name#</pattern>
 		<pattern>#exampleGroup_id#</pattern>
+
 		
 		<pattern>#exampleActionTable#</pattern>
 		<pattern>#exampleAction_id#</pattern>
@@ -23,10 +24,13 @@
 		<pattern>#exampleUser_login#</pattern>
 		<pattern>#exampleUser_groupsId#</pattern>
 
+		<pattern>#exampleGroupUserGroupId#</pattern>
+		<pattern>#exampleGroupUserTable#</pattern>
+		<pattern>#exampleGroupUserUserId#</pattern>
 
 		<pattern>#sClassModelRightsManager#</pattern>
 		
-		<pattern>#exampleRequeteFindListByGroup#</pattern>
+		<pattern>#requeteFindListByUser#</pattern>
 
 	</patterns>
 	<snippets>
@@ -67,7 +71,7 @@
 
 
 
-		<requeteFindListByGroup>
+		<requeteFindListByUser>
 			<patterns>
 				<pattern>#sActionTable#</pattern>
 				<pattern>#sActionId#</pattern>
@@ -94,7 +98,7 @@
 				ON #sItemTable#.#sItemId#=#sPermissionTable#.#sPermissionItemId#
 		WHERE #sPermissionTable#.#sPermissionGroupId#=?
 			]]></code>
-		</requeteFindListByGroup>
+		</requeteFindListByUser>
 
 		<exampleRequeteFindAll>
 			<patterns>

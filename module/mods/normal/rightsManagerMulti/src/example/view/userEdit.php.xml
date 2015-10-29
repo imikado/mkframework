@@ -3,7 +3,7 @@
 		<pattern>#examplemodule#</pattern>
 		
 		<pattern>#exampleUser_login#</pattern>
-		<pattern>#exampleUser_groupsId#</pattern>
+		<pattern>#exampleGroupId#</pattern>
 		
 	</patterns>
 	<snippets>

@@ -24,7 +24,7 @@ $oForm->setMessage($this->tMessage);
 		<td>
 			<?php foreach($this->tJoinGroup as $sKey => $sName):?>
 
-				<label><input type="checkbox" <?php if(in_array($sKey, $this->tGroup)):?>checked="checked"<?php endif;?> name="exampleGroupId[]" value="<?php echo $sKey?>"><?php echo $sName?></label><br/>
+				<label><input type="checkbox" <?php if(in_array($sKey, $this->tGroup)):?>checked="checked"<?php endif;?> name="#exampleGroupId#[]" value="<?php echo $sKey?>"><?php echo $sName?></label><br/>
 			<?php endforeach;?>
 		</td>
 	</tr>
