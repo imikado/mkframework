@@ -5,7 +5,8 @@
 
 'prochainement'=>'comming soon...',
 
-'local'=>'Local',
+'extensions'=>'Extensions',
+'local'=>'Version',
 'remote'=>'Remote',
 
 'mettreAjour'=>'Update the selection',
@@ -21,5 +22,18 @@
 'menu_market'=>'Market',
 'menu_unitTest' => 'Unit tests',
 'menu_builder'=>'Builder',
+
+'install'=>'Install',
+'installe'=>'Installed',
+
+'cacherLesExtensionsInstalles'=>'Hide installed extensions',
+'afficherLesExtensionsInstalles'=>'Show installed extensions',
+
+'noExtension'=>'No extensions',
+'extensionInstalle'=>'Extension successfully installed',
+
+'version'=>'Version',
+'auteur'=>'Author',
+
 
 ));

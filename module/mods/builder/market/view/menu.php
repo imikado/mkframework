@@ -1,3 +1,8 @@
+<style>
+.success{
+	color:darkgreen;
+}
+</style>
 <?php $sSelected=null;?>
 <ul class="projets">
 	<?php foreach($this->tLink as $sLabel => $sAction):?>

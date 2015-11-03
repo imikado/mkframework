@@ -5,7 +5,8 @@
 
 'prochainement'=>'prochainement...',
 
-'local'=>'Local',
+'extensions'=>'Extensions',
+'local'=>'Version',
 'remote'=>'Remote',
 
 'mettreAjour'=>'Mettre &agrave; jour la s&eacute;lection',
@@ -21,6 +22,18 @@
 'menu_market'=>'Market',
 'menu_unitTest' => 'Tests unitaires',
 'menu_builder'=>'Builder',
+
+'install'=>'Installer',
+'installe'=>'Install&eacute;',
+
+'cacherLesExtensionsInstalles'=>'Cacher les extensions install&eacute;es',
+'afficherLesExtensionsInstalles'=>'Afficher les extensions install&eacute;es',
+
+'noExtension'=>'Aucune extensions',
+'extensionInstalle'=>'Extension install&eacute;e avec succ&egrave;s',
+
+'version'=>'Version',
+'auteur'=>'Auteur',
 
 
 ));
