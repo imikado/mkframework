@@ -14,6 +14,9 @@ double_encode=0
 [debug]
 class=plugin_debugError
 
+[module]
+folder.organized=1
+
 [auth]
 ;note : >= php5.2 dans le php.ini 
 ;session.cookie_httponly=1

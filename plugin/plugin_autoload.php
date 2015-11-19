@@ -9,7 +9,7 @@ class plugin_autoload{
 		}else if(in_array($tab[0],array('plugin','model','abstract'))){
 			include _root::getConfigVar('path.'.$tab[0]).$sClass.'.php';
 		}else if($tab[0]=='module'){
-			if(count($tab) == 2){
+			if(count($tab) == 2 or _root::getConfigVar('module.folder.organized',0)==0){
 				include _root::getConfigVar('path.module').substr($sClass,7).'/main.php';
 			}else{
 				unset($tab[0]);

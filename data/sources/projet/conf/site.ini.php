@@ -40,6 +40,9 @@ session.timeout.lifetime=1800
 [acl]
 class=plugin_gestionuser
 
+[module]
+folder.organized=0
+
 [navigation]
 scriptname=index.php
 var=:nav

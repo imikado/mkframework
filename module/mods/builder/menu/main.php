@@ -44,6 +44,7 @@ class module_mods_builder_menu extends abstract_moduleBuilder{
 		//$tModules=scandir(_root::getConfigVar('path.module')).'/mods/normal';
 		
 		$tTitle=array(
+                        'market',
 			'coucheModel',
 			'modules',
 			'modulesEmbedded',
