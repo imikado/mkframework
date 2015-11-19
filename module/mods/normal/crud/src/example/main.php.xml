@@ -30,7 +30,6 @@
 			<patterns>
 				<pattern>#tColumnUpload#</pattern>
 				<pattern>#oExamplemodel#</pattern>
-				<pattern>#sColumnUpload#</pattern>
 			</patterns>
 			<code><![CDATA[
 		$tColumnUpload=#tColumnUpload#

@@ -79,7 +79,12 @@ class module_mods_builder_market extends abstract_moduleBuilder{
 
 					$tIni['remoteVersion']=$tRemoteIni['mods_'.$sType.'_'.$sModule];
 					$tDetail['mods_'.$sType.'_'.$sModule]=$tIni;
-					$tLinkModule[ $tIni['category'] ][ $tIni['title.'.$sLang] ]=$sPriority.'mods_'.$sType.'_'.$sModule;
+
+					$sup=null;
+					if($sType=='bootstrap'){
+						$sup='<sup>Bootstrap</sup>';
+					}
+					$tLinkModule[ $tIni['category'] ][ $tIni['title.'.$sLang].$sup ]=$sPriority.'mods_'.$sType.'_'.$sModule;
 				}
 			}
 
