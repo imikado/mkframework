@@ -91,6 +91,7 @@ class module_mods_builder_market extends abstract_moduleBuilder{
 		}
 
 		$tTitle=array(
+			'market',
 			'coucheModel',
 			'modules',
 			'modulesEmbedded',
