@@ -1,8 +1,8 @@
 <?php
-class module_mods_normal_crudEmbedded extends abstract_moduleBuilder{
+class module_mods_bootstrap_crudEmbedded extends abstract_moduleBuilder{
 
-	protected $sModule='mods_normal_crudEmbedded';
-	protected $sModuleView='mods/normal/crudEmbedded';
+	protected $sModule='mods_bootstrap_crudEmbedded';
+	protected $sModuleView='mods/bootstrap/crudEmbedded';
 	
 	public function _index(){
 	    module_builder::getTools()->rootAddConf('conf/connexion.ini.php');
