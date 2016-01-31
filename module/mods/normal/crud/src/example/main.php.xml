@@ -96,7 +96,7 @@
 		$oModulePagination->setPage( _root::getParam('page') );
 		$oModulePagination->setTab( $#tExamplemodel# );
 		
-		$oView->tExamplemodel=$oModulePagination->getPageElement();
+		$oView->#tExamplemodel#=$oModulePagination->getPageElement();
 		
 		$this->oLayout->add('main',$oView);
 		
