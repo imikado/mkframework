@@ -83,7 +83,7 @@
 				<pattern>#oExamplemodel#</pattern>
 			</patterns>
 			<code><![CDATA[
-<a class="btn btn-default" href="<?php echo module_#examplemodule#::getLink('#examplemodule#::show',array(
+<a class="btn btn-default" href="<?php echo module_#examplemodule#::getLink('show',array(
 										'id'=>$#oExamplemodel#->getId()
 									) 
 							)?>">Show</a>
@@ -95,7 +95,7 @@
 				<pattern>#oExamplemodel#</pattern>
 			</patterns>
 			<code><![CDATA[
-<a class="btn btn-danger" href="<?php echo module_#examplemodule#::getLink('#examplemodule#::delete',array(
+<a class="btn btn-danger" href="<?php echo module_#examplemodule#::getLink('delete',array(
 										'id'=>$#oExamplemodel#->getId()
 									) 
 							)?>">Delete</a>
@@ -106,7 +106,7 @@
 				<pattern>#examplemodule#</pattern>
 			</patterns>
 			<code><![CDATA[
-<p><a class="btn btn-primary" href="<?php echo module_#examplemodule#::getLink('#examplemodule#::new') ?>">New</a></p>
+<p><a class="btn btn-primary" href="<?php echo module_#examplemodule#::getLink('new') ?>">New</a></p>
 			]]></code>
 		</linkNew>
 
