@@ -18,10 +18,10 @@ along with Mkframework.  If not, see <http://www.gnu.org/licenses/>.
 class sgbd_syntax_mysql{
 	
 	public static function getListColumn($sTable){
-		return 'SHOW COLUMNS FROM '.$sTable;
+		return 'SHOW COLUMNS FROM `'.$sTable.'`';
 	}
 	public static function getStructure($sTable){
-		return 'SHOW COLUMNS FROM '.$sTable;
+		return 'SHOW COLUMNS FROM `'.$sTable.'`';
 	}
 	public static function getListTable(){
 		return 'SHOW TABLES';
