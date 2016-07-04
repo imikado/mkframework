@@ -18,6 +18,14 @@ along with Mkframework.  If not, see <http://www.gnu.org/licenses/>.
 class module_builder extends abstract_module{
 	
 	public static $oTools;
+	public static $sLayout;
+	
+	public static function setLayout($sLayout){
+		if(!in_array($sLayout,array('templateProjet','templateProjetLight'))){
+			return;
+		}
+		self::$sLayout=$sLayout;
+	}
 	
 	public static function getTools(){
 		return self::$oTools;
@@ -189,7 +197,8 @@ class module_builder extends abstract_module{
 
 	public function _edit(){
 		
-		$this->oLayout->setLayout('templateProjet');
+		self::setLayout('templateProjet');
+		//$this->oLayout->setLayout('templateProjet');
 		
 		$oTplList=$this->getList();
 		
@@ -205,7 +214,7 @@ class module_builder extends abstract_module{
 			$this->oLayout->addModule('main',_root::getParam('action'));
 		}
 
-		
+		$this->oLayout->setLayout(self::$sLayout);
 
 
 		

@@ -370,11 +370,14 @@ class plugin_chartHisto extends abstract_pluginChart{
 			
 			$iHeight=1-(($iValue/$this->iMax)*($this->iHeight-24));
 			
-			$this->rect($j*($iWidthBar+3),$this->iHeight,($iWidthBar),$iHeight,$this->tColor[$j]);
+			$this->rect($this->iMarginLeft+($j*($iWidthBar+3)),$this->iHeight,($iWidthBar),$iHeight,$this->tColor[$j]);
 			
 			$j++;
 		}
 		
+		$iMinY=0;
+		$iMaxY=0;
+
 		//legend
 		$i=0;
 		foreach($this->tData as $j => $tDetail){
@@ -387,11 +390,49 @@ class plugin_chartHisto extends abstract_pluginChart{
 			$this->text($x+16,$y,$sLabel,'#000',$this->textsizeLegend);
 			
 			$i++;
+
+
+			if($iMaxY < $y){
+				$iMaxY=$y;
+			}
+			
+			
+			if($iMinY=='' or $iMinY > $y){
+				//$iMinY=$y;
+			}
+		}
+
+
+		if($this->gridY){
+			$step=$this->gridY[0];
+			$color=$this->gridY[1];
+			
+			for($y=$iMinY;$y<$iMaxY;$y+=$step){
+				$y2=(1-($y-$iMinY)/($iMaxY-$iMinY))* ($iHeight+$this->legendY)*-2;
+
+				$this->lineFromTo($this->iMarginLeft-5,$y2,$this->iWidth-200,$y2,$color,0.5 );
+			}
 		}
 		
-		$this->lineFromTo(0,0,0,$this->iHeight);
-		$this->lineFromTo(0,$this->iHeight,$this->iWidth-200,$this->iHeight);
-		
+		$this->lineFromTo($this->iMarginLeft,0,$this->iMarginLeft,$this->iHeight);
+		$this->lineFromTo($this->iMarginLeft,$this->iHeight,$this->iWidth-200,$this->iHeight);
+
+		//step
+		if($this->stepY !== null){
+			for($y=($iMinY);$y<$iMaxY;$y+=$this->stepY){
+				$y2=(1-($y-$iMinY)/($iMaxY-$iMinY))* ($iHeight+$this->legendY)*-2;
+
+				$this->lineFromTo($this->iMarginLeft-5,$y2,$this->iMarginLeft,$y2 );
+				
+				$this->text(0,$y2-4,$y);
+			}
+		}else{
+			$this->text(0,10,$iMaxY);
+			$this->text(0,$this->iHeight-10	,$iMinY);
+		}
+
+
+
 		$this->endScript();
 		
 		return $this->sHtml;

@@ -1,0 +1,35 @@
+<main>
+	<patterns>
+		<pattern>#examplemodule#</pattern>
+		
+		<pattern>#model_examplemodel#</pattern>
+		<pattern>#row_examplemodel#</pattern>
+		<pattern>#oExamplemodel#</pattern>
+
+		<pattern>#exampleGroupId#</pattern>
+		<pattern>#exampleActionId#</pattern>
+		<pattern>#exampleItemId#</pattern>
+
+		<pattern>#exampleUser_groupsId#</pattern>
+		
+	</patterns>
+	<snippets>
+		<monSnippet>
+			<patterns>
+				<pattern>#maVar#</pattern>
+		
+			</patterns>
+			<code><![CDATA[
+	public function maFunction(){
+		//#maVar#
+	}
+			]]></code>
+		</monSnippet>
+
+	
+	</snippets>
+	<path>
+		<directory>module/#examplemodule#</directory>
+	</path>
+	<target>module/#examplemodule#/main.php</target>
+</main>

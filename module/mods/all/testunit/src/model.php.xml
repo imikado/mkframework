@@ -1,0 +1,57 @@
+<main>
+	<patterns>
+		<pattern>#model_exampleTest#</pattern>
+
+	</patterns>
+	<snippets>
+
+		<testMethod>
+			<patterns>
+				<pattern>#testMethod#</pattern>
+				<pattern>#method#</pattern>
+
+				<pattern>#model_example#</pattern>
+				<pattern>#row_example#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function #testMethod#()
+    {
+
+    	// Arrange
+    	$tData=array(
+    		new #row_example#(array(
+    			//
+    		)),
+    		new #row_example#(array(
+    			//
+    		)),
+    	);
+
+    	#model_example#::getInstance()->setReturn($tData);
+
+    	//act
+    	$tReturn=#model_example#::getInstance()->#method#();
+
+    	//Assert
+    	$tAssert=array(
+    		new #row_example#(array(
+    			//
+    		)),
+    		new #row_example#(array(
+    			//
+    		)),
+    	);
+
+    	$this->assertEquals($tAssert,$tReturn);
+
+    }
+			]]></code>
+		</testMethod>
+
+	
+	</snippets>
+	<path>
+		<directory>tests/</directory>
+	</path>
+	<target>tests/#model_exampleTest#.php</target>
+</main>

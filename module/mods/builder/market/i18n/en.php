@@ -35,5 +35,8 @@
 'version'=>'Version',
 'auteur'=>'Author',
 
+'paramAllowFopenUrlDisabled' => 'Parameter "allow_url_fopen" is Off, it should be On',
+'paramAllowFopenUrlDisabledDetail' => 'You should update it in your php.ini file, then restart your Apache server',
+
 
 ));

@@ -1,0 +1,192 @@
+<main>
+	<patterns>
+		<pattern>#module_exampleTest#</pattern>
+
+	</patterns>
+	<snippets>
+
+		<testMethodDisplayFromBdd>
+			<patterns>
+				<pattern>#testMethod#</pattern>
+				<pattern>#method#</pattern>
+
+				<pattern>#module_example#</pattern>
+				<pattern>#oModuleExample#</pattern>
+
+			</patterns>
+			<code><![CDATA[
+	public function #testMethod#(){
+	
+		//--Arrange
+		/*
+		//exemple:
+		//  pour table author
+		//  on a deux classes modeles model_exampleAuthor contenant des objets row_exampleAuthor
+
+		//on cree un mock qui nous permettra de forcer le comportement, pour eviter d'interagir avec la base
+		model_exampleAuthor::UTsetInstance('model_exampleAuthor',$this->getMock('model_exampleAuthor') );
+
+		$tReturnExampleFindAll=array(
+			44 => new row_exampleAuthor(
+			array(
+				//
+				//
+			)
+			),
+			54 => new row_exampleAuthor(
+			array(
+				//
+				//
+			)
+			)
+		);
+		model_exampleAuthor::getInstance()->method('exampleFindAll')->will($this->returnValue($tReturnExampleFindAll));
+		*/
+
+		//tableau represenant les parametres url a simuler, par exemple array('id'=> 22)
+		$tGet=array();
+		_unitTest::getRequest()->setGet($tGet);
+
+		$#oModuleExample# = new #module_example#();
+		$#oModuleExample#->before();
+
+		//--Act
+		$#oModuleExample#->#method#();
+
+		//--Assert
+		/*
+		//on imagine qu'on assigne a un moment notre tableau d'auteur a la vue 
+		//on recuperer la vue ajoute au layou a l'emplacement main
+
+		$oViewMain=$#oModuleExample#->oLayout->UTgetView('main');
+
+		//on verifie que la variable tArrayAuthor (assigne dans la vue )
+
+		$tExpect=array(
+			44 => null,
+			54 => new row_exampleAuthor(
+			array(
+				//
+				//
+			)
+			)
+		);
+		$this->assertEquals($tExpect,$oViewMain->tArrayAuthor);
+		*/
+
+
+	}
+			]]></code>
+		</testMethodDisplayFromBdd>
+
+
+		<testMethodDisplay>
+			<patterns>
+				<pattern>#testMethod#</pattern>
+				<pattern>#method#</pattern>
+
+				<pattern>#module_example#</pattern>
+				<pattern>#oModuleExample#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function #testMethod#(){
+
+		//tableau representant les parametres url a simuler, par exemple array('id'=> 22)
+		$tGet=array();
+		_unitTest::getRequest()->setGet($tGet);
+		
+		//--Act
+		//on instancie le module
+		$#oModuleExample#=new #module_example#;
+		//on appelle sa methode before (pour creer le layout)
+		$#oModuleExample#->before();
+		//enfin on appelle la methode concernee
+		$#oModuleExample#->#method#();
+	
+		//--Assert
+		/*
+		//on imagine qu'on assigne a un moment des variables
+		//on peut recuperer la vue ajoute au layout a l'emplacement main
+		$oViewMain=$#oModuleExample#->oLayout->UTgetView('main');
+
+		//ainsi on peut verifier ces variables(assigne dans la vue )
+		$this->assertEquals('valeur teste',$oViewMain->maVariable);
+		*/
+
+	}
+			]]></code>
+		</testMethodDisplay>
+
+		<testMethodForm>
+		<patterns>
+			<pattern>#testMethod#</pattern>
+			<pattern>#method#</pattern>
+
+			<pattern>#module_example#</pattern>
+			<pattern>#oModuleExample#</pattern>
+
+			<pattern>#getLink#</pattern>
+		</patterns>
+		<code><![CDATA[
+	public function #testMethod#(){
+
+		//--Arrange
+		//pour le mk: on assigne le mock a l'instance model (pour qu'il soit appele dans le code via le getInstance() )
+		/*
+		model_maTable::UTsetInstance('model_maTable', $this->getMock('model_maTable'));
+		
+		//objet de base
+		$oMaTable=new row_maTable(array(
+		'id'=>45,
+		'nom'=> 'toto',
+		));
+		
+		// on defini que la methode findById retournera cet objet
+		model_maTable::getInstance()->method('findById')->will($this->returnValue($oMaTable));
+	
+
+		//--Assert
+		//l'objet attendu: on part de l'objet de base
+		
+		$oExpect=clone $oMaTable;
+		$oExpect->nom='titi'; //valeur attendu en base
+
+		//on indique que l'on veut verifier que l'objet qui sera envoye en base (en update) sera bien similaire
+		model_maTable::getInstance()->expects($this->once())->method('update')->with($oExpect);
+		*/
+
+
+		//--Act
+		$tGet=array(
+			//id => ??
+		);
+		$tPost=array(
+			//champs du formulaire
+		);
+
+		$oForm=_unitTest::getForm();
+		$oForm->setGet($tGet);
+		$oForm->setPost($tPost);
+		$oForm->enableToken();
+		$oForm->send();
+
+		//on instancie le module
+		$#oModuleExample#=new #module_example#;
+		//on appelle sa methode before (pour creer le layout)
+		$#oModuleExample#->before();
+		//enfin on appelle la methode concernee
+		$#oModuleExample#->#method#();
+
+		
+
+	}
+		]]></code>
+		</testMethodForm>
+
+	
+	</snippets>
+	<path>
+		<directory>tests/</directory>
+	</path>
+	<target>tests/#module_exampleTest#.php</target>
+</main>

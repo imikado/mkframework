@@ -158,7 +158,9 @@ class plugin_mail{
 		$sMsg .= chunk_split(base64_encode(file_get_contents($this->sAttached)))."\n";
 		}
 		
-		if( mail( implode(',',$this->tTo),$this->sTitle,$sMsg,$sHeader)){
+		$sOptHeader = '-f'.$this->sFrom.''.$n;
+ 		
+		if( mail( implode(',',$this->tTo),$this->sTitle,$sMsg,$sHeader,$sOptHeader)){
 			return true;
 		}else{
 			return false;

@@ -50,3 +50,13 @@ if(_root::getConfigVar('site.mode')=='dev'){
 	$oDebug=new plugin_debug($iMicrotime);
 	echo $oDebug->display();
 }
+if(_root::getConfigVar('log.performance')==1){
+        $sUser=null;
+        $oAccount=_root::getAuth();
+        if($oAccount and $oAccount->getAccount()){
+                $sUser=$oAccount->getAccount()->ACC_Login;
+        }
+        $iDelta=sprintf('%0.3f',plugin_debug::microtime()-plugin_debug::microtime($iMicrotime));
+        $sLog=date('Y-m-d').';'.date('H:i:s').';'.$sUser.';'.$_SERVER['REQUEST_URI'].';'.$iDelta.'s'."\n";
+        file_put_contents(_root::getConfigVar('path.log','data/log/').date('Y-m-d').'_performance.csv', $sLog, FILE_APPEND);
+}

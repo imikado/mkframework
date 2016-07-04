@@ -69,6 +69,10 @@ abstract class abstract_moduleembedded{
 		$sPrefix=$sModuleName;
 		return _root::getParam($sPrefix.$sVar,$uDefault);
 	}
+	public static function _setParam($sModuleName,$sVar,$uValue){
+		$sPrefix=$sModuleName;
+		return _root::setParam($sPrefix.$sVar,$uValue);
+	}
 	
 	
 	public static function _redirect($sRootModule,$tRootParams,$sModuleName,$sModuleAction,$tModuleParam=null){

@@ -23,6 +23,11 @@ class module_chart extends abstract_module{
 	    $oChartHisto=new plugin_chart('HISTO',400,200);
 	    $oChartHisto->setTextSizeLegend('12px arial');
 	    $oChartHisto->setData($tData);
+
+	    $oChartHisto->setMarginLeft(20);
+
+	    $oChartHisto->setStepY(10);
+	    $oChartHisto->setGridY(10,'#444');
 		
 		//coordonnees de la legende
 	    $oChartHisto->setCoordLegend(220,10);

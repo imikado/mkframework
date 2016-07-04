@@ -1,0 +1,28 @@
+<main>
+	<patterns>
+		<pattern>#examplemodule#</pattern>
+		
+		<pattern>#exampleUser_login#</pattern>
+		<pattern>#exampleGroupId#</pattern>
+		
+	</patterns>
+	<snippets>
+		<monSnippet>
+			<patterns>
+				<pattern>#maVar#</pattern>
+		
+			</patterns>
+			<code><![CDATA[
+	public function maFunction(){
+		//#maVar#
+	}
+			]]></code>
+		</monSnippet>
+
+	
+	</snippets>
+	<path>
+		<directory>module/#examplemodule#/view</directory>
+	</path>
+	<target>module/#examplemodule#/view/userEdit.php</target>
+</main>

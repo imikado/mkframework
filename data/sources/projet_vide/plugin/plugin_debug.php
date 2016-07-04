@@ -28,8 +28,12 @@ class plugin_debug{
 	private static $tSpy;
 	private static $tTime;
 	private static $tTimeById;
+
+	public static $enabled=0;
 	
 	public function __construct($sMicrotime){
+
+		if(!self::$enabled){ return; }
 		
 		$this->iStartMicrotime=self::microtime($sMicrotime);
 		
@@ -96,6 +100,11 @@ class plugin_debug{
 		if(self::$tSpy){
 			$this->addComplexSpy('Spy variables',self::$tSpy);
 		}
+
+		$tSessionSpy=self::getListSessionSpy();
+		if($tSessionSpy){
+			$this->addComplexSpy('Spy Session variables',$tSessionSpy);
+		}
 		
 		$this->addAcl();
 	}
@@ -107,7 +116,42 @@ class plugin_debug{
 	* @param mixte $uVar la variable a afficher dans la barre	
 	*/
 	public static function addSpy($uLabel,$uVar){
+		if(!self::$enabled){ return; }
 		self::$tSpy[][$uLabel]=$uVar;
+	}
+
+	public static function getIpHash(){
+		return sha1($_SERVER['REMOTE_ADDR']);
+	}
+	public static function getSessionSpyVarFilename(){
+		$sIP=self::getIpHash();
+		return _root::getConfigVar('path.log','data/log/').'spyVar'.$sIP;
+	}
+
+	public static function addSessionSpy($uLabel,$uVar){
+		if(!self::$enabled){ return; }
+		
+		$sFilename=self::getSessionSpyVarFilename();
+
+		$tSpy=array();
+		if(file_exists($sFilename)){
+			$tSpy=unserialize(file_get_contents( $sFilename ));
+		}
+
+		$tSpy[][$uLabel]=$uVar;
+
+		file_put_contents($sFilename, serialize($tSpy));
+	}
+	public static function getListSessionSpy(){
+		$sFilename=self::getSessionSpyVarFilename();
+		$tSpy=array();
+		if(file_exists($sFilename)){
+			$tSpy=unserialize(file_get_contents( $sFilename ));
+		}
+
+		file_put_contents($sFilename, null);
+
+		return $tSpy;
 	}
 	
 	public static function getListSpy(){
@@ -120,6 +164,7 @@ class plugin_debug{
 	* @param string $uLabel nom du chrono
 	*/
 	public static function addChrono($uLabel){
+		if(!self::$enabled){ return; }
 		$iTime=self::microtime();
 		self::$tTime[]=array($uLabel,$iTime);
 	}
@@ -129,6 +174,7 @@ class plugin_debug{
 	* @param string $uLabel nom du chrono
 	*/
 	public static function startChrono($uLabel){
+		if(!self::$enabled){ return; }
 		$iTime=self::microtime();
 		self::$tTimeById[$uLabel]['start']=$iTime;
 	}
@@ -138,6 +184,7 @@ class plugin_debug{
 	* @param string $uLabel nom du chrono (qui doit etre le meme que le chrono demarre)
 	*/
 	public static function stopChrono($uLabel){
+		if(!self::$enabled){ return; }
 		$iTime=self::microtime();
 		self::$tTimeById[$uLabel]['end']=$iTime;
 	}
@@ -146,6 +193,7 @@ class plugin_debug{
 	
 	
 	public function display(){
+		
 		echo '<script>
 		var activePopup=\'\';
 		function openPopupDebug(id){
@@ -351,7 +399,7 @@ class plugin_debug{
 				continue;
 			}
 			
-			$sHtml.='<p style="border-bottom:1px dotted gray">';
+			$sHtml.='<p style="margin:0px">';
 		
 				$sHtml.='<span >'.$sDate.'</span> ';
 				$sHtml.='<span style="font-weight:bold">'.$sTime.'</span>';
@@ -364,8 +412,14 @@ class plugin_debug{
 				$sHtml.='">'.$sType.'</span>';
 				
 				$sHtml.=$sep;
+
+				if(substr($sLog,0,3)=='sql'){
+					$sHtml.='<span style="color:darkblue"><strong>SQL</strong> '.substr($sLog,3).'</span>';
+				}else{
+					$sHtml.=$sLog;	
+				}
 				
-				$sHtml.=$sLog;
+				
 			
 			$sHtml.='</p>';
 			
@@ -441,10 +495,11 @@ class plugin_debug{
 		return $sHtml;
 	}
 	
-	public static function microtime($sMicrotime=null){
-		if($sMicrotime==null){ $sMicrotime=microtime(); }
-		$tMicrotime = explode(" ", $sMicrotime);
-		return ((float)$tMicrotime[0] + (float)$tMicrotime[1]);
+	public static function microtime($sMicrotime=null){		
+		return microtime(true);
 	}
 	
+}
+if(_root::getConfigVar('site.mode')=='dev'){
+	plugin_debug::$enabled=1;
 }

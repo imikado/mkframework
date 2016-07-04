@@ -2,7 +2,7 @@
 
 $oForm = new plugin_form($this->oData);
 $oForm->setMessage($this->tMessage);
-?>';
+?>
 
 		
 <form action="" method="POST" />

@@ -18,6 +18,34 @@
 	</tr>
 			]]></code>
 		</ligneTrTd>
+		
+		<getInputText>
+			<patterns>
+				<pattern>#column#</pattern>
+			</patterns>
+			<code><![CDATA[<?php echo $oForm->getInputText('#column#');?>]]></code>
+		</getInputText>
+		
+		<getInputTextarea>
+			<patterns>
+				<pattern>#column#</pattern>
+			</patterns>
+			<code><![CDATA[<?php echo $oForm->getInputTextarea('#column#');?>]]></code>
+		</getInputTextarea>
+		
+		<getSelect>
+			<patterns>
+				<pattern>#column#</pattern>
+			</patterns>
+			<code><![CDATA[<?php echo $oForm->getSelect('#column#',$this->tJoin#column#);?>]]></code>
+		</getSelect>
+		
+		<upload>
+			<patterns>
+				<pattern>#column#</pattern>
+			</patterns>
+			<code><![CDATA[<input type="file" name="#column#"/>]]></code>
+		</upload>
 
 	
 	</snippets>
