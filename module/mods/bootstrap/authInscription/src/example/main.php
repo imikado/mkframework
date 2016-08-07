@@ -30,7 +30,7 @@ class module_#MODULE# extends abstract_module{
 		$sLogin=_root::getParam('login');
 		$sPassword=_root::getParam('password');
 		
-		if(strlen($sPassword > $this->maxPasswordLength)){
+		if(strlen($sPassword) > $this->maxPasswordLength){
 			return 'Mot de passe trop long';
 		}
 		
