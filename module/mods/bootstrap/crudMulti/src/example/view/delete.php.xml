@@ -1,0 +1,62 @@
+<main>
+	<patterns>
+		<pattern>#MODULE#</pattern>
+
+		<pattern>#examplemodule#</pattern>
+
+	</patterns>
+	<snippets>
+		<lignetd>
+			<patterns>
+				<pattern>#examplecolumn#</pattern>
+				<pattern>#exampletd#</pattern>
+			</patterns>
+			<code><![CDATA[
+	<tr>
+		<th>#examplecolumn#</th>
+		<td>#exampletd#</td>
+	</tr>
+		]]></code>
+		</lignetd>
+
+		<input>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplecolumn#</pattern>
+			</patterns>
+				
+			<code><![CDATA[<?php echo $this->#oExamplemodel#->#examplecolumn# ?>]]></code>
+		</input>
+
+		<textarea>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplecolumn#</pattern>
+			</patterns>
+				
+			<code><![CDATA[<?php echo $this->#oExamplemodel#->#examplecolumn# ?>]]></code>
+		</textarea>
+
+		<select>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplecolumn#</pattern>
+				<pattern>#examplemodel#</pattern>
+			</patterns>
+				
+			<code><![CDATA[<?php if(isset($this->tJoin#examplemodel#[$this->#oExamplemodel#->#examplecolumn#])){ echo $this->tJoin#examplemodel#[$this->#oExamplemodel#->#examplecolumn#];}else{ echo $this->#oExamplemodel#->#examplecolumn# ;}?>]]></code>
+		</select>
+
+		<upload>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplecolumn#</pattern>
+			</patterns>
+				
+			<code><![CDATA[<?php echo $this->#oExamplemodel#->#examplecolumn# ?>]]></code>
+		</upload>
+
+
+	</snippets>
+	<target>module/#MODULE#/view/delete.php</target>
+</main>

@@ -1,0 +1,126 @@
+<main>
+	<patterns>
+		<pattern>#MODULE#</pattern>
+
+		<pattern>#examplemodule#</pattern>
+
+	</patterns>
+	<snippets>
+		<lignetd>
+			<patterns>
+				<pattern>#exampletd#</pattern>
+			</patterns>
+			<code><![CDATA[
+		<td>#exampletd#</td>
+		]]></code>
+		</lignetd>
+
+		<ligneth>
+			<patterns>
+				<pattern>#examplecolumn#</pattern>
+			</patterns>
+			<code><![CDATA[
+		<th>#examplecolumn#</th>
+		]]></code>
+		</ligneth>
+
+
+
+		<input>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplecolumn#</pattern>
+			</patterns>
+
+			<code><![CDATA[<?php echo $oForm->getInputText('#examplecolumn#',array('class'=>'form-control')) ?>]]></code>
+		</input>
+
+		<textarea>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplecolumn#</pattern>
+			</patterns>
+
+			<code><![CDATA[<?php echo $oForm->getInputTextarea('#examplecolumn#',array('class'=>'form-control')) ?>]]></code>
+		</textarea>
+
+		<select>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplecolumn#</pattern>
+				<pattern>#examplemodel#</pattern>
+			</patterns>
+
+			<code><![CDATA[<?php echo $oForm->getSelect('#examplecolumn#',$this->tJoin#examplemodel#,array('class'=>'form-control')) ?>]]></code>
+		</select>
+
+		<upload>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplecolumn#</pattern>
+			</patterns>
+
+			<code><![CDATA[<?php echo $oForm->getInputUpload('#examplecolumn#',array('class'=>'form-control')) ?>]]></code>
+		</upload>
+
+
+
+		<linkEdit>
+			<patterns>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#oExamplemodel#</pattern>
+			</patterns>
+			<code><![CDATA[
+<a class="btn btn-success" href="<?php echo $this->getLink('#examplemodule#::edit',array(
+										'id'=>$#oExamplemodel#->getId()
+									)
+							)?>">Edit</a>
+			]]></code>
+		</linkEdit>
+		<linkShow>
+			<patterns>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#oExamplemodel#</pattern>
+			</patterns>
+			<code><![CDATA[
+<a  class="btn btn-success"href="<?php echo $this->getLink('#examplemodule#::show',array(
+										'id'=>$#oExamplemodel#->getId()
+									)
+							)?>">Show</a>
+			]]></code>
+		</linkShow>
+		<linkDelete>
+			<patterns>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#oExamplemodel#</pattern>
+			</patterns>
+			<code><![CDATA[
+<a class="btn btn-danger" href="<?php echo $this->getLink('#examplemodule#::delete',array(
+										'id'=>$#oExamplemodel#->getId()
+									)
+							)?>">Delete</a>
+			]]></code>
+		</linkDelete>
+		<linkNew>
+			<patterns>
+				<pattern>#examplemodule#</pattern>
+			</patterns>
+			<code><![CDATA[
+<p><a class="btn btn-primary" href="<?php echo $this->getLink('#examplemodule#::new') ?>">New</a></p>
+			]]></code>
+		</linkNew>
+
+		<linkEditList>
+			<patterns>
+				<pattern>#examplemodule#</pattern>
+			</patterns>
+			<code><![CDATA[
+<p><a class="btn btn-success" href="<?php echo $this->getLink('#examplemodule#::new') ?>">Add entry</a> | <a href="<?php echo $this->getLink('#examplemodule#::editList') ?>">Switch edit mode</a></p>
+			]]></code>
+		</linkEditList>
+
+
+
+	</snippets>
+	<target>module/#MODULE#/view/editList.php</target>
+</main>

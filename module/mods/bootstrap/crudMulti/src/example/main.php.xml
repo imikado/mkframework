@@ -1,0 +1,297 @@
+
+<main>
+	<patterns>
+		<pattern>#MODULE#</pattern>
+
+		<pattern>#iciMethodList#</pattern>
+		<pattern>#iciMethodEditList#</pattern>
+		<pattern>#iciMethodNew#</pattern>
+		<pattern>#iciMethodEdit#</pattern>
+		<pattern>#iciMethodShow#</pattern>
+		<pattern>#iciMethodDelete#</pattern>
+		<pattern>#iciMethodProcessDelete#</pattern>
+
+		<pattern>#examplemodel#</pattern>
+		<pattern>#oExamplemodel#</pattern>
+
+		<pattern>#icitColumn#</pattern>
+		<pattern>#iciUpload#</pattern>
+
+		<pattern>#examplemodule#</pattern>
+
+	</patterns>
+	<snippets>
+		<codetJoin>
+			<patterns>
+				<pattern>#examplemodel#</pattern>
+			</patterns>
+			<code><![CDATA[		$oView->tJoin#examplemodel#=#examplemodel#::getInstance()->getSelect();]]></code>
+		</codetJoin>
+
+		<uploadsave>
+			<patterns>
+				<pattern>#tColumnUpload#</pattern>
+				<pattern>#oExamplemodel#</pattern>
+			</patterns>
+			<code><![CDATA[
+		$tColumnUpload=#tColumnUpload#
+		if($tColumnUpload){
+			foreach($tColumnUpload as $sColumnUpload){
+				$oPluginUpload=new plugin_upload($sColumnUpload);
+				if($oPluginUpload->isValid()){
+					$sNewFileName=_root::getConfigVar('path.upload').$sColumnUpload.'_'.date('Ymdhis');
+
+					$oPluginUpload->saveAs($sNewFileName);
+					$#oExamplemodel#->$sColumnUpload=$oPluginUpload->getPath();
+				}
+			}
+		}
+			]]></code>
+		</uploadsave>
+
+
+		<methodList>
+			<patterns>
+				<pattern>#tExamplemodel#</pattern>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#CODE#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function _list(){
+		
+		$#tExamplemodel#=model_#examplemodel#::getInstance()->findAll();
+		
+		$oView=new _view('#examplemodule#::list');
+		$oView->#tExamplemodel#=$#tExamplemodel#;
+		
+		#CODE#
+		
+		$this->oLayout->add('main',$oView);
+		 
+	}
+		]]></code>
+		</methodList>
+
+
+		<methodEditList>
+			<patterns>
+				<pattern>#tExamplemodel#</pattern>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#CODE#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function _editList(){
+		
+		$tMessage=$this->processListSaveMulti();
+
+		$#tExamplemodel#=model_#examplemodel#::getInstance()->findAll();
+		
+		$oView=new _view('#examplemodule#::editList');
+		$oView->#tExamplemodel#=$#tExamplemodel#;
+		$oView->tMessage=$tMessage;
+		
+		#CODE#
+		
+		$this->oLayout->add('main',$oView);
+		 
+	}
+			]]></code>
+		</methodEditList>
+
+
+		<methodPaginationList>
+			<patterns>
+				<pattern>#tExamplemodel#</pattern>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#CODE#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function _list(){
+		
+		$#tExamplemodel#=model_#examplemodel#::getInstance()->findAll();
+		
+		$oView=new _view('#examplemodule#::list');
+		$oView->#tExamplemodel#=$#tExamplemodel#;
+		
+		#CODE#
+		
+		$oModulePagination=new module_pagination;
+		$oModulePagination->setModuleAction('#examplemodule#::list');
+		$oModulePagination->setParamPage('page');
+		$oModulePagination->setLimit(5);
+		$oModulePagination->setPage( _root::getParam('page') );
+		$oModulePagination->setTab( $#tExamplemodel# );
+		
+		$oView->tExamplemodel=$oModulePagination->getPageElement();
+		
+		$this->oLayout->add('main',$oView);
+		
+		
+		$oViewPagination=$oModulePagination->build();
+		
+		$this->oLayout->add('main',$oViewPagination);
+		 
+	}
+			]]></code>
+		</methodPaginationList>
+
+		<methodNew>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#CODE#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function _new(){
+		$tMessage=$this->processSave();
+	
+		$#oExamplemodel#=new row_#examplemodel#;
+		
+		$oView=new _view('#examplemodule#::new');
+		$oView->#oExamplemodel#=$#oExamplemodel#;
+		
+		#CODE#
+		
+		$oPluginXsrf=new plugin_xsrf();
+		$oView->token=$oPluginXsrf->getToken();
+		$oView->tMessage=$tMessage;
+		
+		$this->oLayout->add('main',$oView);
+	}
+			]]></code>
+		</methodNew>
+
+		<methodEdit>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#CODE#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function _edit(){
+		$tMessage=$this->processSave();
+		
+		$#oExamplemodel#=model_#examplemodel#::getInstance()->findById( _root::getParam('id') );
+		
+		$oView=new _view('#examplemodule#::edit');
+		$oView->#oExamplemodel#=$#oExamplemodel#;
+		$oView->tId=model_#examplemodel#::getInstance()->getIdTab();
+		
+		#CODE#
+		
+		$oPluginXsrf=new plugin_xsrf();
+		$oView->token=$oPluginXsrf->getToken();
+		$oView->tMessage=$tMessage;
+		
+		$this->oLayout->add('main',$oView);
+	}
+		]]></code>
+		</methodEdit>
+
+		<methodShow>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#CODE#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function _show(){
+		$#oExamplemodel#=model_#examplemodel#::getInstance()->findById( _root::getParam('id') );
+		
+		$oView=new _view('#examplemodule#::show');
+		$oView->#oExamplemodel#=$#oExamplemodel#;
+		
+		#CODE#
+
+		$this->oLayout->add('main',$oView);
+	}
+		]]></code>
+		</methodShow>
+
+
+		<methodDelete>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#CODE#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function _delete(){
+		$tMessage=$this->processDelete();
+
+		$#oExamplemodel#=model_#examplemodel#::getInstance()->findById( _root::getParam('id') );
+		
+		$oView=new _view('#examplemodule#::delete');
+		$oView->#oExamplemodel#=$#oExamplemodel#;
+		
+		#CODE#
+
+		$oPluginXsrf=new plugin_xsrf();
+		$oView->token=$oPluginXsrf->getToken();
+		$oView->tMessage=$tMessage;
+		
+		$this->oLayout->add('main',$oView);
+	}
+		]]></code>
+		</methodDelete>
+
+		<methodProcessDelete>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#examplemodule#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function processDelete(){
+		if(!_root::getRequest()->isPost() ){ //si ce n'est pas une requete POST on ne soumet pas
+			return null;
+		}
+		
+		$oPluginXsrf=new plugin_xsrf();
+		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
+			return array('token'=>$oPluginXsrf->getMessage() );
+		}
+	
+		$#oExamplemodel#=model_#examplemodel#::getInstance()->findById( _root::getParam('id',null) );
+				
+		$#oExamplemodel#->delete();
+		//une fois enregistre on redirige (vers la page liste)
+		_root::redirect('#examplemodule#::list');
+		
+	}
+		]]></code>
+		</methodProcessDelete>	
+
+		<oModulePagination>
+			<patterns>
+				<pattern>#sModule#</pattern>
+				<pattern>#tTablename#</pattern>
+			</patterns>
+			<code><![CDATA[
+	$oModulePagination=new module_pagination;
+	$oModulePagination->setModuleAction('#sModule#::list');
+	$oModulePagination->setParamPage('page');
+	$oModulePagination->setLimit(2);
+	$oModulePagination->setPage( _root::getParam('page') );
+	$oModulePagination->setTab( $#tTablename# );
+	
+	$oViewPagination=$oModulePagination->build();
+	$this->oLayout->add('main',$oViewPagination);
+			]]></code>
+		</oModulePagination>
+
+
+	</snippets>
+	<target>module/#MODULE#/main.php</target>
+</main>
+
+
+
+

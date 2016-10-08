@@ -85,6 +85,8 @@ class plugin_gestionuser{
 		}
 		if(!isset($this->tabAllowDeny[$ressource][$action]) ){
 			$ok=false;
+		}else if(isset($this->tabAllowDeny[$ressource][$action]) and $this->tabAllowDeny[$ressource][$action]==0 ){
+			$ok=false;
 		}
 	
 		
