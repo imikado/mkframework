@@ -1,8 +1,8 @@
 <?php
-class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
+class module_mods_bootstrap_crudGuriddo extends abstract_moduleBuilder{
 
-	protected $sModule='mods_normal_crudGuriddo';
-	protected $sModuleView='mods/normal/crudGuriddo';
+	protected $sModule='mods_bootstrap_crudGuriddo';
+	protected $sModuleView='mods/bootstrap/crudGuriddo';
 
 	public function _index(){
 		$bGuriddoExist=false;

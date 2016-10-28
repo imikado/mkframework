@@ -1,0 +1,414 @@
+<main>
+	<patterns>
+		<pattern>#MODULE#</pattern>
+
+		<pattern>#iciMethodList#</pattern>
+		<pattern>#iciMethodNew#</pattern>
+		<pattern>#iciMethodEdit#</pattern>
+		<pattern>#iciMethodShow#</pattern>
+		<pattern>#iciMethodDelete#</pattern>
+		<pattern>#iciMethodProcessDelete#</pattern>
+
+		<pattern>#examplemodel#</pattern>
+		<pattern>#oExamplemodel#</pattern>
+
+		<pattern>#icitColumn#</pattern>
+		<pattern>#iciUpload#</pattern>
+
+		<pattern>#examplemodule#</pattern>
+
+	</patterns>
+	<snippets>
+		<codetJoin>
+			<patterns>
+				<pattern>#examplemodel#</pattern>
+			</patterns>
+			<code><![CDATA[		$oView->tJoin#examplemodel#=#examplemodel#::getInstance()->getSelect();]]></code>
+		</codetJoin>
+
+		<uploadsave>
+			<patterns>
+				<pattern>#tColumnUpload#</pattern>
+				<pattern>#oExamplemodel#</pattern>
+			</patterns>
+			<code><![CDATA[
+		$tColumnUpload=#tColumnUpload#
+		if($tColumnUpload){
+			foreach($tColumnUpload as $sColumnUpload){
+				$oPluginUpload=new plugin_upload($sColumnUpload);
+				if($oPluginUpload->isValid()){
+					$sNewFileName=_root::getConfigVar('path.upload').$sColumnUpload.'_'.date('Ymdhis');
+
+					$oPluginUpload->saveAs($sNewFileName);
+					$#oExamplemodel#->$sColumnUpload=$oPluginUpload->getPath();
+				}
+			}
+		}
+			]]></code>
+		</uploadsave>
+
+
+		<methodList>
+			<patterns>
+				<pattern>#icitablelimit#</pattern>
+				<pattern>#iciDefaultSortField#</pattern>
+				<pattern>#icitableHeight#</pattern>
+				<pattern>#icitableWidth#</pattern>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#icijoins#</pattern>
+				<pattern>#icicolumns#</pattern>
+
+
+			</patterns>
+			<code><![CDATA[
+	public function _list(){
+
+		//instancier le module
+		$oTable=new module_guriddo;
+		//on indique le nombre de lignes par page
+		$oTable->setPaginationLimit(#icitablelimit#);
+
+		#crudEnable#
+
+		//l'id de la div html
+		$oTable->setId('#iciDefaultSortField#');
+
+		//on definit la hauteur du tableau (en pixels)
+		$oTable->setHeight(#icitableHeight#);
+		$oTable->setWidth(#icitableWidth#);
+
+		//la page permettant de retourner le contenu au format json
+		$oTable->setJsonLink('#examplemodule#::listJson');
+
+		//on defini (si besoin) un menu deroulant permettant de modifier la pagination
+		$oTable->setListLimit(array(10,20));
+
+		//activer l'alternance des lignes
+		$oTable->enableAltRows();
+
+		//activer la reorganisation des colonnes
+		$oTable->enableSortable();
+
+		//definir le sens par defaut de tri (asc/desc)
+		$oTable->setDefaultSort('desc');
+
+		//defintion du tri par defaut
+		$oTable->setDefaultSortField('#iciDefaultSortField#');
+
+		//pour ajouter un group de colonne
+		//$oTable->addGroupColumn('Mon groupe',2,'champDeDepart');
+
+		#icijoins#
+
+		#icicolumns#
+
+		$oView= $oTable->build();
+
+		//assigner la vue retournee a votre layout
+		$this->oLayout->add('main',$oView);
+
+
+	}
+		]]></code>
+		</methodList>
+
+		<methodListJson>
+			<patterns>
+				<pattern>#icisortfieldallowed#</pattern>
+				<pattern>#iciDefaultSortField#</pattern>
+				<pattern>#icijsoncolumns#</pattern>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#icijsonjointures#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function _listJson(){
+
+		$oJson=module_guriddo::getJson();
+		//on precise la liste des champs autorise a etre trie
+		$oJson->setSortFieldAllowed(array(#icisortfieldallowed#));
+
+		if($oJson->hasFilter()){
+
+			$count = model_#examplemodel#::getInstance()->findTotalFiltered($oJson->getListFilter());
+			$oJson->setTotal($count);
+			$tData=model_#examplemodel#::getInstance()->findListFilteredAndLimitOrderBy($oJson->getListFilter(),$oJson->getStart(),$oJson->getLimit(),$oJson->getSortField(),$oJson->getSortSide());
+
+		}else{
+			$count = model_#examplemodel#::getInstance()->findTotal();
+			$oJson->setTotal($count);
+			$tData=model_#examplemodel#::getInstance()->findListLimitOrderBy($oJson->getStart(),$oJson->getLimit(),$oJson->getSortField(),$oJson->getSortSide());
+		}
+
+		#icijsonjointures#
+
+		$oJson->setData($tData);
+
+		$oJson->setId('#iciDefaultSortField#');
+		$oJson->addColumn('#iciDefaultSortField#');
+		#icijsoncolumns#
+
+		$oJson->show();
+	}
+ 		]]></code>
+
+		</methodListJson>
+
+		<jsonGetSelect>
+			<patterns>
+				<pattern>#examplemodel#</pattern>
+			</patterns>
+			<code><![CDATA[
+				$tJoin#examplemodel#=#examplemodel#::getInstance()->getSelect();
+				]]></code>
+		</jsonGetSelect>
+
+		<foreachJsonData>
+			<patterns>
+				<pattern>#icijsonline#</pattern>
+
+			</patterns>
+			<code><![CDATA[
+			#iciJsonGetSelect#
+			foreach($tData as $i=>$val){
+
+				#icijsonline#
+			}
+				]]></code>
+		</foreachJsonData>
+
+
+		<methodPaginationList>
+			<patterns>
+				<pattern>#tExamplemodel#</pattern>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#CODE#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function _list(){
+
+		$#tExamplemodel#=model_#examplemodel#::getInstance()->findAll();
+
+		$oView=new _view('#examplemodule#::list');
+		$oView->#tExamplemodel#=$#tExamplemodel#;
+
+		#CODE#
+
+		$oModulePagination=new module_pagination;
+		$oModulePagination->setModuleAction('#examplemodule#::list');
+		$oModulePagination->setParamPage('page');
+		$oModulePagination->setLimit(5);
+		$oModulePagination->setPage( _root::getParam('page') );
+		$oModulePagination->setTab( $#tExamplemodel# );
+
+		$oView->tExamplemodel=$oModulePagination->getPageElement();
+
+		$this->oLayout->add('main',$oView);
+
+
+		$oViewPagination=$oModulePagination->build();
+
+		$this->oLayout->add('main',$oViewPagination);
+
+	}
+			]]></code>
+		</methodPaginationList>
+
+		<methodNew>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#CODE#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function _new(){
+		$tMessage=$this->processSave();
+
+		$#oExamplemodel#=new row_#examplemodel#;
+
+		$oView=new _view('#examplemodule#::new');
+		$oView->#oExamplemodel#=$#oExamplemodel#;
+
+		#CODE#
+
+		$oPluginXsrf=new plugin_xsrf();
+		$oView->token=$oPluginXsrf->getToken();
+		$oView->tMessage=$tMessage;
+
+		$this->oLayout->add('main',$oView);
+	}
+			]]></code>
+		</methodNew>
+
+		<methodEdit>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#CODE#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function _edit(){
+		$tMessage=$this->processSave();
+
+		$#oExamplemodel#=model_#examplemodel#::getInstance()->findById( _root::getParam('id') );
+
+		$oView=new _view('#examplemodule#::edit');
+		$oView->#oExamplemodel#=$#oExamplemodel#;
+		$oView->tId=model_#examplemodel#::getInstance()->getIdTab();
+
+		#CODE#
+
+		$oPluginXsrf=new plugin_xsrf();
+		$oView->token=$oPluginXsrf->getToken();
+		$oView->tMessage=$tMessage;
+
+		$this->oLayout->add('main',$oView);
+	}
+		]]></code>
+		</methodEdit>
+
+		<methodShow>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#CODE#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function _show(){
+		$#oExamplemodel#=model_#examplemodel#::getInstance()->findById( _root::getParam('id') );
+
+		$oView=new _view('#examplemodule#::show');
+		$oView->#oExamplemodel#=$#oExamplemodel#;
+
+		#CODE#
+
+		$this->oLayout->add('main',$oView);
+	}
+		]]></code>
+		</methodShow>
+
+
+		<methodDelete>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#examplemodule#</pattern>
+				<pattern>#CODE#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function _delete(){
+		$tMessage=$this->processDelete();
+
+		$#oExamplemodel#=model_#examplemodel#::getInstance()->findById( _root::getParam('id') );
+
+		$oView=new _view('#examplemodule#::delete');
+		$oView->#oExamplemodel#=$#oExamplemodel#;
+
+		#CODE#
+
+		$oPluginXsrf=new plugin_xsrf();
+		$oView->token=$oPluginXsrf->getToken();
+		$oView->tMessage=$tMessage;
+
+		$this->oLayout->add('main',$oView);
+	}
+		]]></code>
+		</methodDelete>
+
+		<methodProcessDelete>
+			<patterns>
+				<pattern>#oExamplemodel#</pattern>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#examplemodule#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function processDelete(){
+		if(!_root::getRequest()->isPost() ){ //si ce n'est pas une requete POST on ne soumet pas
+			return null;
+		}
+
+		$#oExamplemodel#=model_#examplemodel#::getInstance()->findById( _root::getParam('id',null) );
+
+		$#oExamplemodel#->delete();
+		//une fois enregistre on redirige (vers la page liste)
+		_root::redirect('#examplemodule#::list');
+
+	}
+		]]></code>
+		</methodProcessDelete>
+
+		<oModulePagination>
+			<patterns>
+				<pattern>#sModule#</pattern>
+				<pattern>#tTablename#</pattern>
+			</patterns>
+			<code><![CDATA[
+	$oModulePagination=new module_pagination;
+	$oModulePagination->setModuleAction('#sModule#::list');
+	$oModulePagination->setParamPage('page');
+	$oModulePagination->setLimit(2);
+	$oModulePagination->setPage( _root::getParam('page') );
+	$oModulePagination->setTab( $#tTablename# );
+
+	$oViewPagination=$oModulePagination->build();
+	$this->oLayout->add('main',$oViewPagination);
+			]]></code>
+		</oModulePagination>
+
+		<jsonjointures>
+			<patterns>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#column#</pattern>
+			</patterns>
+			<code><![CDATA[
+				if(isset($tJoin#examplemodel#[$val->#column#])){
+					$val->#column#=$tJoin#examplemodel#[$val->#column#];
+				}
+			]]></code>
+		</jsonjointures>
+
+
+		<sJointures>
+			<patterns>
+				<pattern>#examplemodel#</pattern>
+				<pattern>#column#</pattern>
+			</patterns>
+			<code><![CDATA[
+				$tJoin#examplemodel#=#examplemodel#::getInstance()->getSelect();
+
+				$tmp=array();
+				foreach($tJoin#examplemodel# as $key => $val){
+					$tmp[]=$key.':'.$val;
+				}
+				$sJoin#examplemodel#=implode(';',$tmp);
+				$o#examplemodel#=new stdclass;
+				$o#examplemodel#->value=$sJoin#examplemodel#;
+
+			]]></code>
+		</sJointures>
+
+		<methodListColumn>
+			<patterns>
+				<pattern>#examplecolumn#</pattern>
+				<pattern>#exampleOption#</pattern>
+			</patterns>
+			<code><![CDATA[ $oTable->addColumn('#examplecolumn#','#examplecolumn#',#exampleOption#); ]]></code>
+		</methodListColumn>
+
+		<methodJsonListColumn>
+			<patterns>
+				<pattern>#examplecolumn#</pattern>
+			</patterns>
+			<code><![CDATA[ $oJson->addColumn('#examplecolumn#'); ]]></code>
+		</methodJsonListColumn>
+
+	</snippets>
+	<path>
+		<directory>module/#MODULE#</directory>
+		<directory>module/#MODULE#/view</directory>
+	</path>
+	<target>module/#MODULE#/main.php</target>
+</main>

@@ -21,7 +21,7 @@ along with Mkframework.  If not, see <http://www.gnu.org/licenses/>.
 * @link http://mkf.mkdevs.com/
 */
 abstract class abstract_row{
-	
+
 	private $_bChooseUpdate=false;
 	protected $_tProperty=array();
 	protected $_tPropertyToUpdate;
@@ -61,16 +61,21 @@ abstract class abstract_row{
 	* @access public
 	*/
 	public function update(){
-		$this->getModel()->update($this);
+		if(empty($this->_tPropertyToUpdate) == false){
+			$this->getModel()->update($this);
+		}
 	}
 	/**
 	* enregistre la row par insertion
 	* @access public
 	*/
 	public function insert(){
-		return $this->getModel()->insert($this);
+		if(empty($this->_tPropertyToUpdate) == false){
+			return $this->getModel()->insert($this);
+		}
+		return null;
 	}
-	
+
 	/**
 	* supprime la row
 	* @access public
@@ -78,7 +83,7 @@ abstract class abstract_row{
 	public function delete(){
 		return $this->getModel()->delete($this);
 	}
-	
+
 	/**
 	* retourne si l'objet est vide ou non (pour verifier suite a une requete par exemple)
 	* @return bool
@@ -89,7 +94,7 @@ abstract class abstract_row{
 	  }
 	  return false;
 	}
-	
+
 	public function chooseUpdate(){
 		$this->_bChooseUpdate=true;
 	}
@@ -124,13 +129,13 @@ abstract class abstract_row{
 		}
 		return $tWhereId;
 	}
-	
+
 	/**
 	* setter
 	*/
 	public function __set($sVar,$sVal){
 		$this->_tProperty[$sVar]=$sVal;
-		$this->_tPropertyToUpdate[]=$sVar;
+		$this->_tPropertyToUpdate[$sVar]=$sVar;
 	}
 	/**
 	* getter
@@ -141,14 +146,14 @@ abstract class abstract_row{
 		}
 		return null;
 	}
-	/** 
+	/**
 	* isset
 	*/
 	public function __isset($sVar){
         return isset($this->_tProperty[$sVar]);
     }
-    
-    /** 
+
+    /**
 	* unset
 	*/
     public function __unset($sVar){
@@ -162,12 +167,12 @@ abstract class abstract_row{
 		if($uId == null){ return false; }
 		$tColumnId=$this->getModel()->getIdTab();
 		$sColumnId=$tColumnId[0];
-		
+
 		$this->_tProperty[$sColumnId]=$uId;
-		
+
 		$this->chooseUpdate();
 	}
-	
+
 	public function getId(){
 		return implode('::',$this->getWhere());
 	}

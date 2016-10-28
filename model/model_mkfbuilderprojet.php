@@ -16,19 +16,19 @@ along with Mkframework.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 class model_mkfbuilderprojet extends abstract_model{
-	
+
 	private $sSource='data/sources/projet/';
 	private $sSourceEmpty='data/sources/projet_vide/';
 	private $sGenere=null;
-	
-	public function model_mkfbuilderprojet(){
+
+	public function __construct(){
 		$this->sGenere=_root::getConfigVar('path.generation');
 	}
 
 	public static function getInstance(){
 		return self::_getInstance(__CLASS__);
 	}
-	
+
 	public function create($sProjet){
 		self::copyFromTo($this->sSource,$this->sGenere.$sProjet);
 		//self::copyFromTo($this->sSource.'public/.htaccess',$this->sGenere.$sProjet.'/public/.htaccess');
@@ -53,7 +53,7 @@ class model_mkfbuilderprojet extends abstract_model{
 		}
 
 		if(is_dir($sFrom) ){
-		
+
 			$oDir=new _dir($sFrom);
 			try{
 			mkdir($sTo);
@@ -63,11 +63,11 @@ class model_mkfbuilderprojet extends abstract_model{
 				Verifier les droits du repertoire '.$this->sGenere.' du mkf4builder
 				On doit pouvoir ecrire dedans (generation de projet)
 				'
-				
+
 				);
 			}
 			chmod($sTo,0777);
-			
+
 			foreach($oDir->getList() as $oFile){
 				if(preg_match('/example/',$oFile->getAdresse())){ continue; }
 				self::copyFromTo($oFile->getAdresse(),$sTo.'/'.$oFile->getName());
@@ -77,6 +77,6 @@ class model_mkfbuilderprojet extends abstract_model{
 			chmod($sTo,0666);
 		}
 	}
-	
+
 }
 ?>

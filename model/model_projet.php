@@ -20,7 +20,7 @@ class model_mkfbuilderprojet extends abstract_model{
 	private $sSource='data/sources/projet/';
 	private $sGenere=null;
 	
-	public function model_mkfbuilderprojet(){
+	public function __construct(){
 		$this->sGenere=_root::getConfigVar('path.generation');
 	}
 
