@@ -1,5 +1,4 @@
 <h1 style="color:#233035;background:transparent"><a style="color:#233035;text-decoration: underline" href="<?php echo _root::getLink('builder::list') ?>"><?php echo tr('Liste_des_projets') ?></a> / <?php echo _root::getParam('id') ?></h1>
-
 <h1><?php echo _root::getParam('id') ?>
 
 	<a style="margin-left:20px;color:#444;background:#eee" class="buttons" href="<?php
@@ -20,6 +19,8 @@
 
 	<a style="margin-left:30px;color:white;" class="buttons" href="<?php echo _root::getLink('builder::export', array('id' => _root::getParam('id'))) ?>"><?php echo tr('menuNavProject_link_export') ?></a>
 </h1>
+
+<p style="text-align:right;color:#630505">[ <?php echo $this->sTypeApp ?> ]</p>
 
 <?php if (_root::getParam('action') == '') : ?>
 	<ul>

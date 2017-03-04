@@ -1,0 +1,66 @@
+<main>
+
+
+	<formules>
+		<formu type="loopWithKey" source="params" param="tColumn" keyField="key">
+			<action type="setVariable" name="sColumn" source="params" param="tColumn" useKey="$key" />
+			<action type="setVariable" name="sLabel" source="params" param="tLabelFr" useKey="$key" />
+			<action type="setVariable" name="sTypeRaw" source="params" param="tType" useKey="$key" />
+
+			<action type="splitVariable" source="$sTypeRaw" pattern=".">
+				<var name="sType"></var>
+				<var name="sModelJoin"></var>
+			</action>
+
+			<action type="setVariable" name="sInput" source="snippet" param="$sType">
+				<pattern tag="VARcolumnENDVAR" value="$sColumn"/>
+				<pattern tag="VARmodelENDVAR" value="$sModelJoin"/>
+			</action>
+
+
+
+			<action type="concatParam" name="tJoin" value="$sInput"/>
+
+		</formu>
+	</formules>
+
+	<snippets>
+		<input>
+			<code></code>
+		</input>
+
+		<select>
+
+			<code>
+				<![CDATA[
+		$oView->tJoinVARmodelENDVAR=VARmodelENDVAR::getInstance()->getSelect();]]>
+			</code>
+		</select>
+
+		<uploadsave>
+
+			<code>
+				<![CDATA[
+		$tColumnUpload=#tColumnUpload#
+		if($tColumnUpload){
+			foreach($tColumnUpload as $sColumnUpload){
+				$oPluginUpload=new plugin_upload($sColumnUpload);
+				if($oPluginUpload->isValid()){
+					$sNewFileName=_root::getConfigVar('path.upload').$sColumnUpload.'_'.date('Ymdhis');
+
+					$oPluginUpload->saveAs($sNewFileName);
+					$#oExamplemodel#->$sColumnUpload=$oPluginUpload->getPath();
+				}
+			}
+		}
+			]]>
+			</code>
+		</uploadsave>
+
+	</snippets>
+
+	<path>
+		<directory>module/VARmoduleParentENDVAR/VARmoduleChildENDVAR/</directory>
+	</path>
+	<target>module/VARmoduleParentENDVAR/VARmoduleNameENDVAR/main.php</target>
+</main>

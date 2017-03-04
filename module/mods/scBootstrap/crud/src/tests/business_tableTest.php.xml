@@ -1,0 +1,36 @@
+<main>
+	<formules>
+		<formu type="loopWithKey" source="params" param="tColumn" keyField="key">
+			<action type="setVariable" name="sColumn" source="params" param="tColumn" useKey="$key" />
+
+			<action type="setVariable" name="sArray" source="snippet" param="arrayItem">
+				<pattern tag="VARcolumnENDVAR" value="$sColumn"/>
+			</action>
+
+
+			<action type="concatParam" name="businessArrayColumn" value="$sArray"/>
+		</formu>
+	</formules>
+
+	<snippets>
+
+		<arrayItem>
+			<code><![CDATA[	'VARcolumnENDVAR',]]></code>
+		</arrayItem>
+
+		<monSnippet>
+			<patterns>
+				<pattern>VARpatternENDVAR</pattern>
+
+			</patterns>
+			<code><![CDATA[
+				public function maFunction(){
+				//VARpatternENDVAR
+				}
+				]]></code>
+		</monSnippet>
+
+
+	</snippets>
+	<target>tests/unitaire/VARbusiness_tableENDVARTest.php</target>
+</main>

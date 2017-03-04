@@ -25,11 +25,11 @@ class abstract_moduleBuilder{
 	}
 	protected function projectSaveFile($sContent,$sFilename){
 		$oFile=new _file( _root::getConfigVar('path.generation')._root::getParam('id').'/'.$sFilename );
-		
+
 		if($oFile->exist()){
 		  return false;
 		}
-		
+
 		$oFile->setContent($sContent);
 		$oFile->save();
 		$oFile->chmod(0666);
@@ -48,5 +48,9 @@ class abstract_moduleBuilder{
 		return model_mkfbuilderprojet::getInstance()->copyFromTo($this->getSourceFilename($sFrom),$this->getProjectFilename($sTo));
 	}
 	//end tools
+
+	public function getListSource(){
+		return $this->tSource;
+	}
 
 }

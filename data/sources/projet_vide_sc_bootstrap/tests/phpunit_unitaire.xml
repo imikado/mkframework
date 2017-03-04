@@ -1,0 +1,20 @@
+<phpunit bootstrap="autoload_unitaire.php" colors="true">
+	<filter>
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">..</directory>
+			<exclude>
+				<directory suffix=".php">../plugin/</directory>
+				<directory suffix=".php">../data/</directory>
+			</exclude>
+		</whitelist>
+	</filter>
+	<testsuites>
+		<testsuite name="UnitaireSuite">
+			<directory suffix=".php">./unitaire/</directory>
+		</testsuite>
+	</testsuites>
+	<php>
+		<includePath></includePath>
+	</php>
+</phpunit>
+

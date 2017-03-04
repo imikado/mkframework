@@ -1,0 +1,37 @@
+<main>
+
+	<snippets>
+		<codetJoin>
+
+			<code>
+				<![CDATA[		$oView->tJoin#examplemodel#=#examplemodel#::getInstance()->getSelect();]]>
+			</code>
+		</codetJoin>
+
+		<uploadsave>
+
+			<code>
+				<![CDATA[
+		$tColumnUpload=#tColumnUpload#
+		if($tColumnUpload){
+			foreach($tColumnUpload as $sColumnUpload){
+				$oPluginUpload=new plugin_upload($sColumnUpload);
+				if($oPluginUpload->isValid()){
+					$sNewFileName=_root::getConfigVar('path.upload').$sColumnUpload.'_'.date('Ymdhis');
+
+					$oPluginUpload->saveAs($sNewFileName);
+					$#oExamplemodel#->$sColumnUpload=$oPluginUpload->getPath();
+				}
+			}
+		}
+			]]>
+			</code>
+		</uploadsave>
+
+	</snippets>
+
+	<path>
+		<directory>module/VARmoduleParentENDVAR/VARmoduleChildENDVAR/</directory>
+	</path>
+	<target>module/VARmoduleParentENDVAR/VARmoduleNameENDVAR/main.php</target>
+</main>

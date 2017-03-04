@@ -1,0 +1,326 @@
+<?xml version="1.0"?>
+<forms>
+	<step id="1" >
+
+		<form>
+			<row type="html">
+				<codes>
+					<code id="code1"><![CDATA[
+CREATE TABLE `Users` (
+`id` int(11) NOT NULL auto_increment,
+`login` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`groups_id` int(11) NOT NULL,
+PRIMARY KEY  (`id`)
+);
+
+CREATE TABLE `Groups` (
+`id` int(11) NOT NULL auto_increment,
+`name` varchar(50) NOT NULL,
+PRIMARY KEY  (`id`)
+);
+
+CREATE TABLE `Permissions` (
+`id` int(11) NOT NULL auto_increment,
+`items_id` int(11) NOT NULL,
+`actions_id` int(11) NOT NULL,
+`groups_id` int(11) NOT NULL,
+PRIMARY KEY  (`id`)
+);
+
+CREATE TABLE `Items` (
+`id` int(11) NOT NULL auto_increment,
+`name` varchar(50) NOT NULL,
+PRIMARY KEY  (`id`)
+);
+
+CREATE TABLE `Actions` (
+`id` int(11) NOT NULL auto_increment,
+`name` varchar(50) NOT NULL,
+PRIMARY KEY  (`id`)
+);
+					]]></code>
+				</codes>
+				<html><![CDATA[
+					<h2>TRPresentationENDTR</h2>
+					<p>TRvoilaSchemaDeNotreBaseENDTR</p>
+					<img src="site/css/images/rightsManagerMcd0.png">
+
+					<h2>TRcodesqlENDTR</h2>
+					#code1#
+					]]></html>
+			</row>
+
+
+
+		</form>
+
+
+	</step>
+
+	<step id="2" >
+		<form>
+			<row name="moduleParent" required="true">
+				<label>moduleParent</label>
+				<input type="input" value="private"/>
+			</row>
+
+			<row name="moduleAuth" required="true">
+				<label>moduleAuth</label>
+				<input type="input" value="auth"/>
+			</row>
+
+			<row name="moduleRightsManager" required="true">
+				<label>moduleRightsManager</label>
+				<input type="input" value="rightsManager"/>
+			</row>
+
+			<row name="profil" required="true">
+				<label>selectProfil</label>
+				<input type="selectAutomatic" source="profilList" />
+			</row>
+
+			<row name="model_rightManager" required="true">
+				<label>model_rightManager</label>
+				<input type="input" value="model_rightManager"/>
+			</row>
+		</form>
+	</step>
+
+	<step id="3" >
+		<form>
+
+
+			<row type="html">
+				<html><![CDATA[
+					<img src="site/css/images/rightsManagerMcd0.png">
+					<h2>TRUsersENDTR</h2>
+				]]></html>
+			</row>
+			<row name="tableUsers" required="true">
+				<label>selectTable</label>
+				<input type="selectAutomatic" source="tableList" param="$profil" />
+			</row>
+
+
+			<row type="html">
+				<html><![CDATA[
+					<h2>TRGroupsENDTR</h2>
+				]]></html>
+			</row>
+			<row name="tableGroups" required="true">
+				<label>selectTable</label>
+				<input type="selectAutomatic" source="tableList" param="$profil" />
+			</row>
+
+
+			<row type="html">
+				<html><![CDATA[
+					<h2>TRPermissionsENDTR</h2>
+				]]></html>
+			</row>
+			<row name="tablePermissions" required="true">
+				<label>selectTable</label>
+				<input type="selectAutomatic" source="tableList" param="$profil" />
+			</row>
+
+
+			<row type="html">
+				<html><![CDATA[
+					<h2>TRItemsENDTR</h2>
+				]]></html>
+			</row>
+			<row name="tableItems" required="true">
+				<label>selectTable</label>
+				<input type="selectAutomatic" source="tableList" param="$profil" />
+			</row>
+
+
+			<row type="html">
+				<html><![CDATA[
+					<h2>TRActionsENDTR</h2>
+				]]></html>
+			</row>
+			<row name="tableActions" required="true">
+				<label>selectTable</label>
+				<input type="selectAutomatic" source="tableList" param="$profil" />
+			</row>
+
+
+		</form>
+	</step>
+
+	<step id="4" >
+		<form>
+
+			<row type="html">
+				<html><![CDATA[
+					<img src="site/css/images/rightsManagerMcd0.png">
+					<h2>TRUsersENDTR</h2>
+				]]></html>
+			</row>
+			<row name="user_id" required="true">
+				<label>selectFieldId</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$tableUsers" />
+			</row>
+			<row name="user_login" required="true">
+				<label>selectFieldLogin</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$tableUsers" />
+			</row>
+			<row name="user_password" required="true">
+				<label>selectFieldPassword</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$tableUsers" />
+			</row>
+			<row name="user_fk_group_id" required="true">
+				<label>selectFieldFkGroupId</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$tableUsers" />
+			</row>
+
+
+			<row type="html">
+				<html><![CDATA[
+					<h2>TRGroupsENDTR</h2>
+				]]></html>
+			</row>
+			<row name="group_id" required="true">
+				<label>selectFieldId</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$tableGroups" />
+			</row>
+			<row name="group_name" required="true">
+				<label>selectFieldName</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$tableGroups" />
+			</row>
+
+
+			<row type="html">
+				<html><![CDATA[
+					<h2>TRPermissionsENDTR</h2>
+				]]></html>
+			</row>
+			<row name="permission_id" required="true">
+				<label>selectFieldId</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$tablePermissions" />
+			</row>
+			<row name="permission_fk_item_id" required="true">
+				<label>selectFieldFkItemId</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$tablePermissions" />
+			</row>
+			<row name="permission_fk_action_id" required="true">
+				<label>selectFieldFkActionId</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$tablePermissions" />
+			</row>
+			<row name="permission_fk_group_id" required="true">
+				<label>selectFieldFkGroupId</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$tablePermissions" />
+			</row>
+
+
+			<row type="html">
+				<html><![CDATA[
+					<h2>TRItemsENDTR</h2>
+				]]></html>
+			</row>
+			<row name="item_id" required="true">
+				<label>selectFieldId</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$tableItems" />
+			</row>
+			<row name="item_name" required="true">
+				<label>selectFieldName</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$tableItems" />
+			</row>
+
+
+			<row type="html">
+				<html><![CDATA[
+					<h2>TRActionsENDTR</h2>
+				]]></html>
+			</row>
+			<row name="action_id" required="true">
+				<label>selectFieldId</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$tableActions" />
+			</row>
+			<row name="action_name" required="true">
+				<label>selectFieldName</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$tableActions" />
+			</row>
+
+		</form>
+
+
+	</step>
+
+
+
+	<step id="5" >
+		<form>
+			<row name="moduleParentRedirect" required="true">
+				<label>moduleParentRedirect</label>
+				<input type="selectAutomatic" source="moduleParentList" />
+			</row>
+		</form>
+	</step>
+
+	<step id="6" >
+		<form>
+
+			<row>
+				<label>moduleParentRedirect</label>
+				<input type="read" value="$moduleParentRedirect" />
+			</row>
+			<row name="moduleChildRedirect" required="true">
+				<label>moduleChildRedirect</label>
+				<input type="selectAutomatic" source="moduleChildList" param="$moduleParentRedirect" />
+			</row>
+		</form>
+	</step>
+
+
+	<step id="7" >
+		<form>
+			<row>
+				<label>moduleParentRedirect</label>
+				<input type="read" value="$moduleParentRedirect" />
+			</row>
+			<row>
+				<label>moduleChildRedirect</label>
+				<input type="read" value="$moduleChildRedirect" />
+			</row>
+			<row name="actionChildRedirect">
+				<label>actionChildRedirect</label>
+				<input type="selectAutomatic" source="moduleActionList" param="$moduleRedirect" />
+			</row>
+		</form>
+
+		<page>
+
+
+			<codes>
+				<code id="code1"><![CDATA[
+[auth]
+enabled=1
+et
+module=VARmoduleParentENDVAR_VARmoduleAuthENDVAR::login
+]]></code>
+
+			</codes>
+
+			<html><![CDATA[
+
+
+
+				TRajoutezDansVotreFichierDeConfENDTR<br/>
+
+				#code1#
+
+				TRvousPouvezAccederAuModuleENDTR
+
+			]]></html>
+
+
+		</page>
+	</step>
+
+
+
+
+</forms>

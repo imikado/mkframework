@@ -1,0 +1,46 @@
+<main>
+	<formules>
+		<formu type="loopWithKey" source="params" param="tColumn" keyField="key">
+			<action type="setVariable" name="sColumn" source="params" param="tColumn" useKey="$key" />
+			<action type="setVariable" name="sLabelFr" source="params" param="tLabelFr" useKey="$key" />
+			<action type="setVariable" name="sLabelEn" source="params" param="tLabelEn" useKey="$key" />
+
+
+			<action type="setVariable" name="sLignetd" source="snippet" param="lignetd">
+				<pattern tag="VARcolumnENDVAR" value="$sColumn"/>
+				<pattern tag="VARlabelENDVAR" value="$sLabelEn"/>
+
+			</action>
+
+			<action type="concatParam" name="translation" value="$sLignetd"/>
+
+
+
+
+		</formu>
+	</formules>
+
+	<snippets>
+		<lignetd>
+
+			<code><![CDATA[
+'field.VARcolumnENDVAR'=>'VARlabelENDVAR',
+		]]></code>
+		</lignetd>
+
+		<input>
+
+
+			<code><![CDATA[<?php echo $this->VARoTableENDVAR->VARcolumnENDVAR ?>]]></code>
+		</input>
+
+
+
+
+	</snippets>
+
+	<path>
+		<directory>module/VARmoduleParentENDVAR/VARmoduleNameENDVAR/i18n/</directory>
+	</path>
+	<target>module/VARmoduleParentENDVAR/VARmoduleNameENDVAR/i18n/en.php</target>
+</main>

@@ -1,0 +1,65 @@
+<main>
+
+	<formules>
+		<formu type="loopWithKey" source="params" param="tColumn" keyField="key">
+			<action type="setVariable" name="sColumn" source="params" param="tColumn" useKey="$key" />
+			<action type="setVariable" name="sLabel" source="params" param="tLabelFr" useKey="$key" />
+			<action type="setVariable" name="sType" source="params" param="tType" useKey="$key" />
+
+			<action type="setVariable" name="sInput" source="snippet" param="$sType">
+				<pattern tag="VARcolumnENDVAR" value="$sColumn"/>
+			</action>
+
+			<action type="setVariable" name="sLignetd" source="snippet" param="lignetd">
+				<pattern tag="VARcolumnENDVAR" value="$sColumn"/>
+				<pattern tag="VARinputENDVAR" value="$sInput"/>
+
+			</action>
+
+			<action type="concatParam" name="fields" value="$sLignetd"/>
+
+		</formu>
+	</formules>
+
+	<snippets>
+		<lignetd>
+
+			<code><![CDATA[
+	<div class="form-group">
+		<label class="col-sm-2 control-label"><?php echo tr('field.VARcolumnENDVAR')?></label>
+		<div class="col-sm-10">VARinputENDVAR</div>
+	</div>
+		]]></code>
+		</lignetd>
+
+		<input>
+
+
+			<code><![CDATA[<?php echo $this->VARoTableENDVAR->VARcolumnENDVAR ?>]]></code>
+		</input>
+
+		<textarea>
+
+
+			<code><![CDATA[<?php echo $this->VARoTableENDVAR->VARcolumnENDVAR ?>]]></code>
+		</textarea>
+
+		<select>
+
+
+			<code><![CDATA[<?php if(isset($this->tJoin#examplemodel#[$this->#oExamplemodel#->#examplecolumn#])){ echo $this->tJoin#examplemodel#[$this->#oExamplemodel#->#examplecolumn#];}else{ echo $this->#oExamplemodel#->#examplecolumn# ;}?>]]></code>
+		</select>
+
+		<upload>
+
+
+			<code><![CDATA[<?php echo $this->VARoTableENDVAR->VARcolumnENDVAR ?>]]></code>
+		</upload>
+
+
+	</snippets>
+	<path>
+		<directory>module/VARmoduleParentENDVAR/VARmoduleChildENDVAR/view</directory>
+	</path>
+	<target>module/VARmoduleParentENDVAR/VARmoduleNameENDVAR/view/show.php</target>
+</main>

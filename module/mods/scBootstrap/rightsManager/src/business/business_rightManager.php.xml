@@ -1,0 +1,19 @@
+<main>
+
+	<snippets>
+		<monSnippet>
+			<patterns>
+				<pattern>VARpatternENDVAR</pattern>
+
+			</patterns>
+			<code><![CDATA[
+				public function maFunction(){
+				//VARpatternENDVAR
+				}
+				]]></code>
+		</monSnippet>
+
+
+	</snippets>
+	<target>business/business_VARmoduleRightsManagerENDVAR.php</target>
+</main>

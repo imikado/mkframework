@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<forms>
+	<step id="1" >
+
+		<form>
+
+			<row name="moduleParent" required="true">
+				<label>moduleParent</label>
+				<input type="input" value="private"/>
+			</row>
+
+			<row name="moduleName" required="true">
+				<label>moduleName</label>
+				<input type="input" value="auth"/>
+			</row>
+
+		</form>
+
+	</step>
+
+	<step id="2" >
+		<form>
+			<row name="profil" required="true">
+				<label>selectProfil</label>
+				<input type="selectAutomatic" source="profilList" />
+			</row>
+		</form>
+	</step>
+
+	<step id="3" >
+		<form>
+			<row name="table" required="true">
+				<label>selectTable</label>
+				<input type="selectAutomatic" source="tableList" param="$profil" />
+			</row>
+		</form>
+	</step>
+
+	<step id="4" >
+		<form>
+			<row name="idField" required="true">
+				<label>selectFieldId</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$table" />
+			</row>
+			<row name="loginField" required="true">
+				<label>selectFieldLogin</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$table" />
+			</row>
+			<row name="passwordField" required="true">
+				<label>selectFieldPassword</label>
+				<input type="selectAutomatic" source="tableFieldList" param="$profil" param2="$table" />
+			</row>
+		</form>
+
+
+	</step>
+
+
+
+	<step id="5" >
+		<form>
+			<row name="moduleParentRedirect" required="true">
+				<label>moduleParentRedirect</label>
+				<input type="selectAutomatic" source="moduleParentList" />
+			</row>
+		</form>
+	</step>
+
+	<step id="6" >
+		<form>
+
+			<row>
+				<label>moduleParentRedirect</label>
+				<input type="read" value="$moduleParentRedirect" />
+			</row>
+			<row name="moduleChildRedirect" required="true">
+				<label>moduleChildRedirect</label>
+				<input type="selectAutomatic" source="moduleChildList" param="$moduleParentRedirect" />
+			</row>
+		</form>
+	</step>
+
+
+	<step id="7" >
+		<form>
+			<row>
+				<label>moduleParentRedirect</label>
+				<input type="read" value="$moduleParentRedirect" />
+			</row>
+			<row>
+				<label>moduleChildRedirect</label>
+				<input type="read" value="$moduleChildRedirect" />
+			</row>
+			<row name="actionChildRedirect">
+				<label>actionChildRedirect</label>
+				<input type="selectAutomatic" source="moduleActionList" param="$moduleRedirect" />
+			</row>
+		</form>
+
+		<page>
+
+
+			<codes>
+				<code id="code1"><![CDATA[
+[auth]
+enabled=1
+et
+module=VARmoduleParentENDVAR_VARmoduleChildENDVAR::login
+]]></code>
+
+			</codes>
+
+			<html><![CDATA[
+
+
+
+				TRajoutezDansVotreFichierDeConfENDTR<br/>
+
+				#code1#
+
+				TRvousPouvezAccederAuModuleENDTR
+
+
+			]]></html>
+
+
+		</page>
+	</step>
+
+
+
+
+</forms>

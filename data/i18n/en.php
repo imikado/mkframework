@@ -16,6 +16,10 @@ _root::setConfigVar('tLangue', array(
     'builder::new_applicationVide' => 'Empty application',
     'builder::new_applicationAvecExemples' => 'Application with Examples*',
     'builder::new_applicationComptBootstrap' => 'Application bootstrap compatible**',
+      'builder::new_application_groupPublic' => 'Simples applications',
+    'builder::new_application_groupSC' => 'Software Craftsmanship',
+    'builder::new_application_groupSCDesc' => 'This templates, folow mind "software craftsmanship", they are more complex ( <a href="http://mkframework.com/scraftsmanship.html">more information</a>)',
+
     'builder::new_applicationAvecExemplesAsterisk' => '* If this cas is checked:
 during the generation, examples modules will be added to your project.',
     'builder::new_applicationComptBootstrapAsterisk' => '** If this cas is checked:

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<forms>
+
+	<step id="1">
+		<form>
+			<row name="moduleParent" required="true">
+				<label>moduleParent</label>
+				<input type="input" value=""/>
+			</row>
+
+		</form>
+	</step>
+
+
+</forms>

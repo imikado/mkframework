@@ -1,0 +1,55 @@
+<?php plugin_i18n::add(array(
+
+'selectionnerLeProfilAutiliser'=>'Select profile to use',
+'disponibleDansFichierConnexion'=>'(available in file conf/connexion.ini.php of your project)',
+'laMethodeGetselectPermetDe'=>'* getSelect() method return an indexed arry used in dropdown list and list array.',
+'siUneClasseModeleExiste'=>'* If a model class still exist, you need to delete it to generate',
+'table'=>'Table',
+'clePrimaire'=>'Primary key',
+'ajouterUneMethodeGetselect'=>'Add a getSelect() method*',
+'contraintes'=>'Constraints',
+'laClasseModelExisteDeja'=>'The "model_%s.php" class still exist*',
+'retourneUnTableauAvec'=>'Return an array with',
+'commeCle'=>'as key',
+'commeValeur'=>'as value',
+'regle'=>'rule',
+'et'=>'and',
+'afficher'=>'Display',
+'effacer'=>'Clear',
+'CreationDuFichierVAR'=>'Create file #FICHIER#',
+'coucheModeleGenereAvecSucces'=>'Model layer generated with success',
+'leChamp'=>'Field',
+
+'utiliserOnDuplicateKeyMysql'=>'Use "ON DUPLICATE KEY" (only with mysql)',
+'aucuneTable'=>'No table/collection',
+'toutDeselectionner'=>'(de)select all',
+'generer'=>'Generate',
+
+'nomDeLaCollection'=>'Collection name',
+'ajouter'=>'Add',
+'masquer'=>'Hide',
+'confirmezvousEffacerLesContraintes'=>'Do you confirm to clear class constraints ?',
+
+'nestpasvide'=>'Is not empty',
+'leChampNeDoitPasetreVide'=>'This field should not be empty',
+'estvide'=>'Is empty',
+'leChampDoitetreVide'=>'This field should be empty',
+
+'estEgalA'=>'Is equal to',
+'leChampNeDoitPasEtreEgalA'=>'This field should not be equal to',
+'nestPasEgalA'=>'Is not equal to',
+'leChampNeDoitPasEtreEgalA'=>'This field should be equal to',
+
+'estSuperieurA'=>'Is upper than',
+'leChampNestPasSuperieurA'=>'This field is not upper than',
+'estInferieurA'=>'Is lower than',
+'leChampNestPasInferieurA'=>'This field is not lower than',
+
+'estUnEmailValide'=>'Is a valid email',
+'leChampNestPasUnEmailValide'=>'This field is not a valid email',
+
+'respecteLePattern'=>'Match pattern',
+'leChampNeRespectePasLePattern'=>'This field does not match pattern',
+'neRespecteLePattern'=>'Dont match pattern',
+'leChampNeDoitPasRespecterCePattern'=>'This field shoud not match pattern',
+));

@@ -1,0 +1,28 @@
+<main>
+	<patterns>
+		<pattern>#maTable#</pattern>
+		
+		<pattern>#sSnippet#</pattern>
+		<pattern>#example#</pattern>
+
+	</patterns>
+	<snippets>
+		<monSnippet>
+			<patterns>
+				<pattern>#maVar#</pattern>
+		
+			</patterns>
+			<code><![CDATA[
+	public function maFunction(){
+		//#maVar#
+	}
+			]]></code>
+		</monSnippet>
+
+	
+	</snippets>
+	<path>
+		<directory>module/#examplemodule#</directory>
+	</path>
+	<target>repertoire/model_#maTable#.php</target>
+</main>

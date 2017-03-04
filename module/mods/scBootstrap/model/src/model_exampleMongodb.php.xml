@@ -1,0 +1,53 @@
+<main>
+	<patterns>
+		<pattern>#maTable#</pattern>
+		<pattern>#maTable_id#</pattern>
+		<pattern>#maConfig#</pattern>
+
+		<pattern>#modelMethods#</pattern>
+		<pattern>#modelSaveDuplicateKey#</pattern>
+
+		<pattern>#rowCallSave#</pattern>
+	</patterns>
+	<snippets>
+		<methodGetSelect>
+			<patterns>
+				<pattern>#key#</pattern>
+				<pattern>#val#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function getSelect(){
+		$tab=$this->findAll();
+		$tSelect=array();
+		if($tab){
+		foreach($tab as $oRow){
+			$tSelect[ $oRow->#key# ]=$oRow->#val#;
+		}
+		}
+		return $tSelect;
+	}
+			]]></code>
+		</methodGetSelect>
+
+		<methodSave>
+			<patterns>
+				<pattern>#oData#</pattern>
+				<pattern>#implodetFieldSql#</pattern>
+				<pattern>#implodetSqlUpdate#</pattern>
+				<pattern>#implodetParam#</pattern>
+			</patterns>
+			<code><![CDATA[
+	public function save(#oData#){
+			$this->execute('INSERT INTO '.$this->sTable.'
+				(#implodetFieldSql#)
+				VALUES (#implodetSqlInsert#)
+				ON DUPLICATE KEY
+					UPDATE #implodetSqlUpdate#  ',
+			array(#implodetParam#));
+	}
+			]]></code>
+		</methodSave>
+
+	</snippets>
+	<target>model/model_#maTable#.php</target>
+</main>

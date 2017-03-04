@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<forms>
+
+	<step id="1">
+		<form>
+			<row name="moduleParent" required="true">
+				<label>selectModuleParent</label>
+				<input type="selectAutomatic" value="" source="moduleParentList"/>
+			</row>
+
+			<row name="moduleChild" required="true">
+				<label>moduleName</label>
+				<input type="input" value="$moduleNameDeducted"/>
+			</row>
+
+		</form>
+	</step>
+
+	<step id="2">
+		<form>
+			<row name="actions" required="true">
+				<label>actions</label>
+				<input type="multiInput" value="" />
+			</row>
+
+
+		</form>
+	</step>
+
+
+
+
+
+</forms>

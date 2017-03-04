@@ -1,0 +1,22 @@
+<main>
+
+	<snippets>
+		<monSnippet>
+			<patterns>
+				<pattern>VARpatternENDVAR</pattern>
+
+			</patterns>
+			<code><![CDATA[
+	public function maFunction(){
+		//VARpatternENDVAR
+	}
+			]]></code>
+		</monSnippet>
+
+
+	</snippets>
+	<path>
+		<directory>module/VARmoduleParentENDVAR/VARmoduleChildENDVAR/view/</directory>
+	</path>
+	<target>module/VARmoduleParentENDVAR/VARmoduleChildENDVAR/view/inscription.php</target>
+</main>

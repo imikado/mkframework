@@ -1,0 +1,19 @@
+<main>
+	 
+	<snippets>
+		<monSnippet>
+			<patterns>
+				<pattern>VARpatternENDVAR</pattern>
+
+			</patterns>
+			<code><![CDATA[
+				public function maFunction(){
+				//VARpatternENDVAR
+				}
+				]]></code>
+		</monSnippet>
+
+
+	</snippets>
+	<target>tests/unitaire/business_VARmoduleChildENDVARTest.php</target>
+</main>

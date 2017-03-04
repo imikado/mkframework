@@ -16,6 +16,10 @@ _root::setConfigVar('tLangue', array(
     'builder::new_applicationVide' => 'Application vide',
     'builder::new_applicationAvecExemples' => 'Application avec Exemples*',
     'builder::new_applicationComptBootstrap' => 'Application compatible bootstrap**',
+    'builder::new_applicationProCompBootstrap' => 'Application compatible bootstrap**',
+    'builder::new_application_groupPublic' => 'Applications normales',
+    'builder::new_application_groupSC' => 'Software Craftsmanship',
+    'builder::new_application_groupSCDesc' => 'Ces templates, inspir&eacute;s de ce mouvement "artisanat logiciel" sont plus "complexe" ( <a href="http://mkframework.com/scraftsmanship.html">en savoir plus</a>)',
     'builder::new_applicationAvecExemplesAsterisk' => '* Si cette case est coch&eacute;e:
 au moment de la g&eacute;n&eacute;ration de votre nouvelle application, des modules de bases ainsi que des classes exemples seront g&eacute;n&eacute;r&eacute;es.',
     'builder::new_applicationComptBootstrapAsterisk' => '** Si cette case est coch&eacute;e:

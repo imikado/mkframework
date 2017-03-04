@@ -1,0 +1,8 @@
+<main>
+
+	<snippets></snippets>
+	<path>
+		<directory>module/VARmoduleParentENDVAR/VARmoduleChildENDVAR/view</directory>
+	</path>
+	<target>module/VARmoduleParentENDVAR/VARmoduleChildENDVAR/view/VARviewENDVAR.php</target>
+</main>

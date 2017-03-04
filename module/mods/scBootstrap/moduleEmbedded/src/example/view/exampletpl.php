@@ -1,0 +1,1 @@
+View module/VARmoduleParentENDVAR/VARmoduleChildENDVAR/view/VARviewENDVAR.php

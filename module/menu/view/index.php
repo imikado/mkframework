@@ -8,4 +8,6 @@
 			<li><a href="<?php echo $this->getLink($sLink) ?>"><?php echo $sLibelle ?></a></li>
 		<?php endif; ?>
 	<?php endforeach; ?>
+
+	<li><a target="_blank" href="http://mkframework.com">MkFramework.com</a></li>
 </ul>

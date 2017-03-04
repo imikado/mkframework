@@ -68,11 +68,12 @@ class module_builder extends abstract_module {
 		if (_root::getRequest()->isPost()) {
 
 			$sProject = _root::getParam('projet');
+			$sOpt = _root::getParam('opt');
 
-			if(isset($_POST['opt']) and $_POST['opt']== 'withexamples') {
+			if ($sOpt == 'withexamples') {
 				model_mkfbuilderprojet::getInstance()->create(_root::getParam('projet'));
 				self::getTools()->updateLayoutTitle(_root::getParam('projet'));
-			} else if (isset($_POST['opt']) and $_POST['opt'] == 'withBootstrap') {
+			} else if ($sOpt == 'withBootstrap') {
 				model_mkfbuilderprojet::getInstance()->createEmpty($sProject);
 
 				//copy bootstrap
@@ -83,6 +84,8 @@ class module_builder extends abstract_module {
 
 				//update layout
 				self::getTools()->updateFile(_root::getParam('projet'), array('template1' => 'bootstrap'), 'module/default/main.php');
+			} else if ($sOpt == 'scWithBootstrap') {
+				model_mkfbuilderprojet::getInstance()->createScWithBootstrap($sProject);
 			} else {
 				model_mkfbuilderprojet::getInstance()->createEmpty(_root::getParam('projet'));
 				self::getTools()->updateLayoutTitle(_root::getParam('projet'));
@@ -147,7 +150,7 @@ class module_builder extends abstract_module {
 			$this->updateLibPathInConf($sTo, $sLib);
 
 			$detail = 'Projet cr&eacute;e dans ' . $sTo;
-			$detail.='<br/>Dans votre projet, la librairie du framework pointe sur ' . $sLib;
+			$detail .= '<br/>Dans votre projet, la librairie du framework pointe sur ' . $sLib;
 
 			return array('ok' => 'Projet bien export&eacute; sur ' . $sTo, 'detail' => $detail);
 		} else if (_root::getParam('lib') == 'copy') {
@@ -162,7 +165,7 @@ class module_builder extends abstract_module {
 			$this->updateLibPathInConf($sTo, $sLib);
 
 			$detail = 'Projet cr&eacute;e dans ' . $sTo;
-			$detail.='<br/>Dans votre projet, la librairie du framework a ete copie dans ' . $sLib;
+			$detail .= '<br/>Dans votre projet, la librairie du framework a ete copie dans ' . $sLib;
 
 			return array('ok' => 'Projet bien export&eacute; sur ' . $sTo, 'detail' => $detail);
 		}
@@ -239,10 +242,10 @@ class module_builder extends abstract_module {
 			$ret = "\n";
 
 			$sContent = null;
-			$sContent.='[language]' . $ret;
-			$sContent.=';fr / en...' . $ret;
-			$sContent.='default=' . $sLang . $ret;
-			$sContent.='allow=fr,en' . $ret;
+			$sContent .= '[language]' . $ret;
+			$sContent .= ';fr / en...' . $ret;
+			$sContent .= 'default=' . $sLang . $ret;
+			$sContent .= 'allow=fr,en' . $ret;
 
 			//check writable
 			$iswritable = is_writable(_root::getConfigVar('path.conf') . 'language.ini.php');

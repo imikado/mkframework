@@ -1,0 +1,13 @@
+<main>
+	<patterns>		
+		<pattern>foo</pattern>
+	</patterns>
+	<snippets>
+
+	
+	</snippets>
+	<path>
+		<directory>tests</directory>
+	</path>
+	<target>tests/bootstrap.php</target>
+</main>

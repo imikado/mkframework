@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<forms>
+
+	<step id="1">
+		<form>
+			<row name="model" required="true">
+				<label>selectModel</label>
+				<input type="selectAutomatic" source="modelList"/>
+			</row>
+		</form>
+
+
+	</step>
+
+	<step id="2">
+
+		<form>
+			<row name="moduleParent" required="true">
+				<label>selectModuleParent</label>
+				<input type="selectAutomatic" value="" source="moduleParentList"/>
+			</row>
+
+			<row name="moduleName" required="true">
+				<label>moduleName</label>
+				<input type="input" value="$moduleNameDeducted"/>
+			</row>
+
+		</form>
+
+		<page>
+			<codes>
+				<code id="code1"><![CDATA[
+<?php
+class VARmodel_tableENDVAR extends abstract_model implements VARinterfaceModelENDVAR{
+					]]></code>
+			</codes>
+			<html><![CDATA[
+				TRajoutezUneInterfaceAvotreClasseENDTR<br/>
+
+				TRediterENDTR <a target="_blank" href="index.php?:nav=code::index&project=VARprojectENDVAR&file=model/VARmodelENDVAR">VARmodelENDVAR</a>
+
+
+				#code1#
+			]]></html>
+		</page>
+
+	</step>
+
+	<step id="3">
+		<form>
+
+			<row name="keyField" required="true">
+				<label>selectKeyField</label>
+				<input type="selectAutomatic" value="" source="modelFieldList" param="$model"/>
+			</row>
+
+			<row type="loop" source="modelFieldList" param="$model" keyVar="i" valueVar="columnCurrent">
+				<col name="tColumn">
+					<label>column</label>
+					<input type="input" value="$columnCurrent"/>
+				</col>
+
+				<col name="tType">
+					<label>type</label>
+					<input type="select">
+						<option value="input">text</option>
+						<option value="textarea">textarea</option>
+
+					</input>
+				</col>
+
+				<col name="tLabelFr">
+					<label>labelFr</label>
+					<input type="input" value="$columnCurrent"/>
+				</col>
+
+				<col name="tLabelEn">
+					<label>labelEn</label>
+					<input type="input" value="$columnCurrent"/>
+				</col>
+
+			</row>
+
+		</form>
+
+
+		<page>
+			<codes>
+				<code id="code1"><![CDATA[
+
+
+<?php
+//instancier le module
+$oModuleVARmoduleParentENDVAR_VARmoduleChildENDVAR = new module_VARmoduleParentENDVAR_VARmoduleChildENDVAR();
+
+//si vous souhaitez indiquer au module integrable des informations sur le module parent
+//$oModuleVARmoduleParentENDVAR_VARmoduleChildENDVAR->setRootLink('module::action',array('parametre'=>_root::getParam('parametre')) );
+
+//recupere la vue du module
+$oView=$oModuleVARmoduleParentENDVAR_VARmoduleChildENDVAR->_index();
+
+//assigner la vue retournee a votre layout
+$this->oLayout->add('main',$oView);
+
+
+					]]></code>
+
+			</codes>
+			<html><![CDATA[
+TRpourlutiliserENDTR<br/>
+
+#code1#
+
+			]]></html>
+
+		</page>
+
+
+	</step>
+
+</forms>

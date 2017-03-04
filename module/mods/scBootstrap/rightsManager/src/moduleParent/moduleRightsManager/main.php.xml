@@ -1,0 +1,22 @@
+<main>
+
+	<snippets>
+		<monSnippet>
+			<patterns>
+				<pattern>#maVar#</pattern>
+
+			</patterns>
+			<code><![CDATA[
+	public function maFunction(){
+		//#maVar#
+	}
+			]]></code>
+		</monSnippet>
+
+
+	</snippets>
+	<path>
+		<directory>module/VARmoduleParentENDVAR/VARmoduleRightsManagerENDVAR/</directory>
+	</path>
+	<target>module/VARmoduleParentENDVAR/VARmoduleRightsManagerENDVAR/main.php</target>
+</main>

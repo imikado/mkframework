@@ -1,0 +1,85 @@
+<main>
+	<formules>
+		<formu type="loopWithKey" source="params" param="tColumn" keyField="key">
+			<action type="setVariable" name="sColumn" source="params" param="tColumn" useKey="$key" />
+			<action type="setVariable" name="sLabel" source="params" param="tLabelFr" useKey="$key" />
+			<action type="setVariable" name="sTypeRaw" source="params" param="tType" useKey="$key" />
+
+			<action type="splitVariable" source="$sTypeRaw" pattern=".">
+				<var name="sType"></var>
+				<var name="sModelJoin"></var>
+			</action>
+
+			<action type="setVariable" name="sLigneth" source="snippet" param="ligneth">
+				<pattern tag="VARcolumnENDVAR" value="$sColumn"/>
+			</action>
+
+			<action type="concatParam" name="listTh" value="$sLigneth"/>
+
+			<action type="setVariable" name="sInput" source="snippet" param="$sType">
+				<pattern tag="VARcolumnENDVAR" value="$sColumn"/>
+				<pattern tag="VARmodelENDVAR" value="$sModelJoin"/>
+			</action>
+
+			<action type="setVariable" name="sLignetd" source="snippet" param="lignetd">
+				<pattern tag="VARcolumnENDVAR" value="$sColumn"/>
+				<pattern tag="VARinputENDVAR" value="$sInput"/>
+			</action>
+
+			<action type="concatParam" name="listTd" value="$sLignetd"/>
+		</formu>
+	</formules>
+
+	<snippets>
+		<lignetd>
+
+			<code><![CDATA[
+		<td>VARinputENDVAR</td>
+		]]></code>
+		</lignetd>
+
+		<ligneth>
+
+			<code><![CDATA[
+		<th><?php echo tr('field.VARcolumnENDVAR')?></th>
+		]]></code>
+		</ligneth>
+
+
+
+		<input>
+
+
+			<code><![CDATA[<?php echo $VARoTableENDVAR->VARcolumnENDVAR ?>]]></code>
+		</input>
+
+		<textarea>
+
+
+			<code><![CDATA[<?php echo $VARoTableENDVAR->VARcolumnENDVAR ?>]]></code>
+		</textarea>
+
+		<select>
+
+
+			<code><![CDATA[<?php if(isset($this->tJoinVARmodelENDVAR[ $VARoTableENDVAR->VARcolumnENDVAR ])){ echo $this->tJoinVARmodelENDVAR[ $VARoTableENDVAR->VARcolumnENDVAR ];}else{ echo $VARoTableENDVAR->VARcolumnENDVAR ;}?>]]></code>
+		</select>
+
+		<upload>
+
+
+			<code><![CDATA[<?php echo $#oExamplemodel#->#examplecolumn# ?>]]></code>
+		</upload>
+
+
+
+
+
+
+
+	</snippets>
+	<path>
+		<directory>module/VARmoduleParentENDVAR/VARmoduleChildENDVAR/view</directory>
+	</path>
+	<target>module/VARmoduleParentENDVAR/VARmoduleNameENDVAR/view/list.php</target>
+</main>

@@ -1,0 +1,36 @@
+<main>
+
+	<formules>
+		<formu type="loopWithKey" source="params" param="actions" keyField="key">
+			<action type="setVariable" name="action" source="params" param="actions" useKey="$key" />
+
+			<action type="setVariable" name="listAction" source="snippet" param="methodAction">
+				<pattern tag="VARactionENDVAR" value="$action"/>
+			</action>
+
+
+
+			<action type="concatParam" name="fields" value="$listAction"/>
+
+		</formu>
+	</formules>
+
+	<snippets>
+		<methodAction>
+
+			<code><![CDATA[
+	public function _VARactionENDVAR(){
+
+		$oView=$this->getView('VARactionENDVAR');
+
+		$this->oLayout->add('main',$oView);
+	}
+			]]></code>
+		</methodAction>
+
+	</snippets>
+	<path>
+		<directory>module/VARmoduleParentENDVAR/VARmoduleChildENDVAR/</directory>
+	</path>
+	<target>module/VARmoduleParentENDVAR/VARmoduleChildENDVAR/main.php</target>
+</main>

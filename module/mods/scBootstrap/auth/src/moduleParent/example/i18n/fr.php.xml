@@ -1,0 +1,8 @@
+<main>
+
+
+	<path>
+		<directory>module/VARmoduleParentENDVAR/VARmoduleChildENDVAR/i18n/</directory>
+	</path>
+	<target>module/VARmoduleParentENDVAR/VARmoduleChildENDVAR/i18n/fr.php</target>
+</main>
