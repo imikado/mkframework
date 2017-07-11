@@ -13,18 +13,18 @@ class module_account extends abstract_module{
 		$this->oLayout->addModule('menu','menu::index');
 	}
 	
-	public function getList(){
-		$oAccountModel=new model_account;
-		$tAccount=$oAccountModel->findAll();
-		
-		$oView=new _view('account::list');
-		$oView->tAccount=$tAccount;
-		$oView->tColumn=$oAccountModel->getListColumn();//array('id','titre');//
-		
-		
-		
-		return $oView;
-	}
+public function getList(){
+$oAccountModel=new model_account;
+$tAccount=$oAccountModel->findAll();
+
+$oView=new _view('account::list');
+$oView->tAccount=$tAccount;
+$oView->tColumn=$oAccountModel->getListColumn();//array('id','titre');//
+
+
+
+return $oView;  
+}
 	
 	public function _index(){
 	    //on considere que la page par defaut est la page de listage

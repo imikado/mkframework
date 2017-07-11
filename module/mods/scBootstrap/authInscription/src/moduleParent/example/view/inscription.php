@@ -1,4 +1,4 @@
-<h1><?php echo tr('pageDinscription') ?></h1>
+<h2><?php echo tr('pageDinscription') ?></h2>
 <?php
 $oForm = new plugin_sc_form($this->oUser);
 $oForm->setMessage($this->tMessage);
@@ -20,7 +20,7 @@ $oForm->setMessage($this->tMessage);
 	</p>
 
 
-	<p><input type="submit" value="<?php echo tr('creerCompte') ?>" /> <a href="<?php echo _root::getLink('VARmoduleParentENDVAR_VARmoduleChildENDVAR::login') ?>"><?php echo tr('pageDeLogin') ?></a> </p>
+	<p><input class="btn" type="submit" value="<?php echo tr('creerCompte') ?>" /> <a href="<?php echo _root::getLink('VARmoduleParentENDVAR_VARmoduleChildENDVAR::login') ?>"><?php echo tr('pageDeLogin') ?></a> </p>
 
 
 	<?php if ($this->tMessage and isset($this->tMessage['success'])): ?>

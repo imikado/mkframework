@@ -390,6 +390,113 @@ class module_builderForm {
 		return array('status' => true, 'data' => $sData);
 	}
 
+	//---algo
+	private function algo_setVariable($oSourceMain_,$oObject_,$tParam_,$tVar_,$tConcatVar_){
+		if (isset($oObject_['source']) and (string) $oObject_['source'] == 'params' and isset($oObject_['useKey'])) {
+			$tVar_[(string) $oObject_['name']] = $tParam_[(string) $oObject_['param']][$this->getVarInTab($tVar_, (string) $oObject_['useKey'])];
+		}else if (isset($oObject_['source']) and (string) $oObject_['source'] == 'variables' and isset($oObject_['useKey'])) {
+			$tVar_[(string) $oObject_['name']] = $tVar_[(string) $oObject_['param']][$this->getVarInTab($tVar_, (string) $oObject_['useKey'])];
+		} else if ((string) $oObject_['source'] == 'snippet') {
+
+			$sSnippet = $this->getVarInTab($tVar_, (string) $oObject_['param']);
+			$tReplace = array();
+			if (isset($oObject_->pattern)) {
+				foreach ($oObject_->pattern as $oPattern) {
+					$tReplace[(string) $oPattern['tag']] = $this->getVarInTab($tVar_, (string) $oPattern['value']);
+				}
+			}
+			$tVar_[(string) $oObject_['name']] = $oSourceMain_->getSnippet($sSnippet, $tReplace);
+		}
+
+		return array($tParam_,$tVar_,$tConcatVar_);
+	}
+	public function algo_splitVariable($oSourceMain_,$oObject_,$tParam_,$tVar_,$tConcatVar_){
+
+		/* <action type="splitVariable" source="$sTypeRaw" pattern=".">
+		  <var name="sType"></var>
+		  <var name="sModel"></var>
+		  </action> */
+
+		$sSourceTmp = $this->getVarInTab($tVar_, (string) $oObject_['source']);
+
+		$tVarTmp = explode((string) $oObject_['pattern'], $sSourceTmp);
+		if (false == is_array($tVarTmp)) {
+			$tVarTmp = array($tVarTmp);
+		}
+
+		if(isset($oObject_['arrayVar'])){
+			$tVar_[(string) $oObject_['arrayVar'] ] = $tVarTmp;
+		}
+
+		if($oObject_->var){
+			$i = 0;
+			foreach ($oObject_->var as $oVar) {
+
+
+				$tVar_[(string) $oVar['name']] = null;
+				if (isset($tVarTmp[$i])) {
+					$tVar_[(string) $oVar['name']] = $tVarTmp[$i];
+				}
+				$i++;
+			}
+		}
+
+		return array($tParam_,$tVar_,$tConcatVar_);
+	}
+	private function algo_concatParam($oSourceMain_,$oObject_,$tParam_,$tVar_,$tConcatVar_){
+		if (!isset($tParam_[(string) $oObject_['name']])) {
+			$tParam_[(string) $oObject_['name']] = null;
+		}
+
+		$tConcatVar_[] = (string) $oObject_['name'];
+
+		$tParam_[(string) $oObject_['name']] .= $this->getVarInTab($tVar_, (string) $oObject_['value']);
+
+		return array($tParam_,$tVar_,$tConcatVar_);
+	}
+
+	private function algo_concatVar($oSourceMain_,$oObject_,$tParam_,$tVar_,$tConcatVar_){
+		if (!isset($tVar_[(string) $oObject_['name']])) {
+			$tVar_[(string) $oObject_['name']] = null;
+		}
+
+		$tVar_[(string) $oObject_['name']] .= $this->getVarInTab($tVar_, (string) $oObject_['value']);
+
+		return array($tParam_,$tVar_,$tConcatVar_);
+	}
+
+	private function algo_resetVar($oSourceMain_,$oObject_,$tParam_,$tVar_,$tConcatVar_){
+		$tVar_[(string) $oObject_['name']]=null;
+
+		return array($tParam_,$tVar_,$tConcatVar_);
+	}
+
+	private function algo_resetParam($oSourceMain_,$oObject_,$tParam_,$tVar_,$tConcatVar_){
+		$tParam_[(string) $oObject_['name']]=null;
+
+		return array($tParam_,$tVar_,$tConcatVar_);
+	}
+
+	public function algo_process($sType_,$oSourceMain_,$oObject_,$tParam_,$tVar_,$tConcatVar_){
+		if($sType_=='setVariable'){
+			return $this->algo_setVariable($oSourceMain_,$oObject_,$tParam_,$tVar_,$tConcatVar_);
+		}else if($sType_=='splitVariable'){
+			return $this->algo_splitVariable($oSourceMain_,$oObject_,$tParam_,$tVar_,$tConcatVar_);
+		}else if($sType_=='concatParam'){
+			return $this->algo_concatParam($oSourceMain_,$oObject_,$tParam_,$tVar_,$tConcatVar_);
+		}else if($sType_=='resetParam'){
+			return $this->algo_resetParam($oSourceMain_,$oObject_,$tParam_,$tVar_,$tConcatVar_);
+		}else if($sType_=='concatVar'){
+			return $this->algo_concatVar($oSourceMain_,$oObject_,$tParam_,$tVar_,$tConcatVar_);
+		}else if($sType_=='resetVar'){
+			return $this->algo_resetVar($oSourceMain_,$oObject_,$tParam_,$tVar_,$tConcatVar_);
+		}
+
+
+	}
+
+	//---end algo
+
 	private function processSourceFile($sSource_, $tParam_) {
 		$tParam = $tParam_;
 		$sSource = $sSource_;
@@ -428,52 +535,52 @@ class module_builderForm {
 
 								if (isset($oFormu->action)) {
 									foreach ($oFormu->action as $oAction) {
-										if ((string) $oAction['type'] == 'setVariable') {
-											if (isset($oAction['source']) and (string) $oAction['source'] == 'params' and isset($oAction['useKey'])) {
-												$tVar[(string) $oAction['name']] = $tParam[(string) $oAction['param']][$this->getVarInTab($tVar, (string) $oAction['useKey'])];
-											} else if ((string) $oAction['source'] == 'snippet') {
 
-												$sSnippet = $this->getVarInTab($tVar, (string) $oAction['param']);
-												$tReplace = array();
-												if (isset($oAction->pattern)) {
-													foreach ($oAction->pattern as $oPattern) {
-														$tReplace[(string) $oPattern['tag']] = $this->getVarInTab($tVar, (string) $oPattern['value']);
+										if( in_array((string) $oAction['type'], array('setVariable','splitVariable','concatParam','resetParam','concatVar','resetVar')) ){
+											list($tParam,$tVar,$tConcatVar)=$this->algo_process((string) $oAction['type'],$oSourceMain,$oAction,$tParam,$tVar,$tConcatVar);
+
+										}else if ((string) $oAction['type'] == 'if') {
+
+											if(isset($oAction['variable']) and isset($oAction['equal'])){
+
+												if($tVar[ (string)$oAction['variable'] ]==(string)$oAction['equal'] ){
+
+													foreach($oAction->saction as $oSAction){
+
+														if( in_array((string) $oSAction['type'], array('setVariable','splitVariable','concatParam','resetParam','concatVar','resetVar')) ){
+															list($tParam,$tVar,$tConcatVar)=$this->algo_process((string) $oSAction['type'],$oSourceMain,$oSAction,$tParam,$tVar,$tConcatVar);
+														}
+
 													}
+
 												}
-												$tVar[(string) $oAction['name']] = $oSourceMain->getSnippet($sSnippet, $tReplace);
+
 											}
-										} else if ((string) $oAction['type'] == 'splitVariable') {
 
-											/* <action type="splitVariable" source="$sTypeRaw" pattern=".">
-											  <var name="sType"></var>
-											  <var name="sModel"></var>
-											  </action> */
+										}else if ((string) $oAction['type'] == 'loopWithKey') {
 
-											$sSourceTmp = $this->getVarInTab($tVar, (string) $oAction['source']);
-
-											$tVarTmp = explode((string) $oAction['pattern'], $sSourceTmp);
-											if (false == is_array($tVarTmp)) {
-												$tVarTmp = array($tVarTmp);
-											}
-											$i = 0;
-											foreach ($oAction->var as $oVar) {
-
-
-												$tVar[(string) $oVar['name']] = null;
-												if (isset($tVarTmp[$i])) {
-													$tVar[(string) $oVar['name']] = $tVarTmp[$i];
+											$tSourceParam= $tVar[(string) $oAction['source']];
+											foreach($tSourceParam as $keyParamAction => $keyParamAction){
+												if (isset($oFormu['keyField'])) {
+													$tVar[(string) $oAction['keyField']] = $keyParamAction;
 												}
-												$i++;
-											}
-										} else if ((string) $oAction['type'] == 'concatParam') {
-											if (!isset($tParam[(string) $oAction['name']])) {
-												$tParam[(string) $oAction['name']] = null;
+
+												foreach($oAction->saction as $oSAction){
+
+													if( in_array((string) $oSAction['type'], array('setVariable','splitVariable','concatParam','resetParam','concatVar','resetVar')) ){
+														list($tParam,$tVar,$tConcatVar)=$this->algo_process((string) $oSAction['type'],$oSourceMain,$oSAction,$tParam,$tVar,$tConcatVar);
+													}
+
+												}
+
 											}
 
-											$tConcatVar[] = (string) $oAction['name'];
 
-											$tParam[(string) $oAction['name']] .= $this->getVarInTab($tVar, (string) $oAction['value']);
+
 										}
+
+
+
 									}
 								}
 							}
@@ -658,8 +765,13 @@ class module_builderForm {
 	}
 
 	public function getVarInTab($tVar, $sVar) {
-		if (substr($sVar, 0, 1) == '$' and isset($tVar[substr($sVar, 1)])) {
-			return $tVar[substr($sVar, 1)];
+		if (substr($sVar, 0, 1) == '$'){
+			if(array_key_exists(substr($sVar, 1),$tVar)) {
+				return $tVar[substr($sVar, 1)];
+			}else{
+
+				throw new exception('var "'.$sVar.'" not find in tab');
+			}
 		}
 
 		return $sVar;
@@ -708,12 +820,24 @@ class module_builderForm {
 					}else if (isset($row['type']) and (string) $row['type'] == 'loop') {
 						$tVar = array();
 
-						if (isset($row['source']) and (string) $row['source'] == 'modelFieldList') {
-							$sParam = (string) $row['param'];
-							if (substr($sParam, 0, 1) === '$') {
-								$sParam = $this->getParam(substr($sParam, 1));
+						if (isset($row['source']) and in_array( (string) $row['source'] , array( 'modelFieldList','params') ) ) {
+
+
+							if($row['source'] == 'modelFieldList' ){
+
+								$sParam = (string) $row['param'];
+								if (substr($sParam, 0, 1) === '$') {
+									$sParam = $this->getParam(substr($sParam, 1));
+								}
+								$tIndex = $this->getSelectFieldModel($sParam);
+
+							}else if($row['source'] == 'params' ){
+								$sParam = (string) $row['param'];
+								if (substr($sParam, 0, 1) === '$') {
+									$tParam = $this->getParam(substr($sParam, 1));
+								}
+								$tIndex = $tParam;
 							}
-							$tIndex = $this->getSelectFieldModel($sParam);
 
 							$sForm .= '<table>';
 							$sForm .= '<tr>';

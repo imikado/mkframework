@@ -47,7 +47,31 @@ class sgbd_pdo_mysql extends abstract_sgbd_pdo{
 		}
 		return $tObj;
 	}
-
+	public function getInsertFromTab($tProperty){
+		
+		$sCols='';
+		$sVals='';
+		
+		if($tProperty){
+			$tKey=array_keys($tProperty);
+			foreach($tKey as $sVar){
+				$sCols.='`'.$sVar.'`,';
+				$sVals.='?,';
+			}
+		}
+		return '('.substr($sCols,0,-1).') VALUES ('.substr($sVals,0,-1).') ';
+	}
+	public function getUpdateFromTab($tProperty){
+		$sReq='';
+		if($tProperty){
+			$tKey=array_keys($tProperty);
+			foreach($tKey as $sVar){
+				$sReq.='`'.$sVar.'`'.'=?,';
+			}
+		}
+		
+		return substr($sReq,0,-1);
+	}
 	protected function connect(){
 		if(empty($this->_pDb)){
 			$this->_pDb=new PDO(

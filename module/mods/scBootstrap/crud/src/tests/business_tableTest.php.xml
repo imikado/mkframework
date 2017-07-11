@@ -2,13 +2,17 @@
 	<formules>
 		<formu type="loopWithKey" source="params" param="tColumn" keyField="key">
 			<action type="setVariable" name="sColumn" source="params" param="tColumn" useKey="$key" />
+			<action type="setVariable" name="sState" source="params" param="tState" useKey="$key" />
 
-			<action type="setVariable" name="sArray" source="snippet" param="arrayItem">
-				<pattern tag="VARcolumnENDVAR" value="$sColumn"/>
+			<action type="if" variable="sState" equal="on">
+
+				<saction type="setVariable" name="sArray" source="snippet" param="arrayItem">
+					<pattern tag="VARcolumnENDVAR" value="$sColumn"/>
+				</saction>
+
+				<saction type="concatParam" name="businessArrayColumn" value="$sArray"/>
+
 			</action>
-
-
-			<action type="concatParam" name="businessArrayColumn" value="$sArray"/>
 		</formu>
 	</formules>
 

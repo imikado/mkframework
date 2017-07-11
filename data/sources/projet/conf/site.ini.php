@@ -1,7 +1,7 @@
-;<?php die();?>
+;<?php die(); ?>
 [cache]
 enabled=0
-;temps de validite du cache exprime en secondes 
+;temps de validite du cache exprime en secondes
 lifetime=0
 autoload.enabled=0
 
@@ -20,7 +20,7 @@ default=fr
 allow=fr,en
 
 [auth]
-;note : >= php5.2 dans le php.ini 
+;note : >= php5.2 dans le php.ini
 session.use_cookies = 1
 session.use_only_cookies = 1
 session.cookie_httponly=1
@@ -49,6 +49,9 @@ var=:nav
 module.default=article
 action.default=list
 layout.erreur=../layout/erreurprod.php
+
+[module]
+folder.organized=1
 
 [urlrewriting]
 enabled=0
@@ -79,17 +82,17 @@ class=plugin_check
 
 [site]
 ;Redirection
-;header : header('location:$url ') 
+;header : header('location:$url ')
 ;http: <html><head><META http-equiv="refresh" content="0; URL=$url ></head></html>
-redirection.default=header
-timezone=Europe/Paris
+			 redirection.default=header
+			 timezone=Europe/Paris
 
-[model]
-ini.var=db
+			 [model]
+			 ini.var=db
 
-[pdo]
-;Plus d'informations ici: http://www.php.net//manual/fr/pdo.setattribute.php
-;SILENT,WARNING,EXCEPTION
-ATTR_ERRMODE=WARNING 
-;LOWER,NATURAL,UPPER
-ATTR_CASE=NATURAL
+			 [pdo]
+			 ;Plus d'informations ici: http://www.php.net//manual/fr/pdo.setattribute.php
+			 ;SILENT,WARNING,EXCEPTION
+			 ATTR_ERRMODE=WARNING
+			 ;LOWER,NATURAL,UPPER
+			 ATTR_CASE=NATURAL

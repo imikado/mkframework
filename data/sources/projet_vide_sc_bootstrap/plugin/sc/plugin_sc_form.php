@@ -90,7 +90,7 @@ class plugin_sc_form {
 	public function getToken($sName, $sValue, $tOption = null) {
 		$sHtml = null;
 		$sHtml.='<input type="hidden" type="text" name="' . $sName . '" value="' . $sValue . '" ' . $this->getOption($tOption) . '/>';
-		$sHtml.=$this->getMessage($sName);
+		$sHtml.=$this->getErrorMessageBox($sName);
 		return $sHtml;
 	}
 
@@ -103,7 +103,7 @@ class plugin_sc_form {
 	public function getInputPassword($sName, $tOption = null) {
 		$sHtml = null;
 		$sHtml.='<input type="password" name="' . $sName . '" value="' . $this->getValue($sName) . '" ' . $this->getOption($tOption) . '/>';
-		$sHtml.=$this->getMessage($sName);
+		$sHtml.=$this->getErrorMessageBox($sName);
 		return $sHtml;
 	}
 
@@ -116,7 +116,7 @@ class plugin_sc_form {
 	public function getInputText($sName, $tOption = null) {
 		$sHtml = null;
 		$sHtml.='<input type="text" name="' . $sName . '" value="' . $this->getValue($sName) . '" ' . $this->getOption($tOption) . '/>';
-		$sHtml.=$this->getMessage($sName);
+		$sHtml.=$this->getErrorMessageBox($sName);
 		return $sHtml;
 	}
 
@@ -130,7 +130,7 @@ class plugin_sc_form {
 		$sHtml = null;
 		$sHtml.='<textarea type="text" name="' . $sName . '" ' . $this->getOption($tOption) . '>';
 		$sHtml.=$this->getValue($sName) . '</textarea>';
-		$sHtml.=$this->getMessage($sName);
+		$sHtml.=$this->getErrorMessageBox($sName);
 		return $sHtml;
 	}
 
@@ -143,7 +143,7 @@ class plugin_sc_form {
 	public function getInputUpload($sName, $tOption = null) {
 		$sHtml = null;
 		$sHtml.='<input type="file" name="' . $sName . '" ' . $this->getOption($tOption) . '/>';
-		$sHtml.=$this->getMessage($sName);
+		$sHtml.=$this->getErrorMessageBox($sName);
 		return $sHtml;
 	}
 
@@ -168,7 +168,7 @@ class plugin_sc_form {
 			$sHtml.=' value="' . $sValue . '">' . $sLabel . '</option>';
 		}
 		$sHtml.='</select>';
-		$sHtml.=$this->getMessage($sName);
+		$sHtml.=$this->getErrorMessageBox($sName);
 		return $sHtml;
 	}
 
@@ -191,7 +191,7 @@ class plugin_sc_form {
 			}
 			$sHtml.=' value="' . $sValue . '" ' . $this->getOption($tOption) . '/>' . $sLabel . ' ';
 		}
-		$sHtml.=$this->getMessage($sName);
+		$sHtml.=$this->getErrorMessageBox($sName);
 		return $sHtml;
 	}
 
@@ -210,7 +210,7 @@ class plugin_sc_form {
 			$sHtml.='checked="checked" ';
 		}
 		$sHtml.=' name="' . $sName . '" value="' . $sValue . '" ' . $this->getOption($tOption) . '/>';
-		$sHtml.=$this->getMessage($sName);
+		$sHtml.=$this->getErrorMessageBox($sName);
 		return $sHtml;
 	}
 
@@ -229,7 +229,7 @@ class plugin_sc_form {
 			$sHtml.='checked="checked" ';
 		}
 		$sHtml.=' name="' . $sName . '" value="' . $sValue . '" ' . $this->getOption($tOption) . '/>';
-		$sHtml.=$this->getMessage($sName);
+		$sHtml.=$this->getErrorMessageBox($sName);
 		return $sHtml;
 	}
 
@@ -242,7 +242,7 @@ class plugin_sc_form {
 		return null;
 	}
 
-	public function getErrorMessageBox(){
+	public function getErrorMessageBox($sName){
 		$uMessage=$this->getMessage($sName);
 		if(is_array($uMessage)){
 			return '<p class="error">' . implode(',', $uMessage) . '</p>';

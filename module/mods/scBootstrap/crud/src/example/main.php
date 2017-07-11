@@ -129,7 +129,7 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends module_VARmodule
 			return array('token' => $oPluginXsrf->getMessage());
 		}
 
-		$oBusiness = new VARbusiness_tableENDVAR(VARmodel_tableENDVAR::getInstance(), _root::getI18n() );
+		$oBusiness = new VARbusiness_tableENDVAR(VARmodel_tableENDVAR::getInstance(), _root::getI18n(), new plugin_sc_valid()  );
 
 		$VARoTableENDVAR = VARmodel_tableENDVAR::getInstance()->findById(_root::getParam('id'));
 
