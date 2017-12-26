@@ -25,10 +25,12 @@ sqlserverExple.sgbd=pdo_mssql
 sqlserverExple.username=root
 sqlserverExple.password=root
 
+oracleExple.dsn=
 oracleExple.sgbd=oracle
 oracleExple.username=username
 oracleExple.password=pass
 oracleExple.database=myOracleDb
+oracleExple.hostname=myOracleHostname
 
 xmlExple.dsn=
 xmlExple.sgbd=xml
