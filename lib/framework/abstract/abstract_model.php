@@ -267,8 +267,11 @@ abstract class abstract_model{
         return $query;
     }
 
-    public function checkFieldExists($data) {
-
+    public function checkFieldExists($fields) {
+        $rest = array_diff($fields, $this->getListColumn());
+        if (count($rest) > 0 ) {
+            throw new Exception('Propriétés inéxistante dans la table '.$this->sTable .' : '.implode(', ', $rest));
+        }
     }
 
     public function findBy($filters)
