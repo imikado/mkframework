@@ -253,7 +253,7 @@ abstract class abstract_model{
         }
     }
 
-    protected function getfindQuery($filters) {
+    protected function getFindQuery($filters) {
         $query = 'SELECT * FROM ' . $this->sTable;
         $this->checkFieldExists(array_keys($filters));
         if (count($filters) > 0) {
@@ -276,14 +276,14 @@ abstract class abstract_model{
 
     public function findBy($filters)
     {
-        $query = $this->getfindQuery($filters);
+        $query = $this->getFindQuery($filters);
         $tSql = [$query, array_shift($filters)];
         return $tObj= $this->getSgbd()->findMany($tSql,$this->sClassRow);
     }
 
     public function findOneBy($filters)
     {
-        $query = $this->getfindQuery($filters);
+        $query = $this->getFindQuery($filters);
         $tSql = [$query, array_shift($filters)];
         return $tObj= $this->getSgbd()->findOne($tSql,$this->sClassRow);
     }
