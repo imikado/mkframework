@@ -1,5 +1,5 @@
 <?php
-$oForm = new plugin_form($this->#oExamplemodel#);
+$oForm = new Plugin\Form($this->#oExamplemodel#);
 $oForm->setMessage($this->tMessage);
 ?>
 <form action="" method="POST" #enctype#>

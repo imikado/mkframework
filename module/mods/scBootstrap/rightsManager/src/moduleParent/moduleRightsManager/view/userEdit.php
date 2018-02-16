@@ -1,5 +1,5 @@
 <?php
-$oForm = new plugin_sc_form($this->oUser);
+$oForm = new Plugin\sc\Form(($this->oUser);
 $oForm->setMessage($this->tMessage);
 ?>
 <form action="" method="POST" >

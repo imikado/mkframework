@@ -1,6 +1,6 @@
 <?php
 
-$oForm = new plugin_form($this->oData);
+$oForm = new Plugin\Form($this->oData);
 $oForm->setMessage($this->tMessage);
 ?>
 

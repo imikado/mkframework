@@ -41,7 +41,7 @@ class _unitTestForm{
 	public function send(){
 		$_SERVER['REQUEST_METHOD']=$this->sRequestMethod;
 		if($this->bToken){
-			$oPluginXsrf=new plugin_xsrf();
+			$oPluginXsrf=new Plugin\XSRF();
 			$sToken=$oPluginXsrf->getToken();
 			$this->tPost[$this->sTokenName]=$sToken;
 		}

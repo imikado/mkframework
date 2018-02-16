@@ -28,6 +28,9 @@ class module_mods_bootstrap_viewForm extends abstract_moduleBuilder{
 			$tFile[]=$oFile->getName();
 			require_once( $oFile->getAdresse() );
 			$sClassFoo=substr($oFile->getName(),0,-4);
+            if (substr($sClassFoo,0,6) != 'model_') {
+                $sClassFoo = 'Model\\'.substr($oFile->getName(),0,-4);
+            }
 			$oModelFoo=new $sClassFoo;
 			
 			if( method_exists( $oModelFoo, 'getSelect')){
@@ -60,6 +63,9 @@ class module_mods_bootstrap_viewForm extends abstract_moduleBuilder{
 			
 			$oTpl->tRowMethodes=$tRowMethodes;
 
+            if (substr($sClass,0,6) != 'model_') {
+                $sClass = 'Model\\'.substr($sClass,0,-4);
+            }
 			$oModel=new $sClass;
 			 
 			
@@ -165,7 +171,7 @@ class module_mods_bootstrap_viewForm extends abstract_moduleBuilder{
 			$sCode.=$t.'$oView->oData=$oData;'.$ret;
 			$sCode.=$t.'$oView->tMessage=$tMessage;'.$ret;
 			$sCode.=$ret;
-			$sCode.=$t.'$oPluginXsrf=new plugin_xsrf();'.$ret;
+			$sCode.=$t.'$oPluginXsrf=new Plugin\XSRF();'.$ret;
 			$sCode.=$t.'$oView->token=$oPluginXsrf->getToken();'.$ret;
 			
 			if($tVar){
@@ -187,7 +193,7 @@ class module_mods_bootstrap_viewForm extends abstract_moduleBuilder{
 			
 			$sCode.=$ret;
 			
-			$sCode.=$t.'$oPluginXsrf=new plugin_xsrf();'.$ret;
+			$sCode.=$t.'$oPluginXsrf=new Plugin\XSRF();'.$ret;
 			$sCode.=$t.'if(!$oPluginXsrf->checkToken( _root::getParam(\'token\') ) ){ //on verifie que le token est valide'.$ret;
 				$sCode.=$t.$t.'return array(\'token\'=>$oPluginXsrf->getMessage() );'.$ret;
 			$sCode.=$t.'}'.$ret;

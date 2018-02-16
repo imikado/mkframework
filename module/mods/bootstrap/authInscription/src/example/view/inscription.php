@@ -1,5 +1,5 @@
 <h1>Inscription</h1>
-<?php $oForm=new plugin_form($this->oUser);
+<?php $oForm=new Plugin\Form($this->oUser);
 $oForm->setMessage($this->tMessage);
 ?>
 <form action="" method="POST" class="form-signin" role="form">

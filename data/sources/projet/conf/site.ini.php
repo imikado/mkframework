@@ -12,7 +12,7 @@ charset=UTF-8
 double_encode=0
 
 [debug]
-class=plugin_debugError
+class=Plugin\DebugError
 
 [language]
 ;fr / en... //sLangue
@@ -29,7 +29,7 @@ session.cookie_domain=
 session.cookie_path=
 session.cookie_lifetime=
 enabled=0
-class=plugin_auth
+class=Plugin\Auth
 module=auth::login
 ;liste des modules non concerne par l'auth: separe par des virgules
 module.disabled.list=
@@ -38,7 +38,7 @@ session.timeout.enabled=1
 session.timeout.lifetime=1800
 
 [acl]
-class=plugin_gestionuser
+class=Plugin\GestionUser
 
 [module]
 folder.organized=0
@@ -55,7 +55,7 @@ folder.organized=1
 
 [urlrewriting]
 enabled=0
-class=plugin_routing
+class=Plugin\Routing
 conf=../conf/routing.php
 use4O4=0
 
@@ -69,7 +69,7 @@ xss.enabled=1
 xsrf.session.enabled=0
 
 [log]
-class=plugin_log
+class=Plugin\Log
 error=0
 warning=0
 application=0
@@ -78,7 +78,7 @@ file.enabled=1
 apache.enabled=1
 
 [check]
-class=plugin_check
+class=Plugin\Check
 
 [site]
 ;Redirection

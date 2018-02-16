@@ -57,7 +57,7 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends abstract_modulee
 		$oView = $this->getView('new');
 		$oView->VARoTableENDVAR = $VARoTableENDVAR;
 
-		$oPluginXsrf = new plugin_xsrf();
+		$oPluginXsrf = new Plugin\XSRF();
 		$oView->token = $oPluginXsrf->getToken();
 		$oView->tMessage = $tMessage;
 
@@ -72,7 +72,7 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends abstract_modulee
 		$oView = $this->getView('edit');
 		$oView->VARoTableENDVAR = $VARoTableENDVAR;
 
-		$oPluginXsrf = new plugin_xsrf();
+		$oPluginXsrf = new Plugin\XSRF();
 		$oView->token = $oPluginXsrf->getToken();
 		$oView->tMessage = $tMessage;
 
@@ -98,7 +98,7 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends abstract_modulee
 		$oView->VARoTableENDVAR = $VARoTableENDVAR;
 
 
-		$oPluginXsrf = new plugin_xsrf();
+		$oPluginXsrf = new Plugin\XSRF();
 		$oView->token = $oPluginXsrf->getToken();
 		$oView->tMessage = $tMessage;
 
@@ -110,7 +110,7 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends abstract_modulee
 			return null;
 		}
 
-		$oPluginXsrf = new plugin_xsrf();
+		$oPluginXsrf = new Plugin\XSRF();
 		if (!$oPluginXsrf->checkToken(_root::getParam('token'))) { //on verifie que le token est valide
 			return array('token' => $oPluginXsrf->getMessage());
 		}
@@ -144,7 +144,7 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends abstract_modulee
 			return null;
 		}
 
-		$oPluginXsrf = new plugin_xsrf();
+		$oPluginXsrf = new Plugin\XSRF();
 		if (!$oPluginXsrf->checkToken(_root::getParam('token'))) { //on verifie que le token est valide
 			return array('token' => $oPluginXsrf->getMessage());
 		}

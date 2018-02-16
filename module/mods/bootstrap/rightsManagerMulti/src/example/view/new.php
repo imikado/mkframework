@@ -8,7 +8,7 @@
  * */
 
 
-$oForm=new plugin_form($this->oPermission);
+$oForm=new Plugin\Form($this->oPermission);
 $oForm->setMessage($this->tMessage);
 ?>
 <form action="" method="POST" >

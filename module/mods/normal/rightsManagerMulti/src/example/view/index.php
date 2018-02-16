@@ -19,7 +19,7 @@
 	</tr>
 	<?php if($this->tPermission):?>
 		<?php foreach($this->tPermission as $oPermission):?>
-		<tr <?php echo plugin_tpl::alternate(array('','class="alt"'))?>>
+		<tr <?php echo Plugin\TPL::alternate(array('','class="alt"'))?>>
 			<td><?php echo $oPermission->groupName?></td>
 			<td><?php echo $oPermission->actionName?></td>
 			<td><?php echo $oPermission->itemName?></td>
@@ -54,7 +54,7 @@
 	</tr>
 	<?php if($this->tUser):?>
 		<?php foreach($this->tUser as $oUser):?>
-		<tr <?php echo plugin_tpl::alternate(array('','class="alt"'))?>>
+		<tr <?php echo Plugin\TPL::alternate(array('','class="alt"'))?>>
 			<td><?php echo $oUser->#exampleUser_login#?></td>
 			<td><?php $tGroup=#model_examplemodel#::getInstance()->findListGroupByUser($oUser->#exampleUser_id#);
 			$tGroupName=array();

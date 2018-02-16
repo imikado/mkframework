@@ -1,4 +1,4 @@
-<?php $oForm=new plugin_form($this->oForm);
+<?php $oForm=new Plugin\Form($this->oForm);
 $oForm->setMessage($this->tMessage);
 ?>
 <style>

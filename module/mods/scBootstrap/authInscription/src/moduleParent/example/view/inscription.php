@@ -1,6 +1,6 @@
 <h2><?php echo tr('pageDinscription') ?></h2>
 <?php
-$oForm = new plugin_sc_form($this->oUser);
+$oForm = new Plugin\sc\Form($this->oUser);
 $oForm->setMessage($this->tMessage);
 ?>
 <form action="" method="POST" class="form-signin" role="form">

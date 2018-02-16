@@ -56,6 +56,9 @@ class module_mods_all_testunit extends abstract_moduleBuilder{
 		$sClass=substr($sFilename,0,-4);
 
 		require_once(_root::getConfigVar('path.generation')._root::getParam('id').'/model/'.$sFilename);
+		if (substr($sFilename,0,6) != 'model_') {
+		    $sClass = 'Model\\'.$sClass;
+        }
 
 		$tBlackListMethod=get_class_methods('abstract_model');
 		$tBlackListMethod[]='getInstance';
@@ -87,7 +90,6 @@ class module_mods_all_testunit extends abstract_moduleBuilder{
 		$sClass=substr($sFilename,0,-4);
 		$sRow=str_replace('model_', 'row_', $sClass);
 
-
 		$this->msg=tr('testUnitGeneres');
 		$tDetail=array();
 		$tDetail[]=trR('CreationDuFichierVAR',array('#FICHIER#'=>'tests/bootstrap.php'));
@@ -103,6 +105,10 @@ class module_mods_all_testunit extends abstract_moduleBuilder{
 		/*SOURCE*/$oSourceModel=$this->getObjectSource('model.php');
 		/*SOURCE*/$oSourceModel->setPattern('#model_exampleTest#',$sClass.'Test');
 
+        if (substr($sFilename,0,6) != 'model_') {
+            $sClass = 'Model\\'.substr($sFilename,0,-4);
+            $sRow=  'Row\\'.substr($sFilename,0,-4);
+        }
 		$sCode=null;
 		foreach($tMethod as $sMethod){
 			$sCode.=$oSourceModel->getSnippet(
@@ -146,7 +152,9 @@ class module_mods_all_testunit extends abstract_moduleBuilder{
 		foreach($tFileModel as $sFile){
 			$tModelMethod0=$this->getListMethodModel($sFile);
 			$sClass=substr(basename($sFile),0,-4);
-
+            if (substr($sFile,0,6) != 'model_') {
+                $sClass = 'Model\\'.substr($sFile,0,-4);
+            }
 			foreach($tModelMethod0 as $sModelMethod){
 				$tModelMethod[$sClass][]=$sModelMethod;	
 			}
@@ -403,6 +411,9 @@ class module_mods_all_testunit extends abstract_moduleBuilder{
 		}
 		
 		$tMethod=array();
+        if (substr($sFilename,0,6) != 'model_') {
+            $sClass = 'Model\\'.substr($sFilename,0,-4);
+        }
 		$tMethod0=get_class_methods($sClass);
 		foreach($tMethod0 as $sMethod){
 			if(!in_array($sMethod,$this->tBlackListMethod)){

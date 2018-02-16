@@ -23,8 +23,8 @@ foreach($tUnitTestClass as $sClass){
 include ($tIni['path']['lib'].'/class_root.php');
 
 //enregistrement de l'autoloader
-include($tIni['path']['plugin'].'/plugin_autoload.php');
-spl_autoload_register(array('plugin_autoload','autoload'));
+include($tIni['path']['plugin'].'/Autoload.php');
+spl_autoload_register(array('Plugin\Autoload','autoload'));
 
 $oRoot=new _root();
 $oRoot->setConfigVar('path',$tIni['path']);

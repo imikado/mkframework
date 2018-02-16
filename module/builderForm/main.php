@@ -663,7 +663,7 @@ class module_builderForm {
 	public function getPage() {
 		$iStep = $this->_iStep;
 
-		$tLang = plugin_i18n::getList();
+		$tLang = Plugin\I18n::getList();
 
 		foreach ($this->_oXml as $oStep) {
 			if ((int) $oStep['id'] === (int) $iStep) {
@@ -699,7 +699,7 @@ class module_builderForm {
 		$oData->step = $this->_iStep;
 		$oData->nextStep = $this->_iStep + 1;
 
-		$oForm = new plugin_form($oData);
+		$oForm = new Plugin\Form($oData);
 
 		foreach ($this->_oXml as $oStep) {
 			$this->_iMaxStep = $oStep['id'];
@@ -778,7 +778,7 @@ class module_builderForm {
 	}
 
 	public function build() {
-		$tLang = plugin_i18n::getList();
+		$tLang = Plugin\I18n::getList();
 
 		$sForm = null;
 		$tPrevPost = array();
@@ -787,7 +787,7 @@ class module_builderForm {
 		$oData->step = $this->_iStep;
 		$oData->nextStep = $this->_iStep + 1;
 
-		$oForm = new plugin_form($oData);
+		$oForm = new Plugin\Form($oData);
 
 		foreach ($this->_oXml as $oStep) {
 			$this->_iMaxStep = $oStep['id'];

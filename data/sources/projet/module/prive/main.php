@@ -16,7 +16,7 @@ class module_prive extends abstract_module{
 		
 		$oView=new _view('prive::list');
 		
-		$tArticle=model_article::getInstance()->findAll();
+		$tArticle=Model\Article::getInstance()->findAll();
 		$oView->tArticle=$tArticle;
 				
 		$this->oLayout->add('main',$oView);
@@ -31,15 +31,15 @@ class module_prive extends abstract_module{
 
 		$tMessage=$this->save();
 	
-		$oArticleModel=new model_article;
-		$oArticle=new row_article;
+		$oArticleModel=new Model\Article;
+		$oArticle=new Row\Article;
 		
 		$oView=new _view('prive::new');
 		$oView->oArticle=$oArticle;
 		$oView->tColumn=$oArticleModel->getListColumn();
 		$oView->tId=$oArticleModel->getIdTab();
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -54,7 +54,7 @@ class module_prive extends abstract_module{
 		
 		$tMessage=$this->save();
 	
-		$oArticleModel=new model_article;
+		$oArticleModel=new Model\Article;
 		$oArticle=$oArticleModel->findById( _root::getParam('id') );
 		
 		$oView=new _view('prive::edit');
@@ -62,7 +62,7 @@ class module_prive extends abstract_module{
 		$oView->tColumn=$oArticleModel->getListColumn();
 		$oView->tId=$oArticleModel->getIdTab();
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -79,15 +79,15 @@ class module_prive extends abstract_module{
 			return false;
 		}
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}
 	
-		$oArticleModel=new model_article;
+		$oArticleModel=new Model\Article;
 		$iId=_root::getParam('id',null);
 		if($iId==null){
-			$oArticle=new row_article;	
+			$oArticle=new Row\Article;
 		}else{
 			$oArticle=$oArticleModel->findById( _root::getParam('id',null) );
 		}

@@ -8,7 +8,7 @@ class module_auteurxml extends abstract_module{
 	}
 	
 	public function _list(){
-		$oAuteurModel=new model_auteur;
+		$oAuteurModel=new Model\Auteur();
 		$tAuteur=$oAuteurModel->findAll();
 		
 		$oView=new _view('auteurxml::list');
@@ -20,18 +20,18 @@ class module_auteurxml extends abstract_module{
 	
 	public function _showXml(){
 		
-		$oAuteur=model_auteur::getInstance()->findById(_root::getParam('id'));
+		$oAuteur=Model\Auteur::getInstance()->findById(_root::getParam('id'));
 		
-		$oXml=new plugin_xmlObject($oAuteur);
+		$oXml=new Plugin\XMLObject($oAuteur);
 		$oXml->setListColumn(array('id','nom','prenom'));
 		$oXml->show();
 	}
 	
 	public function _listXml(){
 		
-		$tAuteur=model_auteur::getInstance()->findAll();
+		$tAuteur=Model\Auteur::getInstance()->findAll();
 		
-		$oXml=new plugin_xmlListObject($tAuteur);
+		$oXml=new Plugin\XMLListObject($tAuteur);
 		$oXml->setListColumn(array('id','nom','prenom'));
 		$oXml->show();
 	}

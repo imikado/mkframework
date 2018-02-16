@@ -5,7 +5,7 @@ $sParamSide=module_table::getParam('side');
 $sVarPage='page';
 $sValuePage=module_table::getParam($sVarPage,0);
 
-$oPagination=new plugin_jquery('page',array('page','order','side'));
+$oPagination=new Plugin\Jquery('page',array('page','order','side'));
 $oPagination->addLinkUpdateElement(_root::getLink($this->ajaxLink,array('tablepage'=>'$page','tableorder'=>'$order','tableside'=>'$side')),'tablep');
 echo $oPagination->getJs();
 	

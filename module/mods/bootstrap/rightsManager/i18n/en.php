@@ -1,4 +1,4 @@
-<?php plugin_i18n::add(array(
+<?php Plugin\I18n::add(array(
 
 'presentation'=>'Presentation',
 'pourGererLesDroitsNousAllons'=>'To generate rights of your applicatoin, you should first create database',

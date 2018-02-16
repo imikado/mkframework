@@ -1,5 +1,5 @@
 <?php 
-$oForm=new plugin_form($this->oArticle);
+$oForm=new Plugin\Form($this->oArticle);
 $oForm->setMessage($this->tMessage);
 ?>
 <form action="" method="POST">

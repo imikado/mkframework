@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Plugin\Chart;
+
 class module_chart extends abstract_module{
 	
 	public function before(){
@@ -20,7 +23,7 @@ class module_chart extends abstract_module{
 			array( 2013 , 45)
 		);
 		
-	    $oChartHisto=new plugin_chart('HISTO',400,200);
+	    $oChartHisto=new Plugin\Chart(Chart::HISTO,400,200);
 	    $oChartHisto->setTextSizeLegend('12px arial');
 	    $oChartHisto->setData($tData);
 
@@ -43,7 +46,7 @@ class module_chart extends abstract_module{
 			array( 'or' , 65),
 		);
 		
-		$oChartPie=new plugin_chart('PIE',400,200);
+		$oChartPie=new Plugin\Chart(Chart::PIE,400,200);
 		$oChartPie->setTextSizeLegend('12px arial');
 		$oChartPie->setData($tData);
 		
@@ -55,7 +58,7 @@ class module_chart extends abstract_module{
 		
 		//--------------------------------
 		//--------lines
-	    $oChartLine=new plugin_chart('LINES',400,200);
+	    $oChartLine=new Plugin\Chart(Chart::LINES,400,200);
 	    $oChartLine->setTextSizeLegend('12px arial');
 	    $oChartLine->setMarginLeft(20);
 	    $oChartLine->setPaddingX(1);
@@ -84,7 +87,7 @@ class module_chart extends abstract_module{
 		
 		//--------------------------------
 		//--------bar
-	    $oChartBar=new plugin_chart('BAR',400,200);
+	    $oChartBar=new Plugin\Chart(Chart::BAR,400,200);
 	    $oChartBar->setTextSizeLegend('12px arial');
 	    $oChartBar->setMarginLeft(20);
 	    $oChartBar->setPaddingX(1);
@@ -134,7 +137,7 @@ class module_chart extends abstract_module{
 			array( 2013 , 45)
 		);
 		
-	    $oChartHisto=new plugin_chartSVG('HISTO',400,200);
+	    $oChartHisto=new Plugin\ChartSVG(Chart::HISTO,400,200);
 	    $oChartHisto->setTextSizeLegend('12px arial');
 	    $oChartHisto->setData($tData);
 		
@@ -152,7 +155,7 @@ class module_chart extends abstract_module{
 			array( 'or' , 65),
 		);
 		
-		$oChartPie=new plugin_chartSVG('PIE',400,200);
+		$oChartPie=new Plugin\ChartSVG(Chart::PIE,400,200);
 		$oChartPie->setTextSizeLegend('12px arial');
 		$oChartPie->setData($tData);
 		
@@ -164,7 +167,7 @@ class module_chart extends abstract_module{
 		
 		//--------------------------------
 		//--------lines
-	    $oChartLine=new plugin_chartSVG('LINES',400,200);
+	    $oChartLine=new Plugin\ChartSVG(Chart::LINES,400,200);
 	    $oChartLine->setTextSizeLegend('12px arial');
 	    $oChartLine->setMarginLeft(20);
 	    $oChartLine->setPaddingX(1);
@@ -193,7 +196,7 @@ class module_chart extends abstract_module{
 		
 		//--------------------------------
 		//--------bar
-	    $oChartBar=new plugin_chartSVG('BAR',400,200);
+	    $oChartBar=new Plugin\ChartSVG(Chart::BAR,400,200);
 	    $oChartBar->setTextSizeLegend('12px arial');
 	    $oChartBar->setMarginLeft(20);
 	    $oChartBar->setPaddingX(1);

@@ -1,4 +1,4 @@
-<?php plugin_i18n::add(array(
+<?php Plugin\I18n::add(array(
 
 'baseTableGenereAvecSucces'=>'Base #maTable# (champs: #listField#) g&eacute;n&eacute;r&eacute; avec succ&egrave;s',
 'creationFichier'=>'Cr&eacute;ation fichier #FICHIER#',

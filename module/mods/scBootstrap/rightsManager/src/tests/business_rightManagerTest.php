@@ -3,7 +3,7 @@
 require_once(__DIR__ . '/../autoload_unitaire.php');
 
 //fake i18n class
-require_once(__DIR__ . '/plugin/plugin_i18nFake.php');
+require_once(__DIR__ . '/plugin/I18nFake.php');
 
 /**
  * @runTestsInSeparateProcesses
@@ -33,7 +33,7 @@ class business_VARmoduleRightsManagerENDVARTest extends PHPUnit_Framework_TestCa
 		$oAccount=new stdclass();
 		$oAccount->VARuser_fk_group_idENDVAR=1;
 
-		$oBusiness=new business_VARmoduleRightsManagerENDVAR($oModel,$oACL,new plugin_i18nFake(),$oValid );
+		$oBusiness=new business_VARmoduleRightsManagerENDVAR($oModel,$oACL,new Plugin\I18nFake(),$oValid );
 		$oBusiness->loadForUser($oAccount);
 
 		$this->assertTrue(true);
@@ -52,7 +52,7 @@ class business_VARmoduleRightsManagerENDVARTest extends PHPUnit_Framework_TestCa
 		$oACL->expects($this->once() )->method('allow')->with('write','item');
 
 
-		$oBusiness=new business_VARmoduleRightsManagerENDVAR($oModel,$oACL,new plugin_i18nFake(),$oValid  );
+		$oBusiness=new business_VARmoduleRightsManagerENDVAR($oModel,$oACL,new Plugin\I18nFake(),$oValid  );
 		$oBusiness->allowList($tPermission);
 
 		$this->assertTrue(true);
@@ -61,7 +61,7 @@ class business_VARmoduleRightsManagerENDVARTest extends PHPUnit_Framework_TestCa
 	public function test_getCheckShouldFinishOk(){
 		$oModel=$this->createMock('VARinterfaceModelRightmanagerENDVAR');
 		$oACL=$this->createMock('VARinterfaceACLENDVAR');
-		$oValid=new plugin_sc_valid();
+		$oValid=new Plugin\sc\Valid();
 
 		$tParam=array(
 			'VARpermission_fk_group_idENDVAR'=>'',
@@ -69,7 +69,7 @@ class business_VARmoduleRightsManagerENDVARTest extends PHPUnit_Framework_TestCa
 			'VARpermission_fk_item_idENDVAR'=>''
 		);
 
-		$oBusiness=new business_VARmoduleRightsManagerENDVAR($oModel,$oACL,new plugin_i18nFake(),$oValid   );
+		$oBusiness=new business_VARmoduleRightsManagerENDVAR($oModel,$oACL,new Plugin\I18nFake(),$oValid   );
 		$oResultValid=$oBusiness->getCheck($tParam);
 
 		$this->assertFalse($oResultValid->isValid() );
@@ -86,7 +86,7 @@ class business_VARmoduleRightsManagerENDVARTest extends PHPUnit_Framework_TestCa
 	public function test_updatePermission(){
 		$oModel=$this->createMock('VARinterfaceModelRightmanagerENDVAR');
 		$oACL=$this->createMock('VARinterfaceACLENDVAR');
-		$oValid=new plugin_sc_valid();
+		$oValid=new Plugin\sc\Valid();
 
 		$oModel->method('findById')->willReturn(new stdclass() );
 
@@ -96,7 +96,7 @@ class business_VARmoduleRightsManagerENDVARTest extends PHPUnit_Framework_TestCa
 			'VARpermission_fk_item_idENDVAR'=>'3'
 		);
 
-		$oBusiness=new business_VARmoduleRightsManagerENDVAR($oModel,$oACL,new plugin_i18nFake(),$oValid   );
+		$oBusiness=new business_VARmoduleRightsManagerENDVAR($oModel,$oACL,new Plugin\I18nFake(),$oValid   );
 		$bReturn=$oBusiness->updatePermission(1,$tParam);
 
 		$this->assertEquals(true,$bReturn );

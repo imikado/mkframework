@@ -35,7 +35,7 @@
 		$tColumnUpload=#tColumnUpload#
 		if($tColumnUpload){
 			foreach($tColumnUpload as $sColumnUpload){
-				$oPluginUpload=new plugin_upload($sColumnUpload);
+				$oPluginUpload=new Plugin\Upload($sColumnUpload);
 				if($oPluginUpload->isValid()){
 					$sNewFileName=_root::getConfigVar('path.upload').$sColumnUpload.'_'.date('Ymdhis');
 
@@ -127,7 +127,7 @@
 		
 		#CODE#
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -155,7 +155,7 @@
 		
 		#CODE#
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -204,7 +204,7 @@
 		
 		#CODE#
 
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -225,7 +225,7 @@
 			return null;
 		}
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}

@@ -54,7 +54,7 @@ class module_permission extends abstract_module{
 	
 		$oView=$this->getNew();
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -79,7 +79,7 @@ class module_permission extends abstract_module{
 		
 		$oView=$this->getEdit(_root::getParam('id'));
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -122,7 +122,7 @@ class module_permission extends abstract_module{
 		
 		$oView=$this->getDelete(_root::getParam('id'));
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -134,7 +134,7 @@ class module_permission extends abstract_module{
 			return null;
 		}
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}
@@ -167,7 +167,7 @@ class module_permission extends abstract_module{
 			return null;
 		}
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}

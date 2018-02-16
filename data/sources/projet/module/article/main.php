@@ -15,7 +15,7 @@ class module_article extends abstract_module{
 	
 	public function _list(){
 		
-		$oArticleModel=new model_article;
+		$oArticleModel=new Model\Article;
 		$tArticle=$oArticleModel->findAllOrderBy(module_table::getParam('order','titre'),module_table::getParam('side'));
 		
 		$oView=new _view('article::list');
@@ -23,7 +23,7 @@ class module_article extends abstract_module{
 		$oView->tColumn=$oArticleModel->getListColumn();//array('id','titre');//
 
 		//on recupere un tableau indexe des auteurs pour afficher leur nom a la place de leur id
-		$oView->tJoinAuteur=model_auteur::getInstance()->getSelect();
+		$oView->tJoinAuteur=Model\Auteur::getInstance()->getSelect();
 		
 
 		$this->oLayout->add('main',$oView);
@@ -39,7 +39,7 @@ class module_article extends abstract_module{
 			$sSide='ASC';
 		}
 		
-		$oArticleModel=new model_article;
+		$oArticleModel=new Model\Article;
 		$tArticle=$oArticleModel->findAllOrderBy($sOrder,$sSide);
 		
 		$oView=new _view('article::listViaModule');
@@ -47,7 +47,7 @@ class module_article extends abstract_module{
 		$oView->tColumn=$oArticleModel->getListColumn();//array('id','titre');//
 
 		//on recupere un tableau indexe des auteurs pour afficher leur nom a la place de leur id
-		$oView->tJoinAuteur=model_auteur::getInstance()->getSelect();
+		$oView->tJoinAuteur=Model\Auteur::getInstance()->getSelect();
 		
 
 		$this->oLayout->add('main',$oView);
@@ -63,7 +63,7 @@ class module_article extends abstract_module{
 			$sSide='ASC';
 		}
 		
-		$oArticleModel=new model_article;
+		$oArticleModel=new Model\Article;
 		$tArticle=$oArticleModel->findAllOrderBy($sOrder,$sSide);
 		
 		$oView=new _view('article::listViaModuleAjax');
@@ -71,13 +71,13 @@ class module_article extends abstract_module{
 		$oView->tColumn=$oArticleModel->getListColumn();
 		
 		//on recupere un tableau indexe des auteurs pour afficher leur nom a la place de leur id
-		$oView->tJoinAuteur=model_auteur::getInstance()->getSelect();
+		$oView->tJoinAuteur=Model\Auteur::getInstance()->getSelect();
 		
 		print $oView->show();exit;
 	}
 	
 	public function _listPagination(){
-		$oArticleModel=new model_article;
+		$oArticleModel=new Model\Article;
 		$tArticle=$oArticleModel->findAll();
 		
 		$oModulePagination=new module_pagination;
@@ -96,13 +96,16 @@ class module_article extends abstract_module{
 	}
 	
 	public function _myclass(){
-		
-		$oMetier=new my_metier();
-		
-		$oView=new _view('article::myclass');
-		$oView->oMetier=$oMetier;
-		
-		$this->oLayout->add('main',$oView);
+
+        $oMetier=new my_metier();
+
+        $oView=new _view('article::myclass');
+        $oView->oMetier=$oMetier;
+
+        $oMetierNS=new Service\MetierNS();
+        $oView->oMetierNS=$oMetierNS;
+
+        $this->oLayout->add('main',$oView);
 		
 		
 	}
@@ -110,8 +113,8 @@ class module_article extends abstract_module{
 	public function _new(){
 		$tMessage=$this->save();
 	
-		$oArticleModel=new model_article;
-		$oArticle=new row_article;
+		$oArticleModel=new Model\Article;
+		$oArticle=new Row\Article;
 		
 		$oView=new _view('article::new');
 		$oView->oArticle=$oArticle;
@@ -119,9 +122,9 @@ class module_article extends abstract_module{
 		$oView->tId=$oArticleModel->getIdTab();
 		
 		//on recupere un tableau indexe des auteurs pour afficher leur nom a la place de leur id
-		$oView->tJoinAuteur=model_auteur::getInstance()->getSelect();
+		$oView->tJoinAuteur=Model\Auteur::getInstance()->getSelect();
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -132,7 +135,7 @@ class module_article extends abstract_module{
 	public function _edit(){
 		$tMessage=$this->save();
 		
-		$oArticleModel=new model_article;
+		$oArticleModel=new Model\Article;
 		$oArticle=$oArticleModel->findById( _root::getParam('id') );
 		
 		$oView=new _view('article::edit');
@@ -141,9 +144,9 @@ class module_article extends abstract_module{
 		$oView->tId=$oArticleModel->getIdTab();
 		
 		//on recupere un tableau indexe des auteurs pour afficher leur nom a la place de leur id
-		$oView->tJoinAuteur=model_auteur::getInstance()->getSelect();
+		$oView->tJoinAuteur=Model\Auteur::getInstance()->getSelect();
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -151,7 +154,7 @@ class module_article extends abstract_module{
 	}
 
 	public function _show(){
-		$oArticleModel=new model_article;
+		$oArticleModel=new Model\Article;
 		$oArticle=$oArticleModel->findById( _root::getParam('id') );
 		
 		$oView=new _view('article::show');
@@ -160,7 +163,7 @@ class module_article extends abstract_module{
 		$oView->tId=$oArticleModel->getIdTab();
 		
 		//on recupere un tableau indexe des auteurs pour afficher leur nom a la place de leur id
-		$oView->tJoinAuteur=model_auteur::getInstance()->getSelect();
+		$oView->tJoinAuteur=Model\Auteur::getInstance()->getSelect();
 		
 		$this->oLayout->add('main',$oView);
 	}
@@ -168,7 +171,7 @@ class module_article extends abstract_module{
 	public function _delete(){
 		$tMessage=$this->delete();
 
-		$oArticleModel=new model_article;
+		$oArticleModel=new Model\Article;
 		$oArticle=$oArticleModel->findById( _root::getParam('id') );
 		
 		$oView=new _view('article::delete');
@@ -178,7 +181,7 @@ class module_article extends abstract_module{
 		
 		
 
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -190,15 +193,15 @@ class module_article extends abstract_module{
 			return null;
 		}
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}
 	
-		$oArticleModel=new model_article;
+		$oArticleModel=new Model\Article;
 		$iId=_root::getParam('id',null);
 		if($iId==null){
-			$oArticle=new row_article;	
+			$oArticle=new Row\Article;
 		}else{
 			$oArticle=$oArticleModel->findById( _root::getParam('id',null) );
 		}
@@ -223,12 +226,12 @@ class module_article extends abstract_module{
 			return null;
 		}
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}
 	
-		$oArticleModel=new model_article;
+		$oArticleModel=new Model\Article;
 		$iId=_root::getParam('id',null);
 		if($iId!=null){
 			$oArticle=$oArticleModel->findById( _root::getParam('id',null) );
@@ -241,14 +244,14 @@ class module_article extends abstract_module{
 	}
 
 	public function _newsrss(){
-		$oPluginRss=new plugin_rss();
+		$oPluginRss=new Plugin\RSS();
 		$oPluginRss->setName('news');
 		$oPluginRss->setTitre('Titre du site');
 		$oPluginRss->setUrl('http://www.urldevotresite.org/');
 		$oPluginRss->setDesc('Feed Rss du site');
 		$oPluginRss->setAdresseRss('http://urldevotresite.org/index.php?:nav=article::newsrss');
 		
-		$oModelArticle=new model_article;
+		$oModelArticle=new Model\Article;
 		$tArticle=$oModelArticle->findAll();
 		
 		foreach($tArticle as $oArticle){

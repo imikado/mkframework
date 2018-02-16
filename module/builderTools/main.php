@@ -120,6 +120,9 @@ class module_builderTools {
 		$sPath = _root::getConfigVar('path.generation') . _root::getParam('id') . '/model/' . $sClass . '.php';
 		require_once( $sPath );
 
+        if (substr($sClass,0,6) != 'model_') {
+            $sClass = 'Model\\'.$sClass;
+        }
 		$oModel = new $sClass;
 
 		$sConfig = $oModel->getConfig();
@@ -198,6 +201,9 @@ class module_builderTools {
 	public function getIdTabFromClass($sClass) {
 		$sPath = _root::getConfigVar('path.generation') . _root::getParam('id') . '/model/' . $sClass . '.php';
 		require_once( $sPath );
+        if (substr($sClass,0,6) != 'model_') {
+            $sClass = 'Model\\'.$sClass;
+        }
 		$oModel = new $sClass;
 
 		return $oModel->getIdTab();
@@ -313,6 +319,25 @@ class module_builderTools {
 	public function getSource($sModulePath, $sProjectPath, $sFilename) {
 		return new builderSource($sModulePath, $sProjectPath, $sFilename);
 	}
+
+    public function installComposer($sBaseDir) {
+        set_time_limit(0);
+        $sComposerUrl = 'https://getcomposer.org/composer.phar';
+        $composer_phar =file_get_contents($sComposerUrl);
+        $fp = fopen ($sBaseDir . '/composer.phar', 'w+');
+        fwrite($fp,$composer_phar);
+        fclose($fp);
+    }
+
+    public function executeComposer($sBaseDir) {
+	    $sFullBaseDir = realpath($sBaseDir);
+	    $sBaseDirEscaped = escapeshellcmd($sFullBaseDir);
+        putenv("COMPOSER_HOME=$sBaseDirEscaped");
+        $command = "cd $sBaseDirEscaped; php composer.phar install --no-interaction";
+        ob_start();
+        system($command);
+        $output = ob_get_clean();
+    }
 
 }
 

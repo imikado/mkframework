@@ -150,6 +150,9 @@ class module_mods_bootstrap_viewTable extends abstract_moduleBuilder{
 			$tFile[]=$oFile->getName();
 			require_once( $oFile->getAdresse() );
 			$sClassFoo=substr($oFile->getName(),0,-4);
+            if (substr($sClassFoo,0,6) != 'model_') {
+                $sClassFoo = 'Model\\'.substr($oFile->getName(),0,-4);
+            }
 			$oModelFoo=new $sClassFoo;
 			
 			if( method_exists( $oModelFoo, 'getSelect')){
@@ -185,7 +188,10 @@ class module_mods_bootstrap_viewTable extends abstract_moduleBuilder{
 			$sMethod=_root::getParam('method');
 			
 			module_builder::getTools()->loadConfig($sClass);
-			
+
+            if (substr($sClass,0,6) != 'model_') {
+                $sClass = 'Model\\'.substr($sClass,0,-4);
+            }
 			$oModel=new $sClass;
 			$tData=array();
 			try{
@@ -231,6 +237,9 @@ class module_mods_bootstrap_viewTable extends abstract_moduleBuilder{
 			
 			$oTpl->tRowMethodes=$tRowMethodes;
 
+            if (substr($sClass,0,6) != 'model_') {
+                $sClass = 'Model\\'.substr($sClass,0,-4);
+            }
 			$oModel=new $sClass;
 			$oTpl->sModuleToCreate=$oModel->getTable();
 			

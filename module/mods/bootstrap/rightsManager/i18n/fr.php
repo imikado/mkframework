@@ -1,4 +1,4 @@
-<?php plugin_i18n::add(array(
+<?php Plugin\I18n::add(array(
 
 'presentation'=>'Pr&eacute;sentation',
 'pourGererLesDroitsNousAllons'=>'Pour g&eacute;rer les droits de votre application, nous allons cr&eacute;er d\'abord notre base de donn&eacute;es',

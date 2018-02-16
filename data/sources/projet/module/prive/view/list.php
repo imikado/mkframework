@@ -10,7 +10,7 @@
 
 	<?php if($this->tArticle):?>
 	<?php foreach($this->tArticle as $oArticle):?>
-	<tr class="<?php echo plugin_tpl::alternate(array('white','gray'),'boucle1')?>">
+	<tr class="<?php echo Plugin\TPL::alternate(array('white','gray'),'boucle1')?>">
 
 		<td><?php echo $oArticle->titre?></td>
 		<td><?php echo $oArticle->findAuteur()->nom?></td>

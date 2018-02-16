@@ -8,7 +8,7 @@ exampleUser_groupsId
  * */
 
 
-$oForm=new plugin_form($this->oUser);
+$oForm=new Plugin\Form($this->oUser);
 $oForm->setMessage($this->tMessage);
 ?>
 <form action="" method="POST" >

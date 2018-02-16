@@ -1,5 +1,5 @@
 <form action="" method="POST">
-<?php $oForm=new plugin_formMultiRow();
+<?php $oForm=new Plugin\FormMultiRow();
 $oForm->setMessage($this->tMessage) ?>
 <table class="tb_list">
 	<tr>
@@ -8,7 +8,7 @@ $oForm->setMessage($this->tMessage) ?>
 	</tr>
 	<?php if($this->#tExamplemodel#):?>
 		<?php foreach($this->#tExamplemodel# as $#oExamplemodel#):?>
-		<tr <?php echo plugin_tpl::alternate(array('','class="alt"'))?>>
+		<tr <?php echo Plugin\TPL::alternate(array('','class="alt"'))?>>
 			<?php $oForm->add($#oExamplemodel#)?>
 			#ici#
 			<td>

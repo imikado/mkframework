@@ -21,6 +21,9 @@ class module_mods_bootstrap_authInscription extends abstract_moduleBuilder{
 			$tFile[]=$oFile->getName();
 			require_once( $oFile->getAdresse() );
 			$sClassFoo=substr($oFile->getName(),0,-4);
+            if (substr($sClassFoo,0,6) != 'model_') {
+                $sClassFoo = 'Model\\'.substr($oFile->getName(),0,-4);
+            }
 			$oModelFoo=new $sClassFoo;
 			
 			if( method_exists( $oModelFoo, 'getListAccount') and method_exists( $oModelFoo, 'hashPassword') ){
@@ -82,7 +85,7 @@ class module_mods_bootstrap_authInscription extends abstract_moduleBuilder{
 			return null;
 		}
 
-		$oPluginValid=new plugin_valid(_root::getRequest()->getParams());
+		$oPluginValid=new Plugin\Valid(_root::getRequest()->getParams());
 		$oPluginValid->isNotEmpty('modulename','Le champ doit &ecirc;tre rempli');
 		$oPluginValid->isNotEmpty('classmodel','Le champ doit &ecirc;tre rempli');
 		$oPluginValid->isNotEmpty('redirect','Le champ doit &ecirc;tre rempli');

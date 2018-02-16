@@ -12,7 +12,7 @@ double_encode=0
 [db]
 
 [debug]
-class=plugin_debugError
+class=Plugin\DebugError
 
 [module]
 folder.organized=1
@@ -23,7 +23,7 @@ folder.organized=1
 ;session.use_cookies = 1
 ;session.use_only_cookies = 1
 enabled=0
-class=plugin_auth
+class=Plugin\Auth
 module=auth::login
 session.timeout.enabled=1
 session.timeout.lifetime=(60*1)
@@ -37,7 +37,7 @@ layout.erreur=site/layout/erreurprod.php
 
 [urlrewriting]
 enabled=0
-class=plugin_routing
+class=Plugin\Routing
 conf=conf/routing.php
 use4O4=0
 
@@ -50,7 +50,7 @@ xss.enabled=1
 xsrf.session.enabled=0
 
 [log]
-class=plugin_log
+class=Plugin\Log
 application=0
 warning=0
 error=0
@@ -59,7 +59,7 @@ file.enabled=1
 apache.enabled=1
 
 [check]
-class=plugin_check
+class=Plugin\Check
 
 [site]
 ;Redirection

@@ -1,6 +1,6 @@
 <form action="" method="POST">
 	<?php
-	$oForm = new plugin_formMultiRow();
+	$oForm = new Plugin\FormMultiRow();
 	$oForm->setMessage($this->tMessage)
 	?>
 	<table class="table table-striped">
@@ -10,7 +10,7 @@
 		</tr>
 		<?php if($this->#tExamplemodel#):?>
 		<?php foreach($this->#tExamplemodel# as $#oExamplemodel#):  ?>
-		<tr <?php echo plugin_tpl::alternate(array('', 'class="alt"')) ?>>
+		<tr <?php echo Plugin\TPL::alternate(array('', 'class="alt"')) ?>>
 			<?php $oForm->add($#oExamplemodel#)  ?>
 			#ici#
 			<td>

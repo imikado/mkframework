@@ -32,7 +32,7 @@ $tDoc=array(
 'plugin_log'	=>'classplugin__log',
 'plugin_mail'	=>'classplugin__mail',
 'plugin_rss'	=>'classplugin__rss',
-'plugin_upload'	=>'classplugin__upload',
+'Plugin\Upload'	=>'classplugin__upload',
 'plugin_valid'	=>'classplugin__valid',
 'plugin_xsrf'	=>'classplugin__xsd',
 

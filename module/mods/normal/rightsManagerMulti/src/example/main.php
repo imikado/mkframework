@@ -46,7 +46,7 @@ class module_#examplemodule# extends abstract_module{
 		$oView=new _view('#examplemodule#::edit');
 		$oView->oPermission=$oPermission;
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -61,7 +61,7 @@ class module_#examplemodule# extends abstract_module{
 			return null;
 		}
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}
@@ -94,7 +94,7 @@ class module_#examplemodule# extends abstract_module{
 		$oView=new _view('#examplemodule#::new');
 		$oView->oPermission=$oPermission;
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -109,7 +109,7 @@ class module_#examplemodule# extends abstract_module{
 			return null;
 		}
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}
@@ -168,7 +168,7 @@ class module_#examplemodule# extends abstract_module{
 		$oView=new _view('#examplemodule#::delete');
 		$oView->oPermission=$oPermission;
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -183,7 +183,7 @@ class module_#examplemodule# extends abstract_module{
 			return null;
 		}
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}
@@ -204,7 +204,7 @@ class module_#examplemodule# extends abstract_module{
 		$oView=new _view('#examplemodule#::userEdit');
 		$oView->oUser=$oUser;
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		$oView->tGroup=#model_examplemodel#::getInstance()->findListGroupByUser(_root::getParam('id'));
@@ -219,7 +219,7 @@ class module_#examplemodule# extends abstract_module{
 			return null;
 		}
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}

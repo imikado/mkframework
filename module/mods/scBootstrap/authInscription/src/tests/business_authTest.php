@@ -3,7 +3,7 @@
 require_once(__DIR__ . '/../autoload_unitaire.php');
 
 //fake i18n class
-require_once(__DIR__ . '/plugin/plugin_i18nFake.php');
+require_once(__DIR__ . '/plugin/I18nFake.php');
 
 /**
  * @runTestsInSeparateProcesses
@@ -30,7 +30,7 @@ class business_VARmoduleChildENDVARTest extends PHPUnit_Framework_TestCase {
 		$sLogin = 'login';
 		$sPass = 'pass';
 
-		$oBusinessAuth = new business_VARmoduleChildENDVAR($oMockModel, $oMockAuth,new plugin_i18nFake() );
+		$oBusinessAuth = new business_VARmoduleChildENDVAR($oMockModel, $oMockAuth,new Plugin\I18nFake() );
 
 		$bReturn = $oBusinessAuth->checkCredentials($sLogin, $sPass);
 
@@ -50,7 +50,7 @@ class business_VARmoduleChildENDVARTest extends PHPUnit_Framework_TestCase {
 		$sLogin = 'login';
 		$sPass = 'pass';
 
-		$oBusinessAuth = new business_VARmoduleChildENDVAR($oMockModel, $oMockAuth,new plugin_i18nFake() );
+		$oBusinessAuth = new business_VARmoduleChildENDVAR($oMockModel, $oMockAuth,new Plugin\I18nFake() );
 
 		$bReturn = $oBusinessAuth->checkCredentials($sLogin, $sPass);
 
@@ -68,7 +68,7 @@ class business_VARmoduleChildENDVARTest extends PHPUnit_Framework_TestCase {
 			$sPass.='b';
 		}
 
-		$oBusinessAuth = new business_VARmoduleChildENDVAR($oMockModel, $oMockAuth,new plugin_i18nFake() );
+		$oBusinessAuth = new business_VARmoduleChildENDVAR($oMockModel, $oMockAuth,new Plugin\I18nFake() );
 
 		$bReturn = $oBusinessAuth->checkCredentials($sLogin, $sPass);
 
@@ -86,7 +86,7 @@ class business_VARmoduleChildENDVARTest extends PHPUnit_Framework_TestCase {
 
 		$oUser = new stdClass;
 
-		$oBusinessAuth = new business_VARmoduleChildENDVAR($oMockModel, $oMockAuth,new plugin_i18nFake() );
+		$oBusinessAuth = new business_VARmoduleChildENDVAR($oMockModel, $oMockAuth,new Plugin\I18nFake() );
 
 		$bReturn = $oBusinessAuth->registerNewAccount($oUser, $sLogin, $sPass, $sPass2);
 
@@ -103,7 +103,7 @@ class business_VARmoduleChildENDVARTest extends PHPUnit_Framework_TestCase {
 
 		$oUser = new stdClass;
 
-		$oBusinessAuth = new business_VARmoduleChildENDVAR($oMockModel, $oMockAuth,new plugin_i18nFake() );
+		$oBusinessAuth = new business_VARmoduleChildENDVAR($oMockModel, $oMockAuth,new Plugin\I18nFake() );
 
 		$bReturn = $oBusinessAuth->registerNewAccount($oUser, $sLogin, $sPass, $sPass2);
 		$tData = $oBusinessAuth->getReturn()->getData('tError');
@@ -122,7 +122,7 @@ class business_VARmoduleChildENDVARTest extends PHPUnit_Framework_TestCase {
 
 		$oUser = new stdClass;
 
-		$oBusinessAuth = new business_VARmoduleChildENDVAR($oMockModel, $oMockAuth,new plugin_i18nFake() );
+		$oBusinessAuth = new business_VARmoduleChildENDVAR($oMockModel, $oMockAuth,new Plugin\I18nFake() );
 
 		$bReturn = $oBusinessAuth->registerNewAccount($oUser, $sLogin, $sPass, $sPass2);
 		$tData = $oBusinessAuth->getReturn()->getData('tError');
@@ -146,7 +146,7 @@ class business_VARmoduleChildENDVARTest extends PHPUnit_Framework_TestCase {
 
 		$oUser = new stdClass;
 
-		$oBusinessAuth = new business_VARmoduleChildENDVAR($oMockModel, $oMockAuth,new plugin_i18nFake() );
+		$oBusinessAuth = new business_VARmoduleChildENDVAR($oMockModel, $oMockAuth,new Plugin\I18nFake() );
 
 		$bReturn = $oBusinessAuth->registerNewAccount($oUser, $sLogin, $sPass, $sPass2);
 		$tData = $oBusinessAuth->getReturn()->getData('tError');
