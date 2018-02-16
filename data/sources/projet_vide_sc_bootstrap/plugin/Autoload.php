@@ -10,7 +10,7 @@ class Autoload
         $tab=preg_split('/_/',$sClass);
         if($sClass[0]=='_'){
             include _root::getConfigVar('path.lib').'class'.$sClass.'.php';
-        }else if(in_array($tab[0],array('model','abstract'))){
+        }else if(in_array($tab[0],array('model','plugin','abstract'))){
             include _root::getConfigVar('path.'.$tab[0]).$sClass.'.php';
         }else if($tab[0]=='module'){
             if(count($tab) == 2 or _root::getConfigVar('module.folder.organized',0)==0){
