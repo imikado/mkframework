@@ -1,4 +1,4 @@
-<?php plugin_i18n::add(array(
+<?php Plugin\I18n::add(array(
 
 'menu_coucheModel'=>'Model part',
 'menu_modules'=>'Modules',	

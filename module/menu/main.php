@@ -18,7 +18,7 @@ along with Mkframework.  If not, see <http://www.gnu.org/licenses/>.
 Class module_menu extends abstract_module{
 	
 	public function __construct(){
-		plugin_i18n::start();
+		Plugin\I18n::start();
 	}
 	
 	public function _index(){

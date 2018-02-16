@@ -240,5 +240,4 @@ abstract class abstract_model{
 		}
 		return self::$_tInstance[$class];
 	}
-	
 }

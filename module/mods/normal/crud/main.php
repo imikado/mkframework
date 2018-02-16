@@ -16,6 +16,10 @@ class module_mods_normal_crud extends abstract_moduleBuilder{
 			$tFile[]=$oFile->getName();
 			require_once( $oFile->getAdresse() );
 			$sClassFoo=substr($oFile->getName(),0,-4);
+
+            if (substr($oFile->getName(),0,6) != 'model_') {
+                $sClassFoo = 'Model\\'.substr($oFile->getName(),0,-4);
+            }
 			$oModelFoo=new $sClassFoo;
 			
 			if( method_exists( $oModelFoo, 'getSelect')){
@@ -45,6 +49,9 @@ class module_mods_normal_crud extends abstract_moduleBuilder{
 			
 			$oTpl->tRowMethodes=$tRowMethodes;
 
+            if (substr($sClass,0,6) != 'model_') {
+                $sClass = 'Model\\'.$sClass;
+            }
 			$oModel=new $sClass;
 			$oTpl->sModuleToCreate=$oModel->getTable();
 			$oTpl->sgbd= _root::getConfigVar('db.'.$oModel->getConfig().'.sgbd');
@@ -65,6 +72,10 @@ class module_mods_normal_crud extends abstract_moduleBuilder{
 			}
 			
 			require_once(_root::getConfigVar('path.generation')._root::getParam('id').'/model/'.$sClass.'.php');
+
+            if (substr($sClass,0,6) != 'model_') {
+                $sClass = 'Model\\'.$sClass;
+            }
 			$oModel=new $sClass;
 			$sModule=$sModuleToCreate;
 			$this->projectMkdir('module/'.$sModule );

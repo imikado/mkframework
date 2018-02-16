@@ -59,6 +59,9 @@ class module_mods_bootstrap_rightsManagerMulti extends abstract_moduleBuilder{
 			
 			require_once( $oFile->getAdresse() );
 			$sClass=substr($oFile->getName(),0,-4);
+            if (substr($sClass,0,6) != 'model_') {
+                $sClass = 'Model\\'.substr($oFile->getName(),0,-4);
+            }
 			$oModelFoo=new $sClass;
 			
 			$tFile[$sClass]=$oFile->getName();
@@ -102,7 +105,7 @@ class module_mods_bootstrap_rightsManagerMulti extends abstract_moduleBuilder{
 
 		$tField=$this->tField;
 	
-		$oValid=new plugin_valid(_root::getRequest()->getParams());
+		$oValid=new Plugin\Valid(_root::getRequest()->getParams());
 		foreach($tField as $sField){
 			$oValid->isLongerOrEqualThan($sField,2,'obligatoire');
 		}

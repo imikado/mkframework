@@ -23,8 +23,8 @@ $tIni=parse_ini_file('../conf/path.ini.php',true);
 include($tIni['path']['lib'].'/class_root.php');
 
 //enregistrement de l'autoloader
-include($tIni['path']['plugin'].'/plugin_autoload.php');
-spl_autoload_register(array('plugin_autoload','autoload'));
+include($tIni['path']['plugin'].'/Autoload.php');
+spl_autoload_register(array('Plugin\Autoload','autoload'));
 
 
 //pour gerer toutes les erreurs en exception
@@ -47,6 +47,6 @@ $oRoot->addRequest($_POST);
 $oRoot->run();
 
 if(_root::getConfigVar('site.mode')=='dev'){
-	$oDebug=new plugin_debug($iMicrotime);
+	$oDebug=new Plugin\Debug($iMicrotime);
 	echo $oDebug->display();
 }

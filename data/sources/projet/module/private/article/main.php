@@ -9,7 +9,7 @@ class module_private_article extends abstract_module{
 	
 	public function _list(){
 		
-		$oArticleModel=new model_article;
+		$oArticleModel=new Model\Article;
 		$tArticle=$oArticleModel->findAllOrderBy(module_table::getParam('order','titre'),module_table::getParam('side'));
 		
 		$oView=new _view('private/article::slist');
@@ -17,7 +17,7 @@ class module_private_article extends abstract_module{
 		$oView->tColumn=$oArticleModel->getListColumn();//array('id','titre');//
 
 		//on recupere un tableau indexe des auteurs pour afficher leur nom a la place de leur id
-		$oView->tJoinAuteur=model_auteur::getInstance()->getSelect();
+		$oView->tJoinAuteur=Model\Auteur::getInstance()->getSelect();
 		
 
 		$this->oLayout->add('main',$oView);

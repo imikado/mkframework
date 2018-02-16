@@ -1,5 +1,5 @@
 <?php
-$oForm = new plugin_sc_form($this->VARoTableENDVAR);
+$oForm = new Plugin\sc\Form(($this->VARoTableENDVAR);
 $oForm->setMessage($this->tMessage);
 ?>
 <form class="form-horizontal" action="" method="POST" VARenctypeENDVAR>

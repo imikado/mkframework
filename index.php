@@ -36,8 +36,16 @@ $tIni=parse_ini_file('conf/site.ini.php',true);
 include($tIni['path']['lib'].'/class_root.php');
 //spl_autoload_register(array('_root','autoload'));
 
-include($tIni['path']['plugin'].'/plugin_autoload.php');
-spl_autoload_register(array('plugin_autoload','autoload'));
+include($tIni['path']['plugin'].'/Autoload.php');
+spl_autoload_register(array('Plugin\Autoload','autoload'));
+
+function tr($sText) {
+    return Plugin\I18n::get($sText);
+}
+
+function trR($sText, $tReplace) {
+    return str_replace(array_keys($tReplace), array_values($tReplace), tr($sText));
+}
 
 //pour gerer toutes les erreurs en exception
 function exception_error_handler($errno, $errstr, $errfile, $errline ) {

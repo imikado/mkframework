@@ -3,7 +3,7 @@
 require_once(__DIR__ . '/../autoload_unitaire.php');
 
 //fake i18n class
-require_once(__DIR__ . '/plugin/plugin_i18nFake.php');
+require_once(__DIR__ . '/plugin/I18nFake.php');
 
 /**
  * @runTestsInSeparateProcesses
@@ -20,7 +20,7 @@ class VARbusiness_tableENDVARTest extends PHPUnit_Framework_TestCase {
 
 		$oMockModel = $this->createMock('VARinterfaceModelENDVAR');
 
-		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new plugin_i18nFake(), new plugin_sc_valid() );
+		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new Plugin\I18nFake(), new Plugin\sc\Valid() );
 
 		$tParam = array();
 		$tColumn = array(VARbusinessArrayColumnENDVAR);
@@ -38,7 +38,7 @@ class VARbusiness_tableENDVARTest extends PHPUnit_Framework_TestCase {
 		$oMockModel = $this->createMock('VARinterfaceModelENDVAR');
 		$oMockModel->method('findById')->willReturn( new stdclass() );
 
-		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new plugin_i18nFake(), new plugin_sc_valid() );
+		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new Plugin\I18nFake(), new Plugin\sc\Valid() );
 
 		$tParam = array();
 		$tColumn = array(VARbusinessArrayColumnENDVAR);
@@ -54,7 +54,7 @@ class VARbusiness_tableENDVARTest extends PHPUnit_Framework_TestCase {
 	public function test_insertItemShouldReturnErrorsMissing() {
 		$oMockModel = $this->createMock('VARinterfaceModelENDVAR');
 
-		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new plugin_i18nFake(), new plugin_sc_valid() );
+		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new Plugin\I18nFake(), new Plugin\sc\Valid() );
 
 		$tParam = array();
 		$tColumn = array(VARbusinessArrayColumnENDVAR);
@@ -77,7 +77,7 @@ class VARbusiness_tableENDVARTest extends PHPUnit_Framework_TestCase {
 		$oMockModel = $this->createMock('VARinterfaceModelENDVAR');
 		$oMockModel->method('findById')->willReturn( new stdclass() );
 
-		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new plugin_i18nFake(), new plugin_sc_valid() );
+		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new Plugin\I18nFake(), new Plugin\sc\Valid() );
 
 		$tParam = array();
 		$tColumn = array(VARbusinessArrayColumnENDVAR);

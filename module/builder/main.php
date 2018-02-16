@@ -90,6 +90,8 @@ class module_builder extends abstract_module {
 				model_mkfbuilderprojet::getInstance()->createEmpty(_root::getParam('projet'));
 				self::getTools()->updateLayoutTitle(_root::getParam('projet'));
 			}
+		/*	self::getTools()->installComposer(_root::getConfigVar('path.generation') . $sProject );
+			self::getTools()->executeComposer(_root::getConfigVar('path.generation') . $sProject );*/
 			_root::redirect('builder::list');
 		}
 

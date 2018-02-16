@@ -1,4 +1,4 @@
-<?php plugin_i18n::add(array(
+<?php Plugin\I18n::add(array(
 
 'choisissezUneClassModele'=>'Choisissez une classe mod&egrave;le',
 'leModuleExisteDeja'=>'Le module module/%s existe d&eacute;j&agrave;, veuillez indiquer un autre nom ',

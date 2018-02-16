@@ -1,6 +1,6 @@
 <?php
 
-plugin_i18n::add(array(
+Plugin\I18n::add(array(
     'ajouter' => 'add',
     'annuler' => 'cancel',
     'finish' => 'finish',

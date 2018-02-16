@@ -16,6 +16,9 @@ class module_mods_normal_crudEmbeddedReadonly extends abstract_moduleBuilder{
 			$tFile[]=$oFile->getName();
 			require_once( $oFile->getAdresse() );
 			$sClassFoo=substr($oFile->getName(),0,-4);
+            if (substr($sClassFoo,0,6) != 'model_') {
+                $sClassFoo = 'Model\\'.$sClassFoo;
+            }
 			$oModelFoo=new $sClassFoo;
 			
 			if( method_exists( $oModelFoo, 'getSelect')){
@@ -33,7 +36,10 @@ class module_mods_normal_crudEmbeddedReadonly extends abstract_moduleBuilder{
 
 			$tColumn=module_builder::getTools()->getListColumnFromClass($sClass);
 			$oTpl->sClass=$sClass;
-			
+
+            if (substr($sClassFoo,0,6) != 'model_') {
+                $sClassFoo = 'Model\\'.$sClassFoo;
+            }
 			$tId=module_builder::getTools()->getIdTabFromClass($sClass);
 			foreach($tColumn as $i => $sColumn){
 				if(in_array($sColumn, $tId) ){
@@ -65,6 +71,9 @@ class module_mods_normal_crudEmbeddedReadonly extends abstract_moduleBuilder{
 			}
 			
 			require_once(_root::getConfigVar('path.generation')._root::getParam('id').'/model/'.$sClass.'.php');
+            if (substr($sClassFoo,0,6) != 'model_') {
+                $sClassFoo = 'Model\\'.$sClassFoo;
+            }
 			$oModel=new $sClass;
 			$sModule=$sModuleToCreate;
 			$this->projectMkdir('module/'.$sModule );

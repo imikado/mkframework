@@ -1,5 +1,5 @@
 <?php 
-$oFunctionClose=new plugin_jquery('closeDiv');
+$oFunctionClose=new Plugin\Jquery('closeDiv');
 $oFunctionClose->addModifyElement('rendu','hide');
 echo $oFunctionClose->getJs();
 ?>

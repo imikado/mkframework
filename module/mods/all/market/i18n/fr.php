@@ -1,4 +1,4 @@
-<?php plugin_i18n::add(array(
+<?php Plugin\I18n::add(array(
 
 'verifierLesMisesAjour'=>'V&eacute;rifier les mises &agrave; jour',
 'ajouterUneExtension'=>'Ajouter des extensions au builder',

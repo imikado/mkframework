@@ -8,7 +8,7 @@
 
 	<?php if($this->tArticle):?>
 	<?php foreach($this->tArticle as $oArticle):?>
-	<tr class="<?php echo plugin_tpl::alternate(array('white','gray'),'boucle1')?>">
+	<tr class="<?php echo Plugin\TPL::alternate(array('white','gray'),'boucle1')?>">
 		<?php foreach($this->tColumn as $sColumn):?>
 			<td >
 				<?php if($sColumn=='auteur_id'):?>

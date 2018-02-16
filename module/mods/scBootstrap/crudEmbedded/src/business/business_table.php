@@ -17,7 +17,7 @@ class VARbusiness_tableENDVAR extends business_abstract {
 	}
 
 	public function getCheck($tParam_) {
-		$oPluginValid = new plugin_valid($tParam_);
+		$oPluginValid = new Plugin\Valid($tParam_);
 
 		foreach ($this->_tColumn as $sColumn) {
 			$oPluginValid->isNotEmpty($sColumn, $this->tr('errorIsEmpty'));

@@ -5,7 +5,7 @@
 	</tr>
 	<?php if ($this->VARtTableENDVAR): ?>
 		<?php foreach ($this->VARtTableENDVAR as $VARoTableENDVAR): ?>
-			<tr <?php echo plugin_tpl::alternate(array('', 'class="alt"')) ?>>
+			<tr <?php echo Plugin\TPL::alternate(array('', 'class="alt"')) ?>>
 				VARlistTdENDVAR
 				<td>
 					<a class="btn btn-success" href="<?php

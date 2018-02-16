@@ -35,7 +35,7 @@ class row_#maTable# extends abstract_row{
 	*/
 	/*exemple test validation*/
 	private function getCheck(){
-		$oPluginValid=new plugin_valid($this->getTab());
+		$oPluginValid=new Plugin\Valid($this->getTab());
 		#rowMethodGetCheckContraints#
 		
 		/* renseigner vos check ici

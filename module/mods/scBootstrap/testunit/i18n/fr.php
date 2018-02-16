@@ -1,4 +1,4 @@
-<?php plugin_i18n::add(array(
+<?php Plugin\I18n::add(array(
 
 'model'=>'Couche mod&egrave;le',
 'module'=>'Modules',

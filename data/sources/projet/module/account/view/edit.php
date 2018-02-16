@@ -1,4 +1,4 @@
-<?php $oPluginHtml=new plugin_html?>
+<?php $oPluginHtml=new Plugin\HTML?>
 <form action="" method="POST">
 <?php foreach($this->tColumn as $sColumn):?>
 	<?php if( !in_array($sColumn,$this->tId)) continue;?>

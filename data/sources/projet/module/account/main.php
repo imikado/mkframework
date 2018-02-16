@@ -14,7 +14,7 @@ class module_account extends abstract_module{
 	}
 	
 public function getList(){
-$oAccountModel=new model_account;
+$oAccountModel=new Model\Account();
 $tAccount=$oAccountModel->findAll();
 
 $oView=new _view('account::list');
@@ -37,8 +37,8 @@ return $oView;
 	}
 	
 	public function getNew(){
-		$oAccountModel=new model_account;
-		$oAccount=new row_account;
+		$oAccountModel=new Model\Account();
+		$oAccount=new Row\Account();
 		
 		$oView=new _view('account::new');
 		$oView->oAccount=$oAccount;
@@ -54,7 +54,7 @@ return $oView;
 	
 		$oView=$this->getNew();
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -62,7 +62,7 @@ return $oView;
 	}
 	
 	public function getEdit($id){
-		$oAccountModel=new model_account;
+		$oAccountModel=new Model\Account();
 		$oAccount=$oAccountModel->findById( $id );
 		
 		$oView=new _view('account::edit');
@@ -79,7 +79,7 @@ return $oView;
 		
 		$oView=$this->getEdit(_root::getParam('id'));
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -87,7 +87,7 @@ return $oView;
 	}
 
 	public function getShow($id){
-		$oAccountModel=new model_account;
+		$oAccountModel=new Model\Account();
 		$oAccount=$oAccountModel->findById( $id );
 		
 		$oView=new _view('account::show');
@@ -105,7 +105,7 @@ return $oView;
 	}
 	
 	public function getDelete($id){
-		$oAccountModel=new model_account;
+		$oAccountModel=new Model\Account();
 		$oAccount=$oAccountModel->findById( $id );
 		
 		$oView=new _view('account::delete');
@@ -122,7 +122,7 @@ return $oView;
 		
 		$oView=$this->getDelete(_root::getParam('id'));
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 		
@@ -134,15 +134,15 @@ return $oView;
 			return null;
 		}
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}
 	
-		$oAccountModel=new model_account;
+		$oAccountModel=new Model\Account();
 		$iId=_root::getParam('id',null);
 		if($iId==null){
-			$oAccount=new row_account;	
+			$oAccount=new Row\Account;
 		}else{
 			$oAccount=$oAccountModel->findById( _root::getParam('id',null) );
 		}
@@ -169,12 +169,12 @@ return $oView;
 			return null;
 		}
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}
 	
-		$oAccountModel=new model_account;
+		$oAccountModel=new Model\Account();
 		$iId=_root::getParam('id',null);
 		if($iId!=null){
 			$oAccount=$oAccountModel->findById( _root::getParam('id',null) );

@@ -57,11 +57,15 @@ class module_mods_normal_rightsManager extends abstract_moduleBuilder{
 			
 			require_once( $oFile->getAdresse() );
 			$sClass=substr($oFile->getName(),0,-4);
+
+            $tColumnFoo=module_builder::getTools()->getListColumnFromClass($sClass);
+            if (substr($sClass,0,6) != 'model_') {
+                $sClass = 'Model\\'.$sClass;
+            }
 			$oModelFoo=new $sClass;
 			
 			$tFile[$sClass]=$oFile->getName();
-			
-			$tColumnFoo=module_builder::getTools()->getListColumnFromClass($sClass);
+
 			$tColumnClass=array(null);
 			foreach($tColumnFoo as $sField){
 				$tColumnClass[ $sField ]=$sField;
@@ -100,7 +104,7 @@ class module_mods_normal_rightsManager extends abstract_moduleBuilder{
 
 		$tField=$this->tField;
 	
-		$oValid=new plugin_valid(_root::getRequest()->getParams());
+		$oValid=new Plugin\Valid(_root::getRequest()->getParams());
 		foreach($tField as $sField){
 			$oValid->isLongerOrEqualThan($sField,2,'obligatoire');
 		}
@@ -119,26 +123,42 @@ class module_mods_normal_rightsManager extends abstract_moduleBuilder{
 		//permissions
 		$classModelPermission=_root::getParam('classModelPermission');
 		include_once(_root::getConfigVar('path.generation')._root::getParam('id').'/model/'.$classModelPermission.'.php');
+
+        if (substr($classModelPermission,0,6) != 'model_') {
+            $classModelPermission = 'Model\\'.$classModelPermission;
+        }
 		$oPermission=new $classModelPermission;
 		
 		//actions
 		$classModelAction=_root::getParam('classModelAction');
 		include_once(_root::getConfigVar('path.generation')._root::getParam('id').'/model/'.$classModelAction.'.php');
+        if (substr($classModelAction,0,6) != 'model_') {
+            $classModelAction = 'Model\\'.$classModelAction;
+        }
 		$oAction=new $classModelAction;
 		
 		//items
 		$classModelItem=_root::getParam('classModelItem');
 		include_once(_root::getConfigVar('path.generation')._root::getParam('id').'/model/'.$classModelItem.'.php');
+        if (substr($classModelItem,0,6) != 'model_') {
+            $classModelItem = 'Model\\'.$classModelItem;
+        }
 		$oItem=new $classModelItem;
 		
 		//groups
 		$classModelGroup=_root::getParam('classModelGroup');
 		include_once(_root::getConfigVar('path.generation')._root::getParam('id').'/model/'.$classModelGroup.'.php');
+        if (substr($classModelGroup,0,6) != 'model_') {
+            $classModelGroup = 'Model\\'.$classModelGroup;
+        }
 		$oGroup=new $classModelGroup;
 		
 		//users
 		$classModelUser=_root::getParam('classModelUser');
 		include_once(_root::getConfigVar('path.generation')._root::getParam('id').'/model/'.$classModelUser.'.php');
+        if (substr($classModelUser,0,6) != 'model_') {
+            $classModelUser = 'Model\\'.$classModelUser;
+        }
 		$oUser=new $classModelUser;
 		
 		

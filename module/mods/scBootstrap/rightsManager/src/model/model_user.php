@@ -65,7 +65,7 @@ class VARrow_userENDVAR extends abstract_row {
 	/* exemple test validation */
 
 	private function getCheck() {
-		$oPluginValid = new plugin_valid($this->getTab());
+		$oPluginValid = new Plugin\Valid($this->getTab());
 
 
 		/* renseigner vos check ici

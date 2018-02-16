@@ -34,7 +34,7 @@ class row_exampletb extends abstract_rownosql{
 	*/
 	/*exemple test validation*/
 	private function getCheck(){
-		$oPluginValid=new plugin_valid($this->getTab());
+		$oPluginValid=new Plugin\Valid($this->getTab());
 		//checkContraint
 		
 		/* renseigner vos check ici

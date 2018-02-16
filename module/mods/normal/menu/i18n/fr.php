@@ -1,4 +1,4 @@
-<?php plugin_i18n::add(array(
+<?php Plugin\I18n::add(array(
 
 'remplissezLeLibelle'=>'Remplissez le libell&eacute; du lien',
 'CreationDuFichierVAR'=>'Creation du fichier #FICHIER#',

@@ -23,8 +23,8 @@ $tIni=parse_ini_file('../conf/path.ini.php',true);
 include($tIni['path']['lib'].'/class_root.php');
 
 //enregistrement de l'autoloader
-include($tIni['path']['plugin'].'/plugin_autoload.php');
-spl_autoload_register(array('plugin_autoload','autoload'));
+include($tIni['path']['plugin'].'/Autoload.php');
+spl_autoload_register(array('Plugin\Autoload','autoload'));
 
 
 //pour gerer toutes les erreurs en exception
@@ -47,7 +47,7 @@ $oRoot->addRequest($_POST);
 $oRoot->run();
 
 if(_root::getConfigVar('site.mode')=='dev'){
-	$oDebug=new plugin_debug($iMicrotime);
+	$oDebug=new Plugin\Debug($iMicrotime);
 	echo $oDebug->display();
 }
 if(_root::getConfigVar('log.performance')==1){
@@ -56,7 +56,7 @@ if(_root::getConfigVar('log.performance')==1){
         if($oAccount and $oAccount->getAccount()){
                 $sUser=$oAccount->getAccount()->ACC_Login;
         }
-        $iDelta=sprintf('%0.3f',plugin_debug::microtime()-plugin_debug::microtime($iMicrotime));
+        $iDelta=sprintf('%0.3f',Plugin\Debug::microtime()-Plugin\Debug::microtime($iMicrotime));
         $sLog=date('Y-m-d').';'.date('H:i:s').';'.$sUser.';'.$_SERVER['REQUEST_URI'].';'.$iDelta.'s'."\n";
         file_put_contents(_root::getConfigVar('path.log','data/log/').date('Y-m-d').'_performance.csv', $sLog, FILE_APPEND);
 }

@@ -3,7 +3,7 @@
 require_once(__DIR__ . '/../autoload_unitaire.php');
 
 //fake i18n class
-require_once(__DIR__ . '/plugin/plugin_i18nFake.php');
+require_once(__DIR__ . '/plugin/I18nFake.php');
 
 /**
  * @runTestsInSeparateProcesses
@@ -20,7 +20,7 @@ class VARbusiness_tableENDVARTest extends PHPUnit_Framework_TestCase {
 
 		$oMockModel = $this->createMock('VARinterfaceModelENDVAR');
 
-		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new plugin_i18nFake() );
+		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new Plugin\I18nFake() );
 
 		$tParam = array();
 		$tColumn = array(VARbusinessArrayColumnENDVAR);
@@ -37,7 +37,7 @@ class VARbusiness_tableENDVARTest extends PHPUnit_Framework_TestCase {
 
 		$oMockModel = $this->createMock('VARinterfaceModelENDVAR');
 
-		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new plugin_i18nFake() );
+		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new Plugin\I18nFake() );
 
 		$tParam = array();
 		$tColumn = array(VARbusinessArrayColumnENDVAR);
@@ -53,7 +53,7 @@ class VARbusiness_tableENDVARTest extends PHPUnit_Framework_TestCase {
 	public function test_insertItemShouldReturnErrorsMissing() {
 		$oMockModel = $this->createMock('VARinterfaceModelENDVAR');
 
-		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new plugin_i18nFake() );
+		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new Plugin\I18nFake() );
 
 		$tParam = array();
 		$tColumn = array(VARbusinessArrayColumnENDVAR);
@@ -75,7 +75,7 @@ class VARbusiness_tableENDVARTest extends PHPUnit_Framework_TestCase {
 	public function test_updateItemShouldReturnErrorsMissing() {
 		$oMockModel = $this->createMock('VARinterfaceModelENDVAR');
 
-		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new plugin_i18nFake() );
+		$oBusiness = new VARbusiness_tableENDVAR($oMockModel,new Plugin\I18nFake() );
 
 		$tParam = array();
 		$tColumn = array(VARbusinessArrayColumnENDVAR);

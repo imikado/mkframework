@@ -8,7 +8,7 @@ class module_auteur extends abstract_module{
 	}
 	
 	public function getList(){
-		$oAuteurModel=new model_auteur;
+		$oAuteurModel=new Model\Auteur();
 		$tAuteur=$oAuteurModel->findAll();
 		
 		$oView=new _view('auteur::list');
@@ -25,8 +25,8 @@ class module_auteur extends abstract_module{
 	}
 	
 	public function getNew(){
-		$oAuteurModel=new model_auteur;
-		$oAuteur=new row_auteur;
+		$oAuteurModel=new Model\Auteur();
+		$oAuteur=new Row\Auteur;
 		
 		$oView=new _view('auteur::new');
 		$oView->oAuteur=$oAuteur;
@@ -43,7 +43,7 @@ class module_auteur extends abstract_module{
 	}
 	
 	public function getEdit($id){
-		$oAuteurModel=new model_auteur;
+		$oAuteurModel=new Model\Auteur();
 		$oAuteur=$oAuteurModel->findById( $id );
 		
 		$oView=new _view('auteur::edit');
@@ -61,7 +61,7 @@ class module_auteur extends abstract_module{
 	}
 	
 	public function getShow($id){
-		$oAuteurModel=new model_auteur;
+		$oAuteurModel=new Model\Auteur();
 		$oAuteur=$oAuteurModel->findById( $id );
 		
 		$oView=new _view('auteur::show');
@@ -79,10 +79,10 @@ class module_auteur extends abstract_module{
 	}
 	
 	public function _save(){
-		$oAuteurModel=new model_auteur;
+		$oAuteurModel=new Model\Auteur();
 		$iId=_root::getParam('id',null);
 		if($iId==null){
-			$oAuteur=new row_auteur;	
+			$oAuteur=new Row\Auteur();
 		}else{
 			$oAuteur=$oAuteurModel->findById( _root::getParam('id',null) );
 		}

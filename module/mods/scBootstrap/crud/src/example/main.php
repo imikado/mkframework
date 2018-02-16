@@ -35,7 +35,7 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends module_VARmodule
 
 		VARtJoinENDVAR
 
-		$oPluginXsrf = new plugin_xsrf();
+		$oPluginXsrf = new Plugin\XSRF();
 		$oView->token = $oPluginXsrf->getToken();
 		$oView->tMessage = $tMessage;
 
@@ -52,7 +52,7 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends module_VARmodule
 
 		VARtJoinENDVAR
 
-		$oPluginXsrf = new plugin_xsrf();
+		$oPluginXsrf = new Plugin\XSRF();
 		$oView->token = $oPluginXsrf->getToken();
 		$oView->tMessage = $tMessage;
 
@@ -82,7 +82,7 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends module_VARmodule
 		VARtJoinENDVAR
 
 
-		$oPluginXsrf = new plugin_xsrf();
+		$oPluginXsrf = new Plugin\XSRF();
 		$oView->token = $oPluginXsrf->getToken();
 		$oView->tMessage = $tMessage;
 
@@ -94,14 +94,14 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends module_VARmodule
 			return null;
 		}
 
-		$oPluginXsrf = new plugin_xsrf();
+		$oPluginXsrf = new Plugin\XSRF();
 		if (!$oPluginXsrf->checkToken(_root::getParam('token'))) { //on verifie que le token est valide
 			return array('token' => $oPluginXsrf->getMessage());
 		}
 
 		$tParams = _root::getRequest()->getParams();
 
-		$oBusiness = new VARbusiness_tableENDVAR(VARmodel_tableENDVAR::getInstance(), _root::getI18n(), new plugin_sc_valid() );
+		$oBusiness = new VARbusiness_tableENDVAR(VARmodel_tableENDVAR::getInstance(), _root::getI18n(), new Plugin\sc\Valid() );
 
 		$iId = _root::getParam('id', null);
 		if ($iId == null) {
@@ -124,12 +124,12 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends module_VARmodule
 			return null;
 		}
 
-		$oPluginXsrf = new plugin_xsrf();
+		$oPluginXsrf = new Plugin\XSRF();
 		if (!$oPluginXsrf->checkToken(_root::getParam('token'))) { //on verifie que le token est valide
 			return array('token' => $oPluginXsrf->getMessage());
 		}
 
-		$oBusiness = new VARbusiness_tableENDVAR(VARmodel_tableENDVAR::getInstance(), _root::getI18n(), new plugin_sc_valid()  );
+		$oBusiness = new VARbusiness_tableENDVAR(VARmodel_tableENDVAR::getInstance(), _root::getI18n(), new Plugin\sc\Valid()  );
 
 		$VARoTableENDVAR = VARmodel_tableENDVAR::getInstance()->findById(_root::getParam('id'));
 

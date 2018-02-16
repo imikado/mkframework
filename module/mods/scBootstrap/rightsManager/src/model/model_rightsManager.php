@@ -109,7 +109,7 @@ class VARrow_rightManagerENDVAR extends abstract_row{
 	protected $sClassModel = 'VARmodel_rightManagerENDVAR';
 
 	private function getCheck() {
-		$oPluginValid = new plugin_valid($this->getTab());
+		$oPluginValid = new Plugin\Valid($this->getTab());
 
 
 		/* renseigner vos check ici

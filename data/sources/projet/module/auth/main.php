@@ -18,7 +18,7 @@ class module_auth extends abstract_module{
 		if(_root::getRequest()->isPost() ){
 			$sLogin=_root::getParam('login');
 			$sPass=sha1(_root::getParam('password'));
- 			$oModelAccount=new model_account;
+ 			$oModelAccount=new Model\Account();
 			$tAccount=$oModelAccount->getListAccount();
 			
 			if(_root::getAuth()->checkLoginPass($tAccount,$sLogin,$sPass)){

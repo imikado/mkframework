@@ -32,6 +32,9 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 			$tFile[]=$oFile->getName();
 			require_once( $oFile->getAdresse() );
 			$sClassFoo=substr($oFile->getName(),0,-4);
+            if (substr($sClassFoo,0,6) != 'model_') {
+                $sClassFoo = 'Model\\'.$sClassFoo;
+            }
 			$oModelFoo=new $sClassFoo;
 
 			if( method_exists( $oModelFoo, 'getSelect')){
@@ -54,6 +57,9 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 
 			$oTpl->class=$sClass;
 
+            if (substr($sClass,0,6) != 'model_') {
+                $sClass = 'Model\\'.$sClass;
+            }
 			$oModel=new $sClass;
 
 			if( method_exists( $oModel, 'findTotal')){
@@ -110,6 +116,10 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 			}
 
 			require_once(_root::getConfigVar('path.generation')._root::getParam('id').'/model/'.$sClass.'.php');
+
+            if (substr($sClass,0,6) != 'model_') {
+                $sClass = 'Model\\'.$sClass;
+            }
 			$oModel=new $sClass;
 			$sModule=$sModuleToCreate;
 

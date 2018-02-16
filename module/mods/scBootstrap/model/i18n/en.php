@@ -1,4 +1,4 @@
-<?php plugin_i18n::add(array(
+<?php Plugin\I18n::add(array(
 
 'selectionnerLeProfilAutiliser'=>'Select profile to use',
 'disponibleDansFichierConnexion'=>'(available in file conf/connexion.ini.php of your project)',

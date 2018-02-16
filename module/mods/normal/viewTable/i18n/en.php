@@ -1,4 +1,4 @@
-<?php plugin_i18n::add(array(
+<?php Plugin\I18n::add(array(
 
 'choisissezUneClasseModele'=>'Choose a model class',
 'choisissezLaMethodeQuiRemplira'=>'Choose the method wich will fill the table',

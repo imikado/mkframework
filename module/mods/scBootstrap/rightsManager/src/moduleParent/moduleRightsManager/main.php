@@ -37,7 +37,7 @@ class module_VARmoduleParentENDVAR_VARmoduleRightsManagerENDVAR extends module_V
 		$oView=$oView=$this->getView('edit');
 		$oView->oPermission=$oPermission;
 
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 
@@ -52,12 +52,12 @@ class module_VARmoduleParentENDVAR_VARmoduleRightsManagerENDVAR extends module_V
 			return null;
 		}
 
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}
 
-		$oBusiness=new business_VARmoduleRightsManagerENDVAR(VARmodel_rightManagerENDVAR::getInstance(),_root::getACL(), _root::getI18n(), new plugin_sc_valid() );
+		$oBusiness=new business_VARmoduleRightsManagerENDVAR(VARmodel_rightManagerENDVAR::getInstance(),_root::getACL(), _root::getI18n(), new Plugin\sc\Valid() );
 		if(true === $oBusiness->updatePermission(_root::getParam('id'),_root::getRequest()->getParams() ) ){
 			//une fois enregistre on redirige (vers la page liste)
 			$this->redirect('index');
@@ -74,7 +74,7 @@ class module_VARmoduleParentENDVAR_VARmoduleRightsManagerENDVAR extends module_V
 		$oView=$this->getView('new');
 		$oView->oPermission=$oPermission;
 
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 
@@ -89,12 +89,12 @@ class module_VARmoduleParentENDVAR_VARmoduleRightsManagerENDVAR extends module_V
 			return null;
 		}
 
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}
 
-		$oBusiness=new business_VARmoduleRightsManagerENDVAR(VARmodel_rightManagerENDVAR::getInstance(),_root::getACL(), _root::getI18n(), new plugin_sc_valid() );
+		$oBusiness=new business_VARmoduleRightsManagerENDVAR(VARmodel_rightManagerENDVAR::getInstance(),_root::getACL(), _root::getI18n(), new Plugin\sc\Valid() );
 		if(true === $oBusiness->insertPermission(new VARrow_rightManagerENDVAR(),_root::getRequest()->getParams() ) ){
 			//une fois enregistre on redirige (vers la page liste)
 			$this->redirect('index');
@@ -113,7 +113,7 @@ class module_VARmoduleParentENDVAR_VARmoduleRightsManagerENDVAR extends module_V
 		$oView=$oView=$this->getView('edit');
 		$oView->oPermission=$oPermission;
 
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 
@@ -128,12 +128,12 @@ class module_VARmoduleParentENDVAR_VARmoduleRightsManagerENDVAR extends module_V
 			return null;
 		}
 
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}
 
-		$oBusiness=new business_VARmoduleRightsManagerENDVAR(VARmodel_rightManagerENDVAR::getInstance(),_root::getACL(), _root::getI18n(), new plugin_sc_valid() );
+		$oBusiness=new business_VARmoduleRightsManagerENDVAR(VARmodel_rightManagerENDVAR::getInstance(),_root::getACL(), _root::getI18n(), new Plugin\sc\Valid() );
 		if(true === $oBusiness->deletePermission(_root::getParam('id')) ){
 			//une fois enregistre on redirige (vers la page liste)
 			$this->redirect('index');
@@ -151,7 +151,7 @@ class module_VARmoduleParentENDVAR_VARmoduleRightsManagerENDVAR extends module_V
 		$oView=$this->getView('userEdit');
 		$oView->oUser=$oUser;
 
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		$oView->token=$oPluginXsrf->getToken();
 		$oView->tMessage=$tMessage;
 
@@ -165,7 +165,7 @@ class module_VARmoduleParentENDVAR_VARmoduleRightsManagerENDVAR extends module_V
 			return null;
 		}
 
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}

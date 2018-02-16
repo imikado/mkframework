@@ -35,7 +35,7 @@ class module_VARmoduleParentENDVAR_VARmoduleAuthENDVAR extends module_VARmoduleP
 		}
 
 		$oUser=$oBusinessAuth->getReturn()->getData('oAccount');
-		$oBusinessRightManager = new business_VARmoduleRightsManagerENDVAR(VARmodel_rightManagerENDVAR::getInstance(),_root::getACL(), _root::getI18n(), new plugin_sc_valid() );
+		$oBusinessRightManager = new business_VARmoduleRightsManagerENDVAR(VARmodel_rightManagerENDVAR::getInstance(),_root::getACL(), _root::getI18n(), new Plugin\sc\Valid() );
 		$oBusinessRightManager->loadForUser($oUser);
 
 		_root::redirect('VARmoduleParentRedirectENDVAR_VARmoduleChildRedirectENDVAR::VARactionViewChildRedirectENDVAR');

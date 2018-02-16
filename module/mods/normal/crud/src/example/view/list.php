@@ -5,7 +5,7 @@
 	</tr>
 	<?php if($this->#tExamplemodel#):?>
 		<?php foreach($this->#tExamplemodel# as $#oExamplemodel#):?>
-		<tr <?php echo plugin_tpl::alternate(array('','class="alt"'))?>>
+		<tr <?php echo Plugin\TPL::alternate(array('','class="alt"'))?>>
 			#ici#
 			<td>
 				

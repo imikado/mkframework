@@ -15,13 +15,13 @@ charset=UTF-8
 double_encode=0
 
 [debug]
-class=plugin_sc_debugError
+class=Plugin\sc\debugError
 
 [language]
 ;fr / en... //sLangue
 default=fr
 allow=fr,en
-class=plugin_sc_i18n
+class=Plugin\sc\I18n
 
 [auth]
 ;note : >= php5.2 dans le php.ini
@@ -33,7 +33,7 @@ session.cookie_domain=
 session.cookie_path=
 session.cookie_lifetime=
 enabled=0
-class=plugin_sc_auth
+class=Plugin\sc\Auth
 module=auth::login
 ;liste des modules non concerne par l'auth: separe par des virgules
 module.disabled.list=
@@ -42,7 +42,7 @@ session.timeout.enabled=1
 session.timeout.lifetime=1800
 
 [acl]
-class=plugin_sc_acl
+class=Plugin\sc\ACL
 
 [module]
 folder.organized=1
@@ -56,7 +56,7 @@ layout.erreur=../layout/erreurprod.php
 
 [urlrewriting]
 enabled=0
-class=plugin_routing
+class=Plugin\Routing
 conf=../conf/routing.php
 use4O4=0
 
@@ -70,7 +70,7 @@ xss.enabled=1
 xsrf.session.enabled=0
 
 [log]
-class=plugin_sc_log
+class=Plugin\sc\Log
 error=0
 warning=0
 application=0
@@ -79,7 +79,7 @@ file.enabled=1
 apache.enabled=1
 
 [check]
-class=plugin_check
+class=Plugin\Check
 
 [site]
 ;Redirection

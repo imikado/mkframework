@@ -615,7 +615,7 @@ class _root{
 				$tErreur=array(
 					'Il vous manque un bloc dans votre fichier conf/site.ini',
 					'[log]',
-					'class=plugin_log',
+					'class=Plugin\Log',
 					'application=1',
 					'warning=1',
 					'error=1',
@@ -641,7 +641,7 @@ class _root{
 				$tErreur=array(
 					'Il vous manque un bloc dans votre fichier conf/site.ini',
 					'[language]',
-					'class=plugin_sc_i18n',
+					'class=Plugin\sc\I18n',
 
 				);
 

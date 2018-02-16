@@ -47,7 +47,7 @@
 	$sLienAnneeApres='<a href="'._root::getLink($this->sModuleAction,$tParamTmp).'">&gt;&gt;</a>';
 	
 	//mois avant	
-	$oDate=new plugin_date($sDate);
+	$oDate=new Plugin\Date($sDate);
 	$oDate->removeMonth(1);
 	$iMoisAvant=$oDate->getMonth();
 	$iAnneeAvant=$oDate->getYear();
@@ -57,7 +57,7 @@
 	$sLienMoisAvant='<a href="'._root::getLink($this->sModuleAction,$tParamTmp).'">&lt;&lt;</a>';
 	
 	//mois apres
-	$oDate2=new plugin_date($sDate);
+	$oDate2=new Plugin\Date($sDate);
 	$oDate2->removeMonth(1);
 	$iMoisApres=$oDate2->getMonth();
 	$iAnneeApres=$oDate2->getYear();

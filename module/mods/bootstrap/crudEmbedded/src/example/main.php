@@ -59,7 +59,7 @@ class module_#MODULE# extends abstract_moduleembedded{
 			return null;
 		}
 		
-		$oPluginXsrf=new plugin_xsrf();
+		$oPluginXsrf=new Plugin\XSRF();
 		if(!$oPluginXsrf->checkToken( _root::getParam('token') ) ){ //on verifie que le token est valide
 			return array('token'=>$oPluginXsrf->getMessage() );
 		}

@@ -1,4 +1,4 @@
-<?php $oPluginHtml=new plugin_html?>
+<?php $oPluginHtml=new Plugin\HTML?>
 <form action="" method="POST">
 
 <table>

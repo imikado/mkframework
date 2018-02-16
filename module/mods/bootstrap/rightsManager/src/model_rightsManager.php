@@ -108,7 +108,7 @@ class #row_examplemodel# extends abstract_row{
 	*/
 	/*exemple test validation*/
 	private function getCheck(){
-		$oPluginValid=new plugin_valid($this->getTab());
+		$oPluginValid=new Plugin\Valid($this->getTab());
 		/* renseigner vos check ici
 		$oPluginValid->isEqual('champ','valeurB','Le champ n\est pas &eacute;gal &agrave; '.$valeurB);
 		$oPluginValid->isNotEqual('champ','valeurB','Le champ est &eacute;gal &agrave; '.$valeurB);

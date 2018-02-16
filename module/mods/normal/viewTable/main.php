@@ -150,6 +150,9 @@ class module_mods_normal_viewTable extends abstract_moduleBuilder{
 			$tFile[]=$oFile->getName();
 			require_once( $oFile->getAdresse() );
 			$sClassFoo=substr($oFile->getName(),0,-4);
+            if (substr($sClassFoo,0,6) != 'model_') {
+                $sClassFoo = 'Model\\'.$sClassFoo;
+            }
 			$oModelFoo=new $sClassFoo;
 			
 			if( method_exists( $oModelFoo, 'getSelect')){
@@ -185,7 +188,10 @@ class module_mods_normal_viewTable extends abstract_moduleBuilder{
 			$sMethod=_root::getParam('method');
 			
 			module_builder::getTools()->loadConfig($sClass);
-			
+
+            if (substr($sClass,0,6) != 'model_') {
+                $sClass = 'Model\\'.$sClass;
+            }
 			$oModel=new $sClass;
 			$tData=array();
 			try{
@@ -219,7 +225,10 @@ class module_mods_normal_viewTable extends abstract_moduleBuilder{
 			 
 			$oTpl->sClass=$sClass;
 			$oTpl->tModule=$tModule;
-			
+
+            if (substr($sClass,0,6) != 'model_') {
+                $sClass = 'Model\\'.$sClass;
+            }
 			$tId=module_builder::getTools()->getIdTabFromClass($sClass);
 			foreach($tColumn as $i => $sColumn){
 				if(in_array($sColumn, $tId) ){

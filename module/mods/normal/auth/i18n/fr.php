@@ -1,4 +1,4 @@
-<?php plugin_i18n::add(array(
+<?php Plugin\I18n::add(array(
 
 'choisissezLaClasseAutiliser'=>'Choisissez la classe mod&egrave;le des utilisateurs &agrave; utiliser',
 'champUtilisateur'=>'Champ nom d\'utilisateur',
