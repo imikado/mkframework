@@ -2,7 +2,7 @@
 	"name": "mkframework/mkframework",
 	"description": "A simple php framework.",
 	"license": "LGPL-3.0-only",
-	"version": "4.130.6",
+	"version": "4.130.7",
 	"homepage" : "http://mkframework.com",
 	"require": {
 		"php": ">=5.2.0"
