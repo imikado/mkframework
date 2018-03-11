@@ -66,6 +66,17 @@ class VARmodel_tableENDVAR extends abstract_model implements VARinterfaceModelEN
 						<option value="input">text</option>
 						<option value="textarea">textarea</option>
 
+						<listOption source="modelGetSelectList"></listOption>
+
+					</input>
+				</col>
+
+				<col name="tState">
+					<label>state</label>
+					<input type="select">
+						<option value="on">On</option>
+						<option value="off">Off</option>
+
 					</input>
 				</col>
 

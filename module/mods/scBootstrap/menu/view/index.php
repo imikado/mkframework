@@ -15,7 +15,11 @@ table td{
 <?php if(!_root::getRequest()->isPost()):?>
 	<form action="#createon" method="POST">
 	<p><?php echo tr('pourCreerLeMenu')?></p>
+
+	<p><strong><?php echo tr('titreApplication')?></strong> <input type="text" name="titreApplication" value="<?php echo _root::getParam('id')?>" /></p>
+
 	<p><strong><?php echo tr('nomDuModule')?></strong> <input type="text" name="modulename" value="menu" /></p>
+
 	<?php if($this->bExist==1):?>
 	<p style="color:red"><?php echo tr('leRepertoireModuleExisteDeja')?></p>
 	<?php endif;?>

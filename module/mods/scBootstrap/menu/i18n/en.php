@@ -13,5 +13,6 @@
 'libelleDuLien'=>'link label',
 'genererLeMenu'=>'generate the menu',
 'leRepertoireModuleExisteDeja'=>'the module directory still exists',
+'titreApplication' => 'Application title',
 
 ));

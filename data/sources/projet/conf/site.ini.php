@@ -13,6 +13,7 @@ double_encode=0
 
 [debug]
 class=plugin_debugError
+bar.open=0
 
 [language]
 ;fr / en... //sLangue

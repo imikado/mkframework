@@ -20,7 +20,12 @@ class module_mods_scBootstrap_menu extends abstract_moduleBuilder {
 			if (in_array($sModuleName, array('menu', 'builder', 'example', 'exampleembedded'))) {
 				continue;
 			}
-			include module_builder::getTools()->getRootWebsite() . 'module/' . $sModuleName . '/main.php';
+			$sMainFilename=module_builder::getTools()->getRootWebsite() . 'module/' . $sModuleName . '/main.php';
+			if(true===file_exists($sMainFilename) ){
+				include $sMainFilename;
+			}else{
+				continue;
+			}
 
 			if (get_parent_class('module_' . $sClassName) != 'abstract_module') {
 				//continue;
@@ -67,7 +72,7 @@ class module_mods_scBootstrap_menu extends abstract_moduleBuilder {
 		$sModule = _root::getParam('modulename');
 		$tMethod = _root::getParam('tMethod');
 		$tLabel = _root::getParam('tLabel');
-
+		$sTitle = _root::getParam('titreApplication');
 
 		$ok = 1;
 
@@ -87,7 +92,7 @@ class module_mods_scBootstrap_menu extends abstract_moduleBuilder {
 				if (module_builder::getTools()->projetmkdir('module/' . $sModule . '/view') == true) {
 					$detail .= '<br />' . trR('creationRepertoire', array('#REPERTOIRE#' => 'module/' . $sModule . '/view'));
 
-					$this->genModuleMenuMain($sModule, $tMethod, $tLabel);
+					$this->genModuleMenuMain($sModule, $tMethod, $tLabel, $sTitle);
 
 					$msg = trR('moduleGenereAvecSucces', array('#MODULE#' => $sModule));
 
@@ -113,7 +118,7 @@ class module_mods_scBootstrap_menu extends abstract_moduleBuilder {
 		$this->msg = $msg;
 	}
 
-	private function genModuleMenuMain($sModuleMenuName, $tMethod, $tLabel) {
+	private function genModuleMenuMain($sModuleMenuName, $tMethod, $tLabel, $sTitle) {
 
 		$sData = null;
 		foreach ($tMethod as $i => $sLink) {
@@ -126,11 +131,15 @@ class module_mods_scBootstrap_menu extends abstract_moduleBuilder {
 
 		/* SOURCE */$oSourceMain->setPattern('#TABLEAUICI#', $sData);
 
+		/* SOURCE */$oSourceMain->setPattern('#examplesite#', $sTitle);
+
 		/* SOURCE */$oSourceMain->save();
 
 		$this->projectMkdir('module/' . $sModuleMenuName . '/view');
 
 		/* SOURCE */$oSourceViewIndex = $this->getObjectSource('example/view/index.php');
+
+		/* SOURCE */$oSourceViewIndex->setPattern('#examplesite#', $sTitle);
 		/* SOURCE */$oSourceViewIndex->setPattern('#MODULE#', $sModuleMenuName);
 
 		/* SOURCE */$oSourceViewIndex->save();

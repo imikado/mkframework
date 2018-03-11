@@ -13,6 +13,8 @@ plugin_i18n::add(array(
     'ajoutezUneInterfaceAvotreClasse' => 'Add an interface <strong>VARinterfaceModelENDVAR</strong> on your class <strong>VARmodel_tableENDVAR</strong>',
     'text' => 'text',
     'textarea' => 'textarea',
+	'On'=>'ON',
+	'Off'=>'OFF',
     'moduleCreeAvecSucess' => 'Module "<strong>VARmoduleChildENDVAR</strong>" generated',
     'resumeGeneration' => 'Details of generation',
     'editer' => 'Edit',

@@ -254,6 +254,10 @@ class plugin_sc_debug{
 		echo $this->sHtml;
 		echo '</div>';
 		echo '</div>';
+
+		if(_root::getConfigVar('debug.bar.open',1)==0){
+			echo '<script>showHideDebugBar()</script>';
+		}
 	}
 
 	private function addComplex($key,$value){

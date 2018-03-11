@@ -4,19 +4,29 @@
 		<formu type="loopWithKey" source="params" param="tColumn" keyField="key">
 			<action type="setVariable" name="sColumn" source="params" param="tColumn" useKey="$key" />
 			<action type="setVariable" name="sLabel" source="params" param="tLabelFr" useKey="$key" />
-			<action type="setVariable" name="sType" source="params" param="tType" useKey="$key" />
+			<action type="setVariable" name="sTypeRaw" source="params" param="tType" useKey="$key" />
+			<action type="setVariable" name="sState" source="params" param="tState" useKey="$key" />
 
-			<action type="setVariable" name="sInput" source="snippet" param="$sType">
-				<pattern tag="VARcolumnENDVAR" value="$sColumn"/>
+			<action type="splitVariable" source="$sTypeRaw" pattern=".">
+				<var name="sType"></var>
+				<var name="sModelJoin"></var>
 			</action>
 
-			<action type="setVariable" name="sLignetd" source="snippet" param="lignetd">
-				<pattern tag="VARcolumnENDVAR" value="$sColumn"/>
-				<pattern tag="VARinputENDVAR" value="$sInput"/>
+			<action type="if" variable="sState" equal="on">
+
+				<saction type="setVariable" name="sInput" source="snippet" param="$sType">
+					<pattern tag="VARcolumnENDVAR" value="$sColumn"/>
+					<pattern tag="VARmodelENDVAR" value="$sModelJoin"/>
+				</saction>
+
+				<saction type="setVariable" name="sLignetd" source="snippet" param="lignetd">
+					<pattern tag="VARcolumnENDVAR" value="$sColumn"/>
+					<pattern tag="VARinputENDVAR" value="$sInput"/>
+				</saction>
+
+				<saction type="concatParam" name="fields" value="$sLignetd"/>
 
 			</action>
-
-			<action type="concatParam" name="fields" value="$sLignetd"/>
 
 		</formu>
 	</formules>
@@ -47,7 +57,7 @@
 		<select>
 
 
-			<code><![CDATA[<?php if(isset($this->tJoin#examplemodel#[$this->#oExamplemodel#->#examplecolumn#])){ echo $this->tJoin#examplemodel#[$this->#oExamplemodel#->#examplecolumn#];}else{ echo $this->#oExamplemodel#->#examplecolumn# ;}?>]]></code>
+			<code><![CDATA[<?php if(isset($this->tJoinVARmodelENDVAR[ $this->VARoTableENDVAR->VARcolumnENDVAR ])){ echo $this->tJoinVARmodelENDVAR[ $this->VARoTableENDVAR->VARcolumnENDVAR ];}else{ echo $this->VARoTableENDVAR->VARcolumnENDVAR ;}?>]]></code>
 		</select>
 
 		<upload>

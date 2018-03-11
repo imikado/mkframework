@@ -45,6 +45,8 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends abstract_modulee
 		$oView = $this->getView('list');
 		$oView->VARtTableENDVAR = $VARtTableENDVAR;
 
+		VARtJoinENDVAR
+
 
 		return $oView;
 	}
@@ -56,6 +58,8 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends abstract_modulee
 
 		$oView = $this->getView('new');
 		$oView->VARoTableENDVAR = $VARoTableENDVAR;
+
+		VARtJoinENDVAR
 
 		$oPluginXsrf = new plugin_xsrf();
 		$oView->token = $oPluginXsrf->getToken();
@@ -72,6 +76,8 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends abstract_modulee
 		$oView = $this->getView('edit');
 		$oView->VARoTableENDVAR = $VARoTableENDVAR;
 
+		VARtJoinENDVAR
+
 		$oPluginXsrf = new plugin_xsrf();
 		$oView->token = $oPluginXsrf->getToken();
 		$oView->tMessage = $tMessage;
@@ -85,6 +91,8 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends abstract_modulee
 		$oView = $this->getView('show');
 		$oView->VARoTableENDVAR = $VARoTableENDVAR;
 
+		VARtJoinENDVAR
+
 
 		return $oView;
 	}
@@ -96,6 +104,8 @@ class module_VARmoduleParentENDVAR_VARmoduleChildENDVAR extends abstract_modulee
 
 		$oView = $this->getView('delete');
 		$oView->VARoTableENDVAR = $VARoTableENDVAR;
+
+		VARtJoinENDVAR
 
 
 		$oPluginXsrf = new plugin_xsrf();

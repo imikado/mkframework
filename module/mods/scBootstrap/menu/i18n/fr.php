@@ -13,5 +13,5 @@
 'libelleDuLien'=>'libell&eacute; du lien',
 'genererLeMenu'=>'generer le menu',
 'leRepertoireModuleExisteDeja'=>'le repertoire module existe d&eacute;j&agrave;',
-
+'titreApplication' => 'Titre application',
 ));
