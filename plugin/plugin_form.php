@@ -150,6 +150,7 @@ class plugin_form{
 	public function getSelectGroup($sName,$tValue1,$tValue2,$sLabel1,$sLabel2,$tOption=null){
 
 		$sCurrentValue=$this->getValue($sName);
+                $bSelected=false;
 
 		$sHtml=null;
 		$sHtml.='<select name="'.$sName.'" '.$this->getOption($tOption).'><optgroup label='.$sLabel1.'>';
@@ -157,13 +158,14 @@ class plugin_form{
 				$sHtml.='<option ';
 				if($sValue==$sCurrentValue){
 					$sHtml.=' selected="selected"';
+                                        $bSelected=true;
 				}
 				$sHtml.=' value="'.$sValue.'">'.$sLabel.'</option>';
 			}
                 $sHtml .='<optgroup label='.$sLabel2.'>';
-                        foreach($tValue2 as $sValue => $sLabel){
+                       foreach($tValue2 as $sValue => $sLabel){
 				$sHtml.='<option ';
-				if($sValue==$sCurrentValue){
+				if(($sValue==$sCurrentValue)and !$bSelected){
 					$sHtml.=' selected="selected"';
 				}
 				$sHtml.=' value="'.$sValue.'">'.$sLabel.'</option>';
