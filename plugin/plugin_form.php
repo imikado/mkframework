@@ -137,6 +137,42 @@ class plugin_form{
 		return $sHtml;
 		
 	}
+	/**
+	* retourne un champ menu deroulant sectionne en groupe
+	* @access public
+	* @param string $sName nom du champ
+	* @param array @tValue1 1er tableau de valeurs du menu deroulant
+        * @param array @tValue2 2nd tableau de valeurs du menu deroulant
+         * @param string $sLabel1 nom du 1er groupe
+         * @param string $sLabel2 nom du 2nd groupe
+	* @param array $tOption options du champ
+	*/
+	public function getSelectGroup($sName,$tValue1,$tValue2,$sLabel1,$sLabel2,$tOption=null){
+
+		$sCurrentValue=$this->getValue($sName);
+
+		$sHtml=null;
+		$sHtml.='<select name="'.$sName.'" '.$this->getOption($tOption).'><optgroup label='.$sLabel1.'>';
+			foreach($tValue1 as $sValue => $sLabel){
+				$sHtml.='<option ';
+				if($sValue==$sCurrentValue){
+					$sHtml.=' selected="selected"';
+				}
+				$sHtml.=' value="'.$sValue.'">'.$sLabel.'</option>';
+			}
+                $sHtml .='<optgroup label='.$sLabel2.'>';
+                        foreach($tValue2 as $sValue => $sLabel){
+				$sHtml.='<option ';
+				if($sValue==$sCurrentValue){
+					$sHtml.=' selected="selected"';
+				}
+				$sHtml.=' value="'.$sValue.'">'.$sLabel.'</option>';
+			}
+		$sHtml.='</optgroup></select>';
+		$sHtml.=$this->getMessage($sName);
+		return $sHtml;
+
+	}
 	/** 
 	* retourne une liste de champs radio
 	* @access public
