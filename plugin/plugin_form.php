@@ -141,39 +141,32 @@ class plugin_form{
 	* retourne un champ menu deroulant sectionne en groupe
 	* @access public
 	* @param string $sName nom du champ
-	* @param array @tValue1 1er tableau de valeurs du menu deroulant
-        * @param array @tValue2 2nd tableau de valeurs du menu deroulant
-         * @param string $sLabel1 nom du 1er groupe
-         * @param string $sLabel2 nom du 2nd groupe
+	* @param array $tArrayOfValue tableau de tableau de valeurs du menu deroulant
+        * @param array $tLabel tableau de valeurs des labels des groupes
 	* @param array $tOption options du champ
 	*/
-	public function getSelectGroup($sName,$tValue1,$tValue2,$sLabel1,$sLabel2,$tOption=null){
-
+	public function getSelectGroup($sName,$tArrayOfValue,$tLabel,$tOption=null){
 		$sCurrentValue=$this->getValue($sName);
                 $bSelected=false;
-
+                $i=0;
 		$sHtml=null;
-		$sHtml.='<select name="'.$sName.'" '.$this->getOption($tOption).'><optgroup label='.$sLabel1.'>';
-			foreach($tValue1 as $sValue => $sLabel){
-				$sHtml.='<option ';
-				if($sValue==$sCurrentValue){
-					$sHtml.=' selected="selected"';
-                                        $bSelected=true;
-				}
-				$sHtml.=' value="'.$sValue.'">'.$sLabel.'</option>';
-			}
-                $sHtml .='<optgroup label='.$sLabel2.'>';
-                       foreach($tValue2 as $sValue => $sLabel){
-				$sHtml.='<option ';
-				if(($sValue==$sCurrentValue)and !$bSelected){
-					$sHtml.=' selected="selected"';
-				}
-				$sHtml.=' value="'.$sValue.'">'.$sLabel.'</option>';
-			}
-		$sHtml.='</optgroup></select>';
+		$sHtml.='<select name="'.$sName.'" '.$this->getOption($tOption).'>';
+                foreach ($tArrayOfValue as $tValue){                    
+                    $sHtml.='<optgroup label='.$tLabel[$i].'>';
+                    foreach($tValue as $sValue => $sLabel){
+                        $sHtml.='<option ';
+                        if(($sValue==$sCurrentValue)and !$bSelected){
+                                $sHtml.=' selected="selected"';
+                                $bSelected=true;
+                        }
+                        $sHtml.=' value="'.$sValue.'">'.$sLabel.'</option>';
+                    }
+                    $i++;
+                    $sHtml.='</optgroup>';
+                }
+                $sHtml.='</select>';
 		$sHtml.=$this->getMessage($sName);
 		return $sHtml;
-
 	}
 	/** 
 	* retourne une liste de champs radio
