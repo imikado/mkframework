@@ -137,34 +137,33 @@ class plugin_form{
 		return $sHtml;
 		
 	}
-	/**
+	/** 
 	* retourne un champ menu deroulant sectionne en groupe
 	* @access public
 	* @param string $sName nom du champ
 	* @param array $tArrayOfValue tableau multidimentionnel [Label]=>[Index]=>'Option'
 	* @param array $tOption options du champ
 	*/
-
-        public function getSelectGroup($sName,$tArrayOfValue,$tOption=null){
+	public function getSelectGroup($sName,$tArrayOfValue,$tOption=null){
 		$sCurrentValue=$this->getValue($sName);
-                $bSelected=false;
-                $i=0;
+		$bSelected=false;
+		$i=0;
 		$sHtml=null;
 		$sHtml.='<select name="'.$sName.'" '.$this->getOption($tOption).'>';
-                foreach ($tArrayOfValue as $key => $tValue){                    
-                    $sHtml.='<optgroup label='.$key.'>';
-                    foreach($tValue as $sValue => $sLabel){
-                        $sHtml.='<option ';
-                        if(($sValue==$sCurrentValue)and !$bSelected){
-                                $sHtml.=' selected="selected"';
-                                $bSelected=true;
-                        }
-                        $sHtml.=' value="'.$sValue.'">'.$sLabel.'</option>';
-                    }
-                    $i++;
-                    $sHtml.='</optgroup>';
-                }
-                $sHtml.='</select>';
+		foreach ($tArrayOfValue as $key => $tValue){
+			$sHtml.='<optgroup label='.$key.'>';
+			foreach($tValue as $sValue => $sLabel){
+				$sHtml.='<option ';
+				if(($sValue==$sCurrentValue)and !$bSelected){
+					$sHtml.=' selected="selected"';
+					$bSelected=true;
+				}
+				$sHtml.=' value="'.$sValue.'">'.$sLabel.'</option>';
+			}
+			$i++;
+			$sHtml.='</optgroup>';
+		}
+		$sHtml.='</select>';
 		$sHtml.=$this->getMessage($sName);
 		return $sHtml;
 	}
