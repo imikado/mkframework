@@ -141,18 +141,18 @@ class plugin_form{
 	* retourne un champ menu deroulant sectionne en groupe
 	* @access public
 	* @param string $sName nom du champ
-	* @param array $tArrayOfValue tableau de tableau de valeurs du menu deroulant
-        * @param array $tLabel tableau de valeurs des labels des groupes
+	* @param array $tArrayOfValue tableau multidimentionnel [Label]=>[Index]=>'Option'
 	* @param array $tOption options du champ
 	*/
-	public function getSelectGroup($sName,$tArrayOfValue,$tLabel,$tOption=null){
+
+        public function getSelectGroup($sName,$tArrayOfValue,$tOption=null){
 		$sCurrentValue=$this->getValue($sName);
                 $bSelected=false;
                 $i=0;
 		$sHtml=null;
 		$sHtml.='<select name="'.$sName.'" '.$this->getOption($tOption).'>';
-                foreach ($tArrayOfValue as $tValue){                    
-                    $sHtml.='<optgroup label='.$tLabel[$i].'>';
+                foreach ($tArrayOfValue as $key => $tValue){                    
+                    $sHtml.='<optgroup label='.$key.'>';
                     foreach($tValue as $sValue => $sLabel){
                         $sHtml.='<option ';
                         if(($sValue==$sCurrentValue)and !$bSelected){
