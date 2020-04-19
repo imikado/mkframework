@@ -2,17 +2,16 @@
 	"name": "mkframework/mkframework",
 	"description": "A simple php framework.",
 	"license": "LGPL-3.0-only",
-	"version": "4.130.8",
-	"homepage" : "http://mkframework.com",
+	"version": "4.130.9",
+	"homepage": "http://mkframework.com",
 	"require": {
 		"php": ">=5.2.0"
 	},
-	 "authors": [
-        {
-            "name": "Michael Bertocchi",
-            "homepage": "http://mkframework.com/",
-            "role": "Developer"
-        }
-
-    	]
+	"authors": [
+		{
+			"name": "Michael Bertocchi",
+			"homepage": "http://mkframework.com/",
+			"role": "Developer"
+		}
+	]
 }

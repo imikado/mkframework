@@ -85,7 +85,6 @@
 		$#tExamplemodel#=model_#examplemodel#::getInstance()->findAll();
 		
 		$oView=new _view('#examplemodule#::list');
-		$oView->#tExamplemodel#=$#tExamplemodel#;
 		
 		#CODE#
 		
